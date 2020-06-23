@@ -75,6 +75,7 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	'port' => '3306',
 	'hostname' => 'sql113.epizy.com',
 	'username' => 'epiz_26036211',
 	'password' => 'eSa5O9bmLIaUse',
