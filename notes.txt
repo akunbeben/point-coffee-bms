@@ -1,0 +1,5 @@
+Form permintaan:
+  Status: - 1 Draft
+          - 2 Pending
+          - 3 Approved
+          - 4 Rejected
