@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class StockModel extends CI_Model
 {
 
-    public function get($id = null, $exceptionCode = null)
+    public function get($id = null, $exceptionCode = null, $productCode = null)
     {
         $this->db->select('stock.*, kategori.singkatan as kategoriname, satuan.singkatan as satuanname');
         $this->db->from('stock');
@@ -13,6 +13,10 @@ class StockModel extends CI_Model
 
         if ($id !== null) {
             $this->db->where('stock.id', $id);
+        }
+
+        if ($productCode !== null) {
+            $this->db->where('stock.prdcd', $productCode);
         }
 
         if ($exceptionCode !== null) {

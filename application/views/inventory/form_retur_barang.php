@@ -40,7 +40,7 @@
               </div>
             </div>
             <div class="col-md-3">
-              <button type="submit" class="btn btn-primary">Tambahkan</button>
+              <button type="submit" id="btnSubmit" class="btn btn-primary">Retur</button>
             </div>
           </div>
         </form>
@@ -62,7 +62,7 @@
                       <td><?= $line->prdcd . ' - ' . $line->nama_item; ?></td>
                       <td><?= $line->jumlah; ?> Item</td>
                       <td class="text-center">
-                        <button class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button>
+                        <button class="btn btn-sm btn-danger" onclick="hapusItem('<?= base_url('inventory/hapus-item-retur/' . $line->id . '/' . $header->kode_retur); ?>')"><i class="fas fa-trash-alt"></i></button>
                       </td>
                     </tr>
                   <?php endforeach; ?>
@@ -75,7 +75,7 @@
       <div class="card-footer">
         <div class="row">
           <div class="col-md-12 text-right">
-            <button onclick="selesaiProses('<?= base_url('inventory/selesaikan-proses/' . $header->kode_retur); ?>')" class="btn btn-primary">Retur</button>
+            <button onclick="prosesRetur('<?= base_url('inventory/proses-retur/' . $header->kode_retur); ?>')" class="btn btn-primary" <?= count($lines) == 0 ? 'disabled' : null; ?>>Proses Retur</button>
           </div>
         </div>
       </div>

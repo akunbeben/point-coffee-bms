@@ -146,7 +146,7 @@
             <a class="collapse-item" href="<?= base_url('stock/permintaan-barang'); ?>">Permintaan Barang</a>
             <a class="collapse-item" href="<?= base_url('inventory/proses-barang'); ?>">Proses Barang</a>
             <a class="collapse-item" href="<?= base_url('inventory/data-retur-barang'); ?>">Retur Barang</a>
-            <a class="collapse-item" href="<?= base_url('inventory/konversi-barang') ?>">Konversi Barang</a>
+            <a class="collapse-item" href="<?= base_url('inventory/konversi') ?>">Konversi Barang</a>
           </div>
         </div>
       </li>

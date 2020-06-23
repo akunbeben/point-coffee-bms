@@ -191,4 +191,65 @@ class InventoryModel extends CI_Model
     $this->db->where('header.kode_retur', $returCode);
     return $this->db->get();
   }
+
+  public function createLine($data)
+  {
+    $this->db->insert('retur_barang_detail', $data);
+  }
+
+  public function deleteLine($id)
+  {
+    $this->db->where('id', $id);
+    $this->db->delete('retur_barang_detail');
+  }
+
+  public function prosesRetur($idRetur)
+  {
+    $firstQuery =
+      "UPDATE stock firstTable
+      INNER JOIN retur_barang_detail secondTable
+      ON firstTable.prdcd = secondTable.prdcd
+      SET firstTable.jumlah = firstTable.jumlah - secondTable.jumlah
+      WHERE secondTable.retur_id = '" . $idRetur . "'";
+    $this->db->query($firstQuery);
+
+    $secondQuery =
+      "UPDATE retur_barang firstTable
+      SET firstTable.jumlah_item = (SELECT SUM(jumlah) total FROM retur_barang_detail WHERE retur_id = {$idRetur})
+      WHERE firstTable.id = '" . $idRetur . "'";
+    $this->db->query($secondQuery);
+  }
+
+  public function datatablesQueryRetur($search, $returCode)
+  {
+    $this->db->select('returItem.id, returItem.prdcd, returItem.jumlah, itemDetail.deskripsi as nama_item');
+
+    $this->db->from('retur_barang_detail returItem');
+    $this->db->join('stock itemDetail', 'itemDetail.prdcd = returItem.prdcd');
+    $this->db->join('retur_barang header', 'returItem.retur_id = header.id');
+    $this->db->where('header.kode_retur', $returCode);
+
+    if ($search != null) {
+      $this->db->group_start();
+      $this->db->like('returItem.prdcd', $search);
+      $this->db->or_like('returItem.jumlah', $search);
+      $this->db->or_like('returItem.deskripsi', $search);
+      $this->db->group_end();
+    }
+  }
+
+  public function getDatatablesRetur($search, $length, $start, $orderColumn, $orderDir, $returCode)
+  {
+    $this->datatablesQueryRetur($search, $returCode);
+    $this->db->order_by($orderColumn, $orderDir);
+    $this->db->limit($length, $start);
+
+    return $this->db->get()->result();
+  }
+
+  public function getRecordsFilteredRetur($search = null, $returCode)
+  {
+    $this->datatablesQueryRetur($search, $returCode);
+    return $this->db->get();
+  }
 }

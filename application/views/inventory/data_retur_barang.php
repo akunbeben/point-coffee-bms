@@ -33,7 +33,12 @@
               <td><?= $item->jumlah_item; ?></td>
               <td><?= $item->dibuat_oleh; ?></td>
               <td class="text-center">
-                <button class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                <?php if ($item->jumlah_item != null) : ?>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailItemModal" onclick="initNewDatatable('<?= base_url('inventory/data-retur-json/' . $item->kode_retur); ?>')" title="Detail"><i class="fas fa-eye"></i></button>
+                <?php endif; ?>
+                <?php if ($item->jumlah_item == null) : ?>
+                  <button class="btn btn-warning btn-sm" onclick="editRetur('<?= base_url('inventory/form-retur/' . $item->kode_retur); ?>')" title="Edit"><i class="fas fa-pencil-alt"></i></button>
+                <?php endif; ?>
               </td>
             </tr>
           <?php endforeach; ?>
@@ -74,6 +79,30 @@
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="detailItemModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="detailItemModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title font-weight-bold text-primary" id="detailItemModalLabel">Detail Request: </h6>
+        <button type="button" class="close" id="btnDetailClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm" id="newDatatable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Jumlah</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -167,6 +167,70 @@ class Inventory extends CI_Controller
 
   public function tambah_item_retur($kodeRetur = null)
   {
-    // $this->
+    $dataHeader = $this->InventoryModel->getData($kodeRetur)->row();
+    $item = $this->StockModel->get(null, null, $this->input->post('productcode'))->row();
+
+    $itemCheck = $item->jumlah - $this->input->post('jumlah');
+
+    if ($itemCheck < 0) {
+      $this->session->set_flashdata('pesanGlobal', 'Jumlah yang anda masukkan melebihi batas.');
+      $this->session->set_flashdata('typePesanGlobal', 'error');
+      redirect('inventory/form-retur/' . $kodeRetur);
+    }
+
+    $data = [
+      'id' => null,
+      'retur_id' => $dataHeader->id,
+      'prdcd' => $this->input->post('productcode'),
+      'jumlah' => $this->input->post('jumlah')
+    ];
+
+    $this->InventoryModel->createLine($data);
+    redirect('inventory/form-retur/' . $kodeRetur);
+  }
+
+  public function hapus_item_retur($id = null, $kodeRetur = null)
+  {
+    $this->InventoryModel->deleteLine($id);
+    redirect('inventory/form-retur/' . $kodeRetur);
+  }
+
+  public function proses_retur($kodeRetur = null)
+  {
+    $idRetur = $this->InventoryModel->getData($kodeRetur)->row()->id;
+    $this->InventoryModel->prosesRetur($idRetur);
+    redirect('inventory/data-retur-barang');
+  }
+
+  public function data_retur_json($kodeRetur = null)
+  {
+    $search         = $_POST['search']['value'];
+    $length         = $_POST['length'];
+    $start          = $_POST['start'];
+    $sortColumnName = $_POST['columns']['' . $_POST['order']['0']['column'] . '']['name'];
+    $sortDir        = $_POST['order']['0']['dir'];
+
+    $draw = $_POST['draw'];
+    $recordsFiltered = $this->InventoryModel->getRecordsFilteredRetur($search, $kodeRetur)->num_rows();
+    $recordsTotal = $this->InventoryModel->getLineRetur($kodeRetur)->num_rows();
+    $data = $this->InventoryModel->getDatatablesRetur($search, $length, $start, $sortColumnName, $sortDir, $kodeRetur);
+
+    $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data];
+
+    header('Content-Type: application/json');
+    echo json_encode($output);
+  }
+
+  // Konversi
+
+  public function konversi()
+  {
+    $data = [
+      'title' => 'Konversi',
+      'title' => null,
+      'javascript' => null
+    ];
+
+    $this->template->load('layout/template', 'inventory/konversi', $data);
   }
 }
