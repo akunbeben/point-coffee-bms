@@ -252,4 +252,33 @@ class InventoryModel extends CI_Model
     $this->datatablesQueryRetur($search, $returCode);
     return $this->db->get();
   }
+
+  public function getKonversi($id = null)
+  {
+    $this->db->select('konversi.*, stock.deskripsi as nama_item');
+    $this->db->from('konversi');
+    $this->db->join('stock', 'konversi.prdcd = stock.prdcd');
+
+    if ($id != null) {
+      $this->db->where('konversi.id', $id);
+    }
+
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('konversi.idtoko', $this->session->userdata('x-idm-store'));
+    }
+
+    return $this->db->get();
+  }
+
+  public function createKonversi($data)
+  {
+    $this->db->insert('konversi', $data);
+  }
+
+  public function minusKonversi($data)
+  {
+    $query = "UPDATE stock SET jumlah = jumlah - {$data['jumlah']} WHERE prdcd = '{$data['prdcd']}'";
+
+    $this->db->query($query);
+  }
 }

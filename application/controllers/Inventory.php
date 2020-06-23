@@ -228,9 +228,42 @@ class Inventory extends CI_Controller
     $data = [
       'title' => 'Konversi',
       'title' => null,
-      'javascript' => null
+      'javascript' => 'konversi.js',
+      'data' => $this->InventoryModel->getKonversi()->result(),
+      'stock' => $this->StockModel->get()->result()
     ];
 
+    $this->form_validation->set_rules('prdcd', 'Product Code', 'required');
+    $this->form_validation->set_rules('jumlah', 'Jumlah Product', 'required');
+
+    if ($this->form_validation->run() == true) {
+      $this->prosesKonversi();
+    }
+
     $this->template->load('layout/template', 'inventory/konversi', $data);
+  }
+
+  public function prosesKonversi()
+  {
+    $data = [
+      'id' => null,
+      'prdcd' => $this->input->post('prdcd'),
+      'jumlah' => $this->input->post('jumlah'),
+      'tanggal_konversi' => date('Y-m-d H:i:s', time()),
+      'konversi_oleh' => $this->BaristaModel->GetBaristaByNik($this->InitialModel->CheckInitialStatus()->nik)->row()->nama,
+      'idtoko' => $this->session->userdata('x-idm-store')
+    ];
+
+    $stock = $this->StockModel->get(null, null, $data['prdcd'])->row()->jumlah;
+
+    if ($stock - $data['jumlah'] < 0) {
+      $this->session->set_flashdata('pesanGlobal', 'Jumlah yang anda masukkan melebihi batas.');
+      $this->session->set_flashdata('typePesanGlobal', 'error');
+      redirect('inventory/konversi');
+    }
+
+    $this->InventoryModel->createKonversi($data);
+    $this->InventoryModel->minusKonversi($data);
+    redirect('inventory/konversi');
   }
 }
