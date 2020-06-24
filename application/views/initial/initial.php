@@ -7,15 +7,14 @@
 
         <div class="card-body">
             <form action="" method="post">
-
-                <?php if ($currentInitial->nik == 0) : ?>
+                <?php if ($currentBarista == null) : ?>
                     <div class="form-group">
                         <label for="nik">NIK</label>
                         <select class="form-control" id="nik" name="nik">
-                        <option value="">Masukkan NIK anda.</option>
-                        <?php foreach($barista as $brs) : ?>
-                        <option value="<?= $brs->nik; ?>"><?= $brs->nik . ' - ' . $brs->nama; ?></option>
-                        <?php endforeach; ?>
+                            <option value="">Masukkan NIK anda.</option>
+                            <?php foreach ($barista as $brs) : ?>
+                                <option value="<?= $brs->nik; ?>"><?= $brs->nik . ' - ' . $brs->nama; ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">

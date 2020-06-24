@@ -170,6 +170,10 @@ class InventoryModel extends CI_Model
       $this->db->where('returBarang.kode_retur', $returCode);
     }
 
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('returBarang.idtoko', $this->session->userdata('x-idm-store'));
+    }
+
     return $this->db->get();
   }
 

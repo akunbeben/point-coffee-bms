@@ -1,11 +1,14 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Authentication extends CI_Controller {
+class Authentication extends CI_Controller
+{
 
-    public function __construct(){
+    public function __construct()
+    {
         parent::__construct();
         $this->load->model('AuthenticationModel');
+        $this->load->model('InitialModel');
         $this->load->library('form_validation');
     }
 
@@ -57,6 +60,10 @@ class Authentication extends CI_Controller {
 
     public function logout()
     {
+        if ($this->InitialModel->CheckInitialStatus()->nik > 0) {
+            $this->session->set_flashdata('initial', '<div class="alert alert-danger" role="alert">Silahkan tutup shift terlebih dahulu!</div>');
+            redirect(base_url('initial'));
+        }
         $this->session->unset_userdata(['x-idm-token', 'x-idm-username', 'x-idm-name', 'x-idm-store', 'x-idm-nik']);
         redirect('authentication/login');
     }

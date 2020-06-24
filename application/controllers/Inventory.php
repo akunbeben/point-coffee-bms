@@ -144,7 +144,8 @@ class Inventory extends CI_Controller
       'tanggal_retur' => date('Y-m-d H:i:s', time()),
       'supplier_id' => $this->input->post('supplier'),
       'jumlah_item' => null,
-      'dibuat_oleh' => $this->BaristaModel->GetBaristaByNik($this->InitialModel->CheckInitialStatus()->nik)->row()->nama
+      'dibuat_oleh' => $this->BaristaModel->GetBaristaByNik($this->InitialModel->CheckInitialStatus()->nik)->row()->nama,
+      'idtoko' => $this->session->userdata('x-idm-store')
     ];
 
     $this->InventoryModel->createRetur($data);
@@ -227,7 +228,6 @@ class Inventory extends CI_Controller
   {
     $data = [
       'title' => 'Konversi',
-      'title' => null,
       'javascript' => 'konversi.js',
       'data' => $this->InventoryModel->getKonversi()->result(),
       'stock' => $this->StockModel->get()->result()
