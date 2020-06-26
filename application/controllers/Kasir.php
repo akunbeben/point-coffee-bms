@@ -13,6 +13,7 @@ class Kasir extends CI_Controller
         $this->load->model('ProductModel');
         $this->load->model('KasirModel');
         $this->load->model('InitialModel');
+        $this->load->model('LaporanModel');
         $this->load->helper('kasir');
     }
 
@@ -55,7 +56,7 @@ class Kasir extends CI_Controller
             'quantity'      => 1
         ];
 
-        $currentProductOnCart = $this->KasirModel->KeranjangBelanja($data['product_id'])->row();
+        $currentProductOnCart = $this->KasirModel->KeranjangBelanja(null, $data['product_id'])->row();
 
         if ($currentProductOnCart->product_id == $data['product_id']) {
             $this->plus_product($currentProductOnCart->id);
@@ -122,10 +123,15 @@ class Kasir extends CI_Controller
             'total_bayar' => $this->input->post('kasir_total_bayar'),
             'keuntungan' => $this->input->post('kasir_keuntungan'),
             'kembalian' => $this->input->post('kasir_kembalian'),
-            'tanggal_transaksi' => date('Y-m-d H:i:s', time())
+            'tanggal_transaksi' => date('Y-m-d H:i:s', time()),
+            'idtoko' => $this->session->userdata('x-idm-store')
         ];
 
         $this->KasirModel->CloseOrder($data);
+
+        $salesId = $this->LaporanModel->getSales(null, $data['struk'])->row()->id;
+
+        $this->KasirModel->sendDetail($salesId);
         $this->KasirModel->ResetKeranjang();
         $this->session->set_flashdata('pesan', 'Penjualan Selesai.');
         $this->session->set_flashdata('typePesan', 'success');

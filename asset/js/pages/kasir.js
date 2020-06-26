@@ -103,7 +103,9 @@ function NonTunai(url) {
 }
 
 function bayar() {
-	if ($("#kasir_total_bayar").val() < $("#kasir_total_belanja").val()) {
+	var totalBayar = parseInt($("#kasir_total_bayar").val());
+	var totalBelanja = parseInt($("#kasir_total_belanja").val());
+	if (totalBayar < totalBelanja) {
 		Swal.fire({
 			title: "Silahkan lakukan pembayaran terlebih dahulu.",
 			toast: true,

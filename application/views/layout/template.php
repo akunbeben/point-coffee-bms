@@ -151,6 +151,18 @@
         </div>
       </li>
 
+      <hr class="sidebar-divider">
+
+      <div class="sidebar-heading">
+        REPORTING
+      </div>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('reports/penjualan'); ?>">
+          <i class="fas fa-fw fa-paste"></i>
+          <span>Penjualan</span></a>
+      </li>
+
       <!-- Nav Item - Utilities Collapse Menu -->
 
       <!-- Divider -->

@@ -1,21 +1,26 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class KasirModel extends CI_Model {
+class KasirModel extends CI_Model
+{
 
     public function AddToCart($data)
     {
         $this->db->insert('kasir_keranjang', $data);
     }
 
-    public function KeranjangBelanja($id = null)
+    public function KeranjangBelanja($id = null, $productId = null)
     {
         $this->db->select('kasir_keranjang.*, product.prdcd, product.singkatan, product.price, product.sellingprice');
         $this->db->from('kasir_keranjang');
         $this->db->join('product', 'product.id = kasir_keranjang.product_id');
 
         if ($id != null) {
-            $this->db->where('product_id', $id);
+            $this->db->where('kasir_keranjang.id', $id);
+        }
+
+        if ($productId != null) {
+            $this->db->where('kasir_keranjang.product_id', $productId);
         }
 
         return $this->db->get();
@@ -37,10 +42,10 @@ class KasirModel extends CI_Model {
         $query = "UPDATE kasir_keranjang SET quantity = quantity - 1 WHERE id = $id";
         $this->db->query($query);
     }
-    
+
     public function TotalBelanja()
     {
-        $query = "SELECT (kasir_keranjang.quantity * product.sellingprice) as total FROM `kasir_keranjang` LEFT JOIN `product` ON `kasir_keranjang`.`product_id` = `product`.`id`";
+        $query = "SELECT SUM(kasir_keranjang.quantity * product.sellingprice) as total FROM `kasir_keranjang` LEFT JOIN `product` ON `kasir_keranjang`.`product_id` = `product`.`id`";
 
         return $this->db->query($query)->row();
     }
@@ -65,6 +70,14 @@ class KasirModel extends CI_Model {
     public function ResetKeranjang()
     {
         $this->db->truncate('kasir_keranjang');
+    }
+
+    public function sendDetail($invoiceId)
+    {
+        $query =
+            "INSERT INTO penjualan_detail (penjualan_id, product_id, quantity)
+            SELECT '" . $invoiceId . "' , product_id, quantity FROM kasir_keranjang";
+        $this->db->query($query);
     }
 
     public function CheckPembayaran($struk)
