@@ -6,7 +6,10 @@ class LaporanModel extends CI_Model
 
   public function getSales($id = null, $invoiceNumber = null)
   {
+    $this->db->select('penjualan.*, barista.nama, toko.kodetoko');
     $this->db->from('penjualan');
+    $this->db->join('barista', 'penjualan.kasir = barista.nik');
+    $this->db->join('toko', 'penjualan.idtoko = toko.id');
     $this->db->where('penjualan.idtoko', $this->session->userdata('x-idm-store'));
 
     if ($id != null) {
@@ -22,7 +25,16 @@ class LaporanModel extends CI_Model
 
   public function getSalesDetail($id)
   {
-    $this->db->from('penjualan_detail');
+    $query =
+      "SELECT 
+        detail.singkatan, line.quantity, detail.sellingprice harga
+      FROM 
+        penjualan_detail line
+      JOIN 
+        product detail ON line.product_id = detail.id
+      WHERE line.penjualan_id = '" . $id . "'";
+
+    return $this->db->query($query);
   }
 
   private function getAjaxQuery($search)

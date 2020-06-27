@@ -41,13 +41,14 @@ class Laporan extends CI_Controller
 
   public function api_penjualan_detail($invoiceNumber)
   {
-    $data = $this->LaporanModel->getSales($invoiceNumber)->row();
-    $data->tanggal_transaksi = date('Y M d H:i:s', strtotime($data->tanggal_transaksi));
+    $header = $this->LaporanModel->getSales($invoiceNumber)->row();
+    $header->tanggal_transaksi = date('Y/m/d H:i:s', strtotime($header->tanggal_transaksi));
+    $line = $this->LaporanModel->getSalesDetail($invoiceNumber)->result();
 
-    if ($data != null) {
+    if ($line != null) {
       $output = [
         'status' => true,
-        'data' => $data
+        'data' => ['header' => $header, 'line' => $line]
       ];
     } else {
       $output = [

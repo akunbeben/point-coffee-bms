@@ -162,17 +162,32 @@
       </div>
       <div class="modal-body">
         <div class="row">
+          <div class="col-md-12 text-center">
+            <p id="header">No. Struk: 0000000001</p>
+          </div>
+          <hr class="sidebar-divider">
+        </div>
+        <div class="row">
           <div class="col-md-6">
             <p id="struk">No. Struk: 0000000001</p>
           </div>
           <div class="col-md-6 text-right">
-            <p id="customer">Customer: Benny Rahmat</p>
+            <p id="kasir">Customer: Benny Rahmat</p>
           </div>
-          <hr class="sidebar-divider">
-          <div class="row">
-            <div class="col-md-6">
-              <p>Item 1</p>
-            </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table" id="itemDetail">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-center">Harga</th>
+                </tr>
+              </thead>
+              <tbody>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

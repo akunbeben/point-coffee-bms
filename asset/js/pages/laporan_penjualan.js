@@ -58,7 +58,37 @@ function getDetail(url) {
 		type: "POST",
 		dataType: "json",
 		success: function (data) {
-			console.log(data);
+			var tbody = $("#itemDetail tbody");
+			var header = data.data.header;
+			var line = data.data.line;
+
+			tbody.empty();
+
+			$("#struk").html("No. Struk: " + header.struk);
+			$("#kasir").html("Kasir: " + header.nama);
+			$("#header").html(
+				header.tanggal_transaksi +
+					" | " +
+					header.kodetoko +
+					" | " +
+					header.struk
+			);
+
+			line.forEach(function (resultRow) {
+				var tableRow = `<tr>
+													<td>
+														${resultRow.singkatan}
+													</td>
+													<td class="text-center">
+														${resultRow.quantity}
+													</td>
+													<td class="text-center">
+														${resultRow.harga}
+													</td>
+												 </tr>`;
+
+				tbody.append(tableRow);
+			});
 		},
 		error: function (error) {
 			Swal.fire({
