@@ -8,13 +8,15 @@ class Laporan extends CI_Controller
     parent::__construct();
     IsAuthenticate();
     $this->load->model('LaporanModel');
+    $this->load->helper('kasir_helper');
   }
 
   public function laporan_penjualan()
   {
     $data = [
       'title' => 'Laporan Penjualan',
-      'javascript' => 'laporan_penjualan.js'
+      'javascript' => 'laporan_penjualan.js',
+      'pendapatan' => $this->LaporanModel->getPendapatanHariIni()->row()
     ];
 
     $this->template->load('layout/template', 'laporan/penjualan/index', $data);

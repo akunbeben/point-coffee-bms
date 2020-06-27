@@ -37,6 +37,15 @@ class LaporanModel extends CI_Model
     return $this->db->query($query);
   }
 
+  public function getPendapatanHariIni()
+  {
+    $query = "SELECT SUM(total_belanja) as pendapatan FROM penjualan WHERE idtoko = '" . $this->session->userdata('x-idm-store') . "'";
+
+    return $this->db->query($query);
+  }
+
+  // Ajax 
+
   private function getAjaxQuery($search)
   {
     $this->db->select('penjualan.*, barista.nama');

@@ -141,3 +141,10 @@ function formatCurrency(total) {
 			.toString()
 	);
 }
+
+function export_div() {
+	var pdf = new jsPDF("p", "pt", "a4");
+	pdf.addHTML($("#div_id"), 15, 15, function () {
+		pdf.save("div.pdf");
+	});
+}
