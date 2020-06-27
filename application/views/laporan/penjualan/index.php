@@ -182,16 +182,19 @@
                 <tr>
                   <th>Item</th>
                   <th class="text-center">Qty</th>
-                  <th class="text-center">Harga</th>
+                  <th class="text-left">Harga</th>
                 </tr>
               </thead>
               <tbody>
               </tbody>
+              <tfoot class="table-borderless">
+              </tfoot>
             </table>
           </div>
         </div>
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>
     </div>

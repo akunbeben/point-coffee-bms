@@ -59,13 +59,16 @@ function getDetail(url) {
 		dataType: "json",
 		success: function (data) {
 			var tbody = $("#itemDetail tbody");
+			var tfoot = $("#itemDetail tfoot");
 			var header = data.data.header;
 			var line = data.data.line;
 
 			tbody.empty();
+			tfoot.empty();
 
 			$("#struk").html("No. Struk: " + header.struk);
 			$("#kasir").html("Kasir: " + header.nama);
+			$("#total").html("Kasir: " + header.total_belanja);
 			$("#header").html(
 				header.tanggal_transaksi +
 					" | " +
@@ -73,6 +76,27 @@ function getDetail(url) {
 					" | " +
 					header.struk
 			);
+			var totalBelanja = `<tr>
+														<th colspan="2" class="text-right"><strong>Total:</strong>
+														</th>
+														<th class="text-left">
+															${formatCurrency(header.total_belanja)}
+														</th>
+													</tr>
+													<tr>
+														<th colspan="2" class="text-right"><strong>Tunai:</strong>
+														</th>
+														<th class="text-left">
+															${formatCurrency(header.total_bayar)}
+														</th>
+													</tr>
+													<tr>
+														<th colspan="2" class="text-right"><strong>Kembali:</strong>
+														</th>
+														<th class="text-left">
+															${formatCurrency(header.kembalian)}
+														</th>
+													</tr>`;
 
 			line.forEach(function (resultRow) {
 				var tableRow = `<tr>
@@ -82,13 +106,13 @@ function getDetail(url) {
 													<td class="text-center">
 														${resultRow.quantity}
 													</td>
-													<td class="text-center">
-														${resultRow.harga}
+													<td class="text-left">
+														${formatCurrency(resultRow.harga)}
 													</td>
 												 </tr>`;
-
 				tbody.append(tableRow);
 			});
+			tfoot.append(totalBelanja);
 		},
 		error: function (error) {
 			Swal.fire({
@@ -101,4 +125,19 @@ function getDetail(url) {
 			});
 		},
 	});
+}
+
+function formatCurrency(total) {
+	var neg = false;
+	if (total < 0) {
+		neg = true;
+		total = Math.abs(total);
+	}
+	return (
+		(neg ? "-Rp. " : "Rp. ") +
+		parseFloat(total, 10)
+			.toFixed(2)
+			.replace(/(\d)(?=(\d{3})+\.)/g, "$1,")
+			.toString()
+	);
 }
