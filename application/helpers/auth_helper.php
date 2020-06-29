@@ -18,6 +18,8 @@ function IsAdmin()
     $ci = &get_instance();
 
     if ($ci->session->userdata('x-idm-store') != 1) {
+        $ci->session->set_flashdata('pesanGlobal', 'Anda tidak memiliki akses ke menu ini!');
+        $ci->session->set_flashdata('typePesanGlobal', 'error');
         redirect(base_url());
     }
 }

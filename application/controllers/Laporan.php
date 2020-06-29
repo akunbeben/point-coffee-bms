@@ -79,4 +79,60 @@ class Laporan extends CI_Controller
     $mpdf->WriteHTML($view);
     $mpdf->Output();
   }
+
+  public function pendapatan()
+  {
+    IsAdmin();
+
+    $data = [
+      'title' => 'Pendapatan per Periode',
+      'javascript' => 'laporan_pendapatan.js'
+    ];
+
+    $this->template->load('layout/template', 'laporan/pendapatan/laporan_pendapatan', $data);
+  }
+
+  public function pendapatan_perbulan_ajax()
+  {
+    $pendapatan_perbulan = $this->LaporanModel->pendapatan_perbulan()->result();
+
+    foreach ($pendapatan_perbulan as $key => $value) {
+      $value->pendapatan = intval($value->pendapatan);
+    }
+
+    $output = [
+      'data' => $pendapatan_perbulan,
+      'status' => true
+    ];
+
+    if ($pendapatan_perbulan == null) {
+      $output['data'] = null;
+      $output['status'] = false;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($output);
+  }
+
+  public function pendapatan_perhari_ajax()
+  {
+    $pendapatan_perhari = $this->LaporanModel->pendapatan_perhari()->result();
+
+    foreach ($pendapatan_perhari as $key => $value) {
+      $value->pendapatan = intval($value->pendapatan);
+    }
+
+    $output = [
+      'data' => $pendapatan_perhari,
+      'status' => true
+    ];
+
+    if ($pendapatan_perhari == null) {
+      $output['data'] = null;
+      $output['status'] = false;
+    }
+
+    header('Content-Type: application/json');
+    echo json_encode($output);
+  }
 }

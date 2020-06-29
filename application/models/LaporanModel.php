@@ -102,4 +102,44 @@ class LaporanModel extends CI_Model
     $this->getAjaxQuery($search);
     return $this->db->get();
   }
+
+  public function pendapatan_perbulan()
+  {
+    $query =
+      "SELECT 
+        SUM(penjualan.total_belanja) as pendapatan, 
+        toko.kodetoko, 
+        toko.nama_toko, 
+        MONTHNAME(penjualan.tanggal_transaksi) AS periode
+      FROM 
+        penjualan 
+      JOIN
+        toko ON penjualan.idtoko = toko.id
+      WHERE 
+        MONTH(penjualan.tanggal_transaksi) = MONTH(CURDATE())
+      GROUP BY 
+        toko.kodetoko, toko.nama_toko, MONTH(penjualan.tanggal_transaksi)";
+
+    return $this->db->query($query);
+  }
+
+  public function pendapatan_perhari()
+  {
+    $query =
+      "SELECT 
+        toko.kodetoko, 
+        toko.nama_toko, 
+        SUM(penjualan.total_belanja) as pendapatan, 
+        DAY(penjualan.tanggal_transaksi) AS periode
+      FROM 
+        penjualan 
+      JOIN
+        toko ON penjualan.idtoko = toko.id
+      WHERE 
+        DAY(penjualan.tanggal_transaksi) = DAY(CURDATE())
+      GROUP BY 
+        toko.kodetoko, toko.nama_toko, periode";
+
+    return $this->db->query($query);
+  }
 }

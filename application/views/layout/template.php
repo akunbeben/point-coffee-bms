@@ -163,6 +163,14 @@
           <span>Penjualan</span></a>
       </li>
 
+      <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('reports/pendapatan'); ?>">
+            <i class="fas fa-fw fa-dollar-sign"></i>
+            <span>Pendapatan</span></a>
+        </li>
+      <?php endif; ?>
+
       <!-- Nav Item - Utilities Collapse Menu -->
 
       <!-- Divider -->
@@ -277,12 +285,12 @@
 
   <script src="<?= base_url('asset/'); ?>vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
-  <script src="<?= base_url('asset/'); ?>vendor/chart.js/Chart.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.js"></script>
 
   <!-- Page level custom scripts -->
-  <script src="<?= base_url('asset/'); ?>js/demo/chart-area-demo.js"></script>
+  <!-- <script src="<?= base_url('asset/'); ?>js/demo/chart-area-demo.js"></script>
   <script src="<?= base_url('asset/'); ?>js/demo/chart-pie-demo.js"></script>
-  <script src="<?= base_url('asset/'); ?>js/demo/chart-bar-demo.js"></script>
+  <script src="<?= base_url('asset/'); ?>js/demo/chart-bar-demo.js"></script> -->
   <script src="<?= base_url('asset/'); ?>vendor/sweetalert2/dist/sweetalert2.all.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/select2/dist/js/select2.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.min.js"></script>
@@ -298,6 +306,17 @@
 
     var globalMessage = "<?= $this->session->flashdata('pesanGlobal'); ?>";
     var globalMessageType = "<?= $this->session->flashdata('typePesanGlobal'); ?>";
+
+    if (globalMessage != "") {
+      Swal.fire({
+        title: globalMessage,
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 3000,
+        type: globalMessageType,
+      });
+    }
 
     function Logout() {
       Swal.fire({
