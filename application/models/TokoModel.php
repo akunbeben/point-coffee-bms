@@ -1,8 +1,9 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class TokoModel extends CI_Model{
-    
+class TokoModel extends CI_Model
+{
+
     public function GetUnregisteredStore()
     {
         $this->db->select('toko.*, users.username, users.idtoko');
@@ -17,6 +18,7 @@ class TokoModel extends CI_Model{
         if ($id !== null) {
             $this->db->where('id', $id);
         }
+
         $this->db->where('toko.id !=', 1);
         return $this->db->get('toko');
     }

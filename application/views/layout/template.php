@@ -277,8 +277,16 @@
 
   <script src="<?= base_url('asset/'); ?>vendor/datatables/jquery.dataTables.min.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  <script src="<?= base_url('asset/'); ?>vendor/chart.js/Chart.min.js"></script>
+
+  <!-- Page level custom scripts -->
+  <script src="<?= base_url('asset/'); ?>js/demo/chart-area-demo.js"></script>
+  <script src="<?= base_url('asset/'); ?>js/demo/chart-pie-demo.js"></script>
+  <script src="<?= base_url('asset/'); ?>js/demo/chart-bar-demo.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/sweetalert2/dist/sweetalert2.all.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/select2/dist/js/select2.js"></script>
+  <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.min.js"></script>
+  <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.plugin.autotable.js"></script>
 
   <?php if ($javascript != null) : ?>
     <script src="<?= base_url('asset/'); ?>js/pages/<?= $javascript; ?>"></script>

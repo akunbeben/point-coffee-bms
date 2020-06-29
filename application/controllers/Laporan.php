@@ -1,12 +1,15 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
+use Mpdf\Mpdf;
+
 class Laporan extends CI_Controller
 {
   public function __construct()
   {
     parent::__construct();
     IsAuthenticate();
+    $this->load->model('TokoModel');
     $this->load->model('LaporanModel');
     $this->load->helper('kasir_helper');
   }
@@ -61,5 +64,19 @@ class Laporan extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($output);
+  }
+
+  public function print_nota($id)
+  {
+    $data = [
+      'toko' => $this->TokoModel->get($this->session->userdata('x-idm-store'))->row(),
+      'header' => $this->LaporanModel->getSales($id)->row(),
+      'lines' => $this->LaporanModel->getSalesDetail($id)->result()
+    ];
+
+    $mpdf = new Mpdf;
+    $view = $this->load->view('laporan/penjualan/print_invoice', $data, TRUE);
+    $mpdf->WriteHTML($view);
+    $mpdf->Output();
   }
 }

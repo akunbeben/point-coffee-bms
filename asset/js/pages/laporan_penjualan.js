@@ -45,7 +45,7 @@ $(document).ready(function () {
 						"laporan/api_penjualan_detail/" +
 						row.id +
 						"`)";
-					return `<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' onclick='${clicky}' data-target='#exampleModal'><i class='fas fa-eye'></i></button>`;
+					return `<button type='button' class='btn btn-primary btn-sm' data-toggle='modal' onclick='${clicky}' data-target='#transaksiModal'><i class='fas fa-eye'></i></button>`;
 				},
 			},
 		],
@@ -113,6 +113,11 @@ function getDetail(url) {
 				tbody.append(tableRow);
 			});
 			tfoot.append(totalBelanja);
+
+			$("#btnPrint").attr(
+				"onClick",
+				`printInvoice('${globalBaseUrl + "laporan/print-nota/" + header.id}')`
+			);
 		},
 		error: function (error) {
 			Swal.fire({
@@ -142,9 +147,11 @@ function formatCurrency(total) {
 	);
 }
 
-function export_div() {
-	var pdf = new jsPDF("p", "pt", "a4");
-	pdf.addHTML($("#div_id"), 15, 15, function () {
-		pdf.save("div.pdf");
-	});
+function printInvoice(url) {
+	// var url = globalBaseUrl + "laporan/print-laporan-detail/";
+	window.open(url, "_blank");
+}
+
+function closeModal() {
+	$("#transaksiModal").modal("hide");
 }

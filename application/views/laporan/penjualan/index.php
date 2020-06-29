@@ -1,39 +1,3 @@
-<div class="row mb-4">
-  <!-- Earnings (Monthly) Card Example -->
-  <div class="col-xl-3 col-md-6">
-    <div class="card border-left-primary shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Pendapatan hari ini</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800"><?= rupiah($pendapatan->pendapatan); ?></div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Earnings (Monthly) Card Example -->
-  <!-- <div class="col-xl-3 col-md-6">
-    <div class="card border-left-success shadow h-100 py-2">
-      <div class="card-body">
-        <div class="row no-gutters align-items-center">
-          <div class="col mr-2">
-            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Earnings (Annual)</div>
-            <div class="h5 mb-0 font-weight-bold text-gray-800">$215,000</div>
-          </div>
-          <div class="col-auto">
-            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
-</div>
-
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <div class="float-left mt-2">
@@ -57,30 +21,30 @@
           <div class="row">
             <div class="col-md-3">
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-md-4 col-form-label">From</label>
+                <label for="dateFrom" class="col-md-4 col-form-label">From</label>
                 <div class="col-md-8">
-                  <input type="date" class="form-control form-control-sm" id="colFormLabelSm">
+                  <input type="date" class="form-control form-control-sm" id="dateFrom" name="dateFrom">
                 </div>
               </div>
             </div>
             <div class="col-md-3">
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-md-4 col-form-label">To</label>
+                <label for="dateTo" class="col-md-4 col-form-label">To</label>
                 <div class="col-md-8">
-                  <input type="date" class="form-control form-control-sm" id="colFormLabelSm">
+                  <input type="date" class="form-control form-control-sm" id="dateTo" name="dateTo">
                 </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="form-group row">
-                <label for="colFormLabelSm" class="col-md-4 col-form-label">Kasir</label>
+                <label for="cashier" class="col-md-4 col-form-label">Kasir</label>
                 <div class="col-md-8">
-                  <input type="text" class="form-control form-control-sm" id="colFormLabelSm">
+                  <input type="text" class="form-control form-control-sm" id="cashier" name="cashier">
                 </div>
               </div>
             </div>
             <div class="col-md-2 text-center">
-              <button class="btn btn-primary btn-sm">Filter</button>
+              <button type="button" id="btnFilter" class="btn btn-primary btn-sm">Filter</button>
             </div>
           </div>
         </form>
@@ -109,51 +73,53 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="transaksiModal" tabindex="-1" role="dialog" aria-labelledby="transaksiModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Detail Transaksi</h5>
+        <h5 class="modal-title" id="transaksiModalLabel">Detail Transaksi</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <p id="header">No. Struk: 0000000001</p>
+        <div id="printable-area">
+          <div class="row">
+            <div class="col-md-12 text-center">
+              <p id="header">No. Struk: 0000000001</p>
+            </div>
+            <hr class="sidebar-divider">
           </div>
-          <hr class="sidebar-divider">
-        </div>
-        <div class="row">
-          <div class="col-md-6">
-            <p id="struk">No. Struk: 0000000001</p>
+          <div class="row">
+            <div class="col-md-6">
+              <p id="struk">No. Struk: 0000000001</p>
+            </div>
+            <div class="col-md-6 text-right">
+              <p id="kasir">Customer: Benny Rahmat</p>
+            </div>
           </div>
-          <div class="col-md-6 text-right">
-            <p id="kasir">Customer: Benny Rahmat</p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-12">
-            <table class="table" id="itemDetail">
-              <thead>
-                <tr>
-                  <th>Item</th>
-                  <th class="text-center">Qty</th>
-                  <th class="text-left">Harga</th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-              <tfoot class="table-borderless">
-              </tfoot>
-            </table>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table" id="itemDetail">
+                <thead>
+                  <tr>
+                    <th>Item</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-left">Harga</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                <tfoot class="table-borderless">
+                </tfoot>
+              </table>
+            </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fas fa-print"></i> Print</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" id="btnPrint" class="btn btn-primary"><i class="fas fa-print"></i> Print</button>
+        <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
       </div>
     </div>
   </div>

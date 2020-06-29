@@ -16,6 +16,10 @@ class LaporanModel extends CI_Model
       $this->db->where('penjualan.id', $id);
     }
 
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
+    }
+
     if ($invoiceNumber != null) {
       $this->db->where('penjualan.struk', $invoiceNumber);
     }
@@ -39,7 +43,23 @@ class LaporanModel extends CI_Model
 
   public function getPendapatanHariIni()
   {
-    $query = "SELECT SUM(total_belanja) as pendapatan FROM penjualan WHERE idtoko = '" . $this->session->userdata('x-idm-store') . "'";
+    $query = "SELECT SUM(total_belanja) as pendapatan FROM penjualan WHERE tanggal_transaksi >= CURDATE() AND idtoko = '" . $this->session->userdata('x-idm-store') . "'";
+
+    return $this->db->query($query);
+  }
+
+  public function getPendapatanToko()
+  {
+    $query =
+      "SELECT 
+        SUM(penjualan.total_belanja) as pendapatan, toko.kodetoko, toko.nama_toko
+      FROM 
+        penjualan 
+      JOIN
+        toko ON penjualan.idtoko = toko.id
+      WHERE 
+        tanggal_transaksi >= CURDATE()
+      GROUP BY toko.kodetoko, toko.nama_toko";
 
     return $this->db->query($query);
   }
@@ -52,6 +72,10 @@ class LaporanModel extends CI_Model
     $this->db->from('penjualan');
     $this->db->join('barista', 'penjualan.kasir = barista.nik');
     $this->db->where('penjualan.idtoko', $this->session->userdata('x-idm-store'));
+
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
+    }
 
     if ($search != null) {
       $this->db->group_start();
