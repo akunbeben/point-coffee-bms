@@ -42,15 +42,12 @@
           <br>
           <br>
           <table class="change_order_items" style="font-family: Calibri; font-size: 6pt; border: 1px dotted; width: 100%;">
-
-
             <tbody>
               <tr>
                 <th style="border-bottom: 1px dotted;">No</th>
                 <th style="border-bottom: 1px dotted;">Item</th style="border-bottom: 1px dotted;">
                 <th style="border-bottom: 1px dotted;">Jumlah</th style="border-bottom: 1px dotted;">
                 <th style="border-bottom: 1px dotted;">Harga</th style="border-bottom: 1px dotted;">
-                <!-- <th style="border-bottom: 1px dotted;">Total</th style="border-bottom: 1px dotted;"> -->
               </tr>
 
               <?php $no = 1;
@@ -60,12 +57,9 @@
                   <td><?= $line->singkatan; ?></td>
                   <td style="text-align: center; "><?= $line->quantity; ?></td>
                   <td style="text-align: right; "><?= rupiah($line->harga); ?></td>
-                  <!-- <td style="text-align: right; "><?= rupiah($line->harga_jual * $line->jumlah_terjual); ?></td> -->
                 </tr>
               <?php endforeach; ?>
-
             </tbody>
-
           </table>
 
           <p style="text-align: right; font-family: Calibri; font-size: 6pt;">Total: <?= rupiah($header->total_belanja); ?></p>

@@ -1,3 +1,29 @@
+<div class="card shadow mb-4">
+  <div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
+  </div>
+  <div class="card-body">
+    <form action="" method="post">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="tanggal_awal">Tanggal Awal</label>
+            <input type="date" class="form-control form-control-sm" id="tanggal_awal" name="tanggal_awal">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="tanggal_akhir">Tanggal Akhir</label>
+            <input type="date" class="form-control form-control-sm" id="tanggal_akhir" name="tanggal_akhir">
+          </div>
+        </div>
+        <div class="col-md-2 text-center" style="margin-top: 31.5px;">
+          <button class="btn btn-primary btn-sm"><i class="fas fa-search"></i> Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -31,6 +57,9 @@
               <td class="text-center">
                 <?php if ($stuff->status != 35) : ?>
                   <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#detailpermintaanModal" onclick="initNewDatatable('<?= base_url('stock/get-item-json/' . $stuff->kodepermintaan); ?>')" title="Proses"><i class="fas fa-recycle"></i></button>
+                <?php elseif ($stuff->status == 35) : ?>
+                  <button id="detailButton" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#detailpermintaanModal" onclick="initNewDatatable('<?= base_url('stock/get-item-json/' . $stuff->kodepermintaan); ?>'); showDetail();" title="Detail"><i class="fas fa-eye"></i></button>
+                  <button class="btn btn-sm btn-primary" title="Print" onclick="window.location.href = '<?= base_url('laporan/proses-barang/') . $stuff->surat_jalan; ?>'"><i class="fas fa-print"></i></button>
                 <?php endif; ?>
               </td>
             </tr>
@@ -64,7 +93,7 @@
           </table>
         </div>
       </div>
-      <div class="modal-footer">
+      <div class="modal-footer" id="modal-footer">
         <button type="button" id="btnProses" class="btn btn-primary">Proses Sekarang</button>
       </div>
     </div>

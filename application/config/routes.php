@@ -54,4 +54,6 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = TRUE;
 $route['reports/penjualan'] = 'laporan/laporan_penjualan';
 $route['reports/pendapatan'] = 'laporan/pendapatan';
+$route['reports/shift'] = 'laporan/laporan_shift';
+$route['reports/harian'] = 'laporan/laporan_harian';
 $route['api/reports/penjualan'] = 'laporan/api_laporan_penjualan';

@@ -18,7 +18,10 @@ class Stock extends CI_Controller
         $this->load->helper('stock');
         $this->load->helper('initial');
         $this->load->helper('kasir');
-        CheckDataInitial();
+
+        if ($this->session->userdata('x-idm-store') != 1) {
+            CheckDataInitial();
+        }
     }
 
     public function index()

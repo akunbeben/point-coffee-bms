@@ -15,13 +15,13 @@ function formatCurrency(total) {
 	);
 }
 
-function roundup(v) {
-	return Math.ceil(v / 500000) * 500000;
+function roundup(number) {
+	return Math.ceil(number / 500000) * 500000;
 }
 
 async function drawChart() {
 	const dataChartSet = await getData(
-		"http://point-coffee.test/laporan/pendapatan_perbulan_ajax"
+		"http://localhost/pos/laporan/pendapatan_perbulan_ajax"
 	);
 
 	const ctx = document.getElementById("chartPendapatan").getContext("2d");
@@ -47,7 +47,7 @@ async function drawChart() {
 							beginAtZero: true,
 							maxTicksLimit: 5,
 							max: roundup(Math.max(...dataChartSet.yAxisLabel)),
-							callback: function (value, index, values) {
+							callback: function (value) {
 								return formatCurrency(value);
 							},
 						},
@@ -56,7 +56,7 @@ async function drawChart() {
 			},
 			tooltips: {
 				callbacks: {
-					label: function (tooltipItem, data) {
+					label: function (tooltipItem) {
 						return "Pendapatan: " + formatCurrency(tooltipItem.value);
 					},
 				},
@@ -68,6 +68,7 @@ async function drawChart() {
 async function getData(url) {
 	const yAxisLabel = [];
 	const xAxisLabel = [];
+	var period;
 
 	let response = await fetch(url);
 	let result = await response.json();
@@ -79,7 +80,15 @@ async function getData(url) {
 		);
 	}
 
-	const period = result.data[0].periode;
+	if (result.data == null) {
+		yAxisLabel, xAxisLabel, (period = null);
+
+		console.log(result);
+
+		return { yAxisLabel, xAxisLabel, period };
+	}
+
+	period = result.data[0].periode;
 
 	return { yAxisLabel, xAxisLabel, period };
 }

@@ -11,6 +11,7 @@ class Laporan extends CI_Controller
     IsAuthenticate();
     $this->load->model('TokoModel');
     $this->load->model('LaporanModel');
+    $this->load->model('InventoryModel');
     $this->load->helper('kasir_helper');
   }
 
@@ -134,5 +135,58 @@ class Laporan extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($output);
+  }
+
+  public function laporan_shift()
+  {
+    $data = [
+      'title' => 'Laporan Shift',
+      'javascript' => null,
+      'data' => $this->LaporanModel->getTutupShift(null, $this->session->userdata('x-idm-store'))->result()
+    ];
+
+    $this->template->load('layout/template', 'laporan/shift/index', $data);
+  }
+
+  public function laporan_harian()
+  {
+    $data = [
+      'title' => 'Laporan Harian',
+      'javascript' => null,
+      'data' => $this->LaporanModel->getTutupHarian(null, $this->session->userdata('x-idm-store'))->result()
+    ];
+
+    $this->template->load('layout/template', 'laporan/harian/index', $data);
+  }
+
+  public function proses_barang($suratJalan)
+  {
+    $data = [
+      'toko' => $this->TokoModel->get($this->session->userdata('x-idm-store'))->row(),
+      'header' => $this->InventoryModel->getHeaderProsesBarang($suratJalan, $this->session->userdata('x-idm-store'))->row(),
+      'lines' => $this->InventoryModel->getLineProsesBarang($suratJalan)->result()
+    ];
+
+    // var_dump($data);
+    // die;
+
+    $mpdf = new Mpdf;
+    $view = $this->load->view('laporan/proses_barang/print', $data, TRUE);
+    $mpdf->WriteHTML($view);
+    $mpdf->Output();
+  }
+
+  public function retur_barang($kodeRetur)
+  {
+    $data = [
+      'toko' => $this->TokoModel->get($this->session->userdata('x-idm-store'))->row(),
+      'header' => $this->InventoryModel->getData($kodeRetur)->row(),
+      'lines' => $this->InventoryModel->getLineRetur($kodeRetur)->result()
+    ];
+
+    $mpdf = new Mpdf;
+    $view = $this->load->view('laporan/retur/print', $data, TRUE);
+    $mpdf->WriteHTML($view);
+    $mpdf->Output();
   }
 }

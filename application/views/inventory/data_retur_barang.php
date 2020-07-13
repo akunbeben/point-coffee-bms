@@ -1,3 +1,29 @@
+<div class="card shadow mb-4">
+  <div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
+  </div>
+  <div class="card-body">
+    <form action="" method="post">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="tanggal_awal">Tanggal Awal</label>
+            <input type="date" class="form-control form-control-sm" id="tanggal_awal" name="tanggal_awal">
+          </div>
+        </div>
+        <div class="col-md-5">
+          <div class="form-group">
+            <label for="tanggal_akhir">Tanggal Akhir</label>
+            <input type="date" class="form-control form-control-sm" id="tanggal_akhir" name="tanggal_akhir">
+          </div>
+        </div>
+        <div class="col-md-2 text-center" style="margin-top: 31.5px;">
+          <button class="btn btn-primary btn-sm"><i class="fas fa-search"></i> Filter</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
@@ -35,6 +61,7 @@
               <td class="text-center">
                 <?php if ($item->jumlah_item != null) : ?>
                   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailItemModal" onclick="initNewDatatable('<?= base_url('inventory/data-retur-json/' . $item->kode_retur); ?>')" title="Detail"><i class="fas fa-eye"></i></button>
+                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" onclick="window.location.href = '<?= base_url('laporan/retur-barang/' . $item->kode_retur); ?>'" title="Print"><i class="fas fa-print"></i></button>
                 <?php endif; ?>
                 <?php if ($item->jumlah_item == null) : ?>
                   <button class="btn btn-warning btn-sm" onclick="editRetur('<?= base_url('inventory/form-retur/' . $item->kode_retur); ?>')" title="Edit"><i class="fas fa-pencil-alt"></i></button>

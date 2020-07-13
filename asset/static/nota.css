@@ -2,29 +2,30 @@
 
 @import url(common.css);
 
-@page { 
-  margin: 0.25in;
+@page {
+	margin: 0.25in;
 }
 
 @font-face {
-  font-family: "Monaco";
-  src: url("fonts/monaco-webfont.woff");
+	font-family: "Monaco";
+	src: url("fonts/monaco-webfont.woff");
 }
 
 @media print {
-  body * {
-    visibility: hidden;
-  }
-  #print-area, #print-area * {
-    visibility: visible;
-  }
-  #print-area {
-    position: absolute;
-    left: 0;
-    top: 0;
-  }
+	body * {
+		visibility: hidden;
+	}
+	#print-area,
+	#print-area * {
+		visibility: visible;
+	}
+	#print-area {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
 }
 
 body {
-  font-family: Monaco;
+	font-family: Monaco;
 }

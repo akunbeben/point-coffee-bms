@@ -4,7 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class InventoryModel extends CI_Model
 {
 
-  public function getItems($id = null, $kodePermintaan = null)
+  public function getItems($id = null, $kodePermintaan = null, $tanggalFilter = null)
   {
     $this->db->select('proses_barang.*, lookupvalue.desc');
     $this->db->from('proses_barang');
@@ -12,6 +12,11 @@ class InventoryModel extends CI_Model
 
     if ($id != null) {
       $this->db->where('id', $id);
+    }
+
+    if ($tanggalFilter != null) {
+      $this->db->where('tanggal_terima >=', $tanggalFilter['tanggal_awal'] . ' 00:00:00');
+      $this->db->where('tanggal_terima <=', $tanggalFilter['tanggal_akhir'] . ' 23:59:59');
     }
 
     if ($kodePermintaan != null) {
@@ -160,7 +165,7 @@ class InventoryModel extends CI_Model
 
   // Retur Barang
 
-  public function getData($returCode = null)
+  public function getData($returCode = null, $tanggalFilter = null)
   {
     $this->db->select('returBarang.*, supplier.supco, supplier.nama_supplier');
     $this->db->from('retur_barang returBarang');
@@ -168,6 +173,11 @@ class InventoryModel extends CI_Model
 
     if ($returCode != null) {
       $this->db->where('returBarang.kode_retur', $returCode);
+    }
+
+    if ($tanggalFilter != null) {
+      $this->db->where('tanggal_retur >=', $tanggalFilter['tanggal_awal'] . ' 00:00:00');
+      $this->db->where('tanggal_retur <=', $tanggalFilter['tanggal_akhir'] . ' 23:59:59');
     }
 
     if ($this->session->userdata('x-idm-store') != 1) {
@@ -186,12 +196,14 @@ class InventoryModel extends CI_Model
   {
     $this->db->select('
       line.*,
-      item.deskripsi nama_item
+      item.deskripsi nama_item,
+      unit.desc satuan
     ');
 
     $this->db->from('retur_barang_detail line');
     $this->db->join('retur_barang header', 'line.retur_id = header.id');
     $this->db->join('stock item', 'line.prdcd = item.prdcd');
+    $this->db->join('lookupvalue unit', 'item.satuan = unit.id');
     $this->db->where('header.kode_retur', $returCode);
     return $this->db->get();
   }
@@ -284,5 +296,41 @@ class InventoryModel extends CI_Model
     $query = "UPDATE stock SET jumlah = jumlah - {$data['jumlah']} WHERE prdcd = '{$data['prdcd']}'";
 
     $this->db->query($query);
+  }
+
+  public function getHeaderProsesBarang($suratJalan = null, $idToko = null)
+  {
+    $query =
+      "SELECT
+        proses_barang.*,
+        SUM(proses_barang_detail.harga) AS total,
+        SUM(proses_barang_detail.jumlah) AS total_barang
+      FROM
+        proses_barang
+      JOIN
+        proses_barang_detail ON proses_barang.surat_jalan = proses_barang_detail.surat_jalan
+      WHERE
+        proses_barang.status = 35
+      AND
+        proses_barang.surat_jalan = '$suratJalan'
+      AND
+        proses_barang.idtoko = '$idToko'
+      GROUP BY
+        proses_barang.surat_jalan";
+
+    return $this->db->query($query);
+  }
+
+  public function getLineProsesBarang($suratJalan = null)
+  {
+    $this->db->select('proses_barang_detail.*, stock.deskripsi');
+    $this->db->from('proses_barang_detail');
+    $this->db->join('stock', 'stock.prdcd = proses_barang_detail.prdcd');
+
+    if ($suratJalan != null) {
+      $this->db->where('surat_jalan', $suratJalan);
+    }
+
+    return $this->db->get();
   }
 }

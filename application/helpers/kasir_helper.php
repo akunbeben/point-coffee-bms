@@ -50,3 +50,10 @@ function rupiah($angka)
     $hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
     return $hasil_rupiah;
 }
+
+function persen($jumlah, $persen)
+{
+    $hasil = (intval($jumlah) / 100) * intval($persen);
+
+    return $hasil;
+}

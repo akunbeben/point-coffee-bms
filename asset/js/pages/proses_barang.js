@@ -50,3 +50,9 @@ function initNewDatatable(url) {
 function prosesData(url) {
 	window.location.href = url;
 }
+
+function showDetail() {
+	const modalFooter = document.getElementById("modal-footer");
+
+	modalFooter.style.display = "none";
+}

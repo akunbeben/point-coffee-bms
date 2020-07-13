@@ -21,12 +21,26 @@ class Inventory extends CI_Controller
   public function proses_barang()
   {
     UserOnly();
+    $dataFilter = null;
+
+    $tanggalAwal = $this->input->post('tanggal_awal');
+    $tanggalAkhir = $this->input->post('tanggal_akhir');
+
+    if ($tanggalAwal != null) {
+      $dataFilter['tanggal_awal'] = $tanggalAwal;
+      $dataFilter['tanggal_akhir'] = date('Y-m-d H:i:s', time());
+    }
+
+    if ($tanggalAwal != null && $tanggalAkhir != null) {
+      $dataFilter['tanggal_awal'] = $tanggalAwal;
+      $dataFilter['tanggal_akhir'] = $tanggalAkhir;
+    }
 
     $data = [
       'title' => 'Proses Barang',
       'sub_title' => '',
       'javascript'  => 'proses_barang.js',
-      'barang'  => $this->InventoryModel->getItems()->result()
+      'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter)->result()
     ];
 
     $this->template->load('layout/template', 'inventory/proses_barang', $data);
@@ -119,17 +133,33 @@ class Inventory extends CI_Controller
 
   public function data_retur_barang()
   {
+    $dataFilter = null;
+    $dataPostSupplier = $this->input->post('supplier');
+
+    $tanggalAwal = $this->input->post('tanggal_awal');
+    $tanggalAkhir = $this->input->post('tanggal_akhir');
+
+    if ($tanggalAwal != null) {
+      $dataFilter['tanggal_awal'] = $tanggalAwal;
+      $dataFilter['tanggal_akhir'] = date('Y-m-d H:i:s', time());
+    }
+
+    if ($tanggalAwal != null && $tanggalAkhir != null) {
+      $dataFilter['tanggal_awal'] = $tanggalAwal;
+      $dataFilter['tanggal_akhir'] = $tanggalAkhir;
+    }
+
     $data = [
       'title' => 'Retur Barang',
       'sub_title' => null,
       'javascript' => 'retur_barang.js',
-      'data' => $this->InventoryModel->getData()->result(),
+      'data' => $this->InventoryModel->getData(null, $dataFilter)->result(),
       'supplier' => $this->SupplierModel->get()->result()
     ];
 
-    $this->form_validation->set_rules('supplier', 'Supplier', 'required');
+    // $this->form_validation->set_rules('supplier', 'Supplier', 'required');
 
-    if ($this->form_validation->run() == true) {
+    if ($dataPostSupplier != null) {
       $this->returBarang();
     }
 
@@ -183,7 +213,8 @@ class Inventory extends CI_Controller
       'id' => null,
       'retur_id' => $dataHeader->id,
       'prdcd' => $this->input->post('productcode'),
-      'jumlah' => $this->input->post('jumlah')
+      'jumlah' => $this->input->post('jumlah'),
+      'keterangan' => $this->input->post('keterangan')
     ];
 
     $this->InventoryModel->createLine($data);
@@ -242,6 +273,25 @@ class Inventory extends CI_Controller
 
     $this->template->load('layout/template', 'inventory/konversi', $data);
   }
+
+  // public function detail_proses_barang($suratJalan = null)
+  // {
+  //   $search         = $_POST['search']['value'];
+  //   $length         = $_POST['length'];
+  //   $start          = $_POST['start'];
+  //   $sortColumnName = $_POST['columns']['' . $_POST['order']['0']['column'] . '']['name'];
+  //   $sortDir        = $_POST['order']['0']['dir'];
+
+  //   $draw = $_POST['draw'];
+  //   $recordsFiltered = $this->InventoryModel->getRecordsFilteredRetur($search, $suratJalan)->num_rows();
+  //   $recordsTotal = $this->InventoryModel->getLineRetur($suratJalan)->num_rows();
+  //   $data = $this->InventoryModel->getDatatablesRetur($search, $length, $start, $sortColumnName, $sortDir, $suratJalan);
+
+  //   $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data];
+
+  //   header('Content-Type: application/json');
+  //   echo json_encode($output);
+  // }
 
   public function prosesKonversi()
   {

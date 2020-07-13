@@ -86,4 +86,54 @@ class KasirModel extends CI_Model
         $this->db->where('no_struk', $struk);
         return $this->db->get()->row();
     }
+
+    public function getCurrentTotalSales($transactionDate)
+    {
+        $query =
+            "SELECT 
+                SUM(total_bayar) AS total 
+            FROM 
+                penjualan
+            WHERE 
+                tanggal_transaksi >= '$transactionDate'
+            AND 
+                tanggal_transaksi <=" . "'" . date('Y-m-d H:i:s', time()) . "'" .
+            "AND idtoko = " . "'" . $this->session->userdata('x-idm-store') . "'";
+
+        return $this->db->query($query);
+    }
+
+    public function getCountSales($transactionDate)
+    {
+        $query =
+            "SELECT 
+                COUNT(id) AS jumlah_struk
+            FROM 
+                penjualan
+            WHERE 
+                tanggal_transaksi >= '$transactionDate'
+            AND 
+                tanggal_transaksi <=" . "'" . date('Y-m-d H:i:s', time()) . "'" .
+            "AND idtoko = " . "'" . $this->session->userdata('x-idm-store') . "'";
+
+        return $this->db->query($query);
+    }
+
+    public function getCountSalesItem($transactionDate)
+    {
+        $query =
+            "SELECT 
+                SUM(penjualan_detail.quantity) AS jumlah_item
+            FROM 
+                penjualan 
+            INNER JOIN 
+                penjualan_detail on penjualan_detail.penjualan_id = penjualan.id
+            WHERE 
+                penjualan.tanggal_transaksi >= '$transactionDate'
+            AND 
+                penjualan.tanggal_transaksi <=" . "'" . date('Y-m-d H:i:s', time()) . "'" .
+            "AND penjualan.idtoko = " . "'" . $this->session->userdata('x-idm-store') . "'";
+
+        return $this->db->query($query);
+    }
 }

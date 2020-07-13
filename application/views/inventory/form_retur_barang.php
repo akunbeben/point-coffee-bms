@@ -43,6 +43,16 @@
               <button type="submit" id="btnSubmit" class="btn btn-primary">Retur</button>
             </div>
           </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group row">
+                <label for="keterangan" class="col-sm-4 col-form-label">Keterangan</label>
+                <div class="col-md-8">
+                  <textarea name="keterangan" class="form-control" id="keterangan" cols="1" rows="2"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
         <hr>
         <div class="row">
@@ -53,6 +63,7 @@
                   <tr>
                     <th>Item</th>
                     <th>Jumlah</th>
+                    <th>Keterangan</th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -61,6 +72,7 @@
                     <tr>
                       <td><?= $line->prdcd . ' - ' . $line->nama_item; ?></td>
                       <td><?= $line->jumlah; ?> Item</td>
+                      <td><?= $line->keterangan; ?></td>
                       <td class="text-center">
                         <button class="btn btn-sm btn-danger" onclick="hapusItem('<?= base_url('inventory/hapus-item-retur/' . $line->id . '/' . $header->kode_retur); ?>')"><i class="fas fa-trash-alt"></i></button>
                       </td>

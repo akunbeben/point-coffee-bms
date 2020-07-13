@@ -113,7 +113,7 @@
           <div class="bg-white py-2 collapse-inner rounded">
             <a class="collapse-item" href="<?= base_url('initial'); ?>">Initial</a>
             <a class="collapse-item" href="<?= base_url('initial/tutup-shift'); ?>">Tutup Shift</a>
-            <a class="collapse-item" href="<?= base_url() ?>">Tutup Harian</a>
+            <a class="collapse-item" href="<?= base_url('initial/tutup_harian') ?>">Tutup Harian</a>
           </div>
         </div>
       </li>
@@ -161,6 +161,24 @@
         <a class="nav-link" href="<?= base_url('reports/penjualan'); ?>">
           <i class="fas fa-fw fa-paste"></i>
           <span>Penjualan</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('reports/shift'); ?>">
+          <i class="fas fa-fw fa-table"></i>
+          <span>Shift</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('reports/harian'); ?>">
+          <i class="fas fa-fw fa-calendar"></i>
+          <span>Harian</span></a>
+      </li>
+
+      <li class="nav-item">
+        <a class="nav-link" href="<?= base_url('reports/proses-barang'); ?>">
+          <i class="fas fa-fw fa-exchange-alt"></i>
+          <span>Proses Barang</span></a>
       </li>
 
       <?php if ($this->session->userdata('x-idm-store') == 1) : ?>

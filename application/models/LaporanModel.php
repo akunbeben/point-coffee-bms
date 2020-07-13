@@ -142,4 +142,44 @@ class LaporanModel extends CI_Model
 
     return $this->db->query($query);
   }
+
+  public function getTutupShift($id = null, $idToko = null)
+  {
+    $this->db->from('tutup_shift');
+    if ($id != null) {
+      $this->db->where('id', $id);
+    }
+
+    if ($idToko != null) {
+      $this->db->where('idtoko', $idToko);
+    }
+
+    $this->db->order_by('tanggal_tutup_shift DESC', 'shift ASC');
+
+    return $this->db->get();
+  }
+
+  public function getShiftHarian($tanggal = null)
+  {
+    $this->db->from('tutup_shift');
+    $this->db->where('tanggal_tutup_shift >=', $tanggal . ' 00:00:00');
+    $this->db->where('tanggal_tutup_shift <=', $tanggal . ' 23:59:59');
+    return $this->db->get();
+  }
+
+  public function getTutupHarian($id = null, $idToko = null)
+  {
+    $this->db->from('tutup_harian');
+    if ($id != null) {
+      $this->db->where('id', $id);
+    }
+
+    if ($idToko != null) {
+      $this->db->where('idtoko', $idToko);
+    }
+
+    $this->db->order_by('tanggal_tutup_harian DESC');
+
+    return $this->db->get();
+  }
 }
