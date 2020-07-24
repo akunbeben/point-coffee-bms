@@ -23,11 +23,19 @@
                     </div>
                     <div class="form-group">
                         <label for="jenis_kelamin">Jenis Kelamin</label>
-                        <input type="text" class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                        <select class="form-control" id="jenis_kelamin" name="jenis_kelamin">
+                            <?php foreach ($jenis_kelamin as $jenis) : ?>
+                                <option value="<?= $jenis->desc ?>"><?= $jenis->desc ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="jabatan">Jabatan</label>
-                        <input type="text" class="form-control" id="jabatan" name="jabatan">
+                        <select class="form-control" id="jabatan" name="jabatan">
+                            <?php foreach ($jabatan as $jbtn) : ?>
+                                <option value="<?= $jbtn->desc ?>"><?= $jbtn->desc ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
@@ -39,23 +47,31 @@
                     </div>
                     <div class="form-group">
                         <label for="status_kerja">Status Kerja</label>
-                        <input type="text" class="form-control" id="status_kerja" name="status_kerja">
+                        <select class="form-control" id="status_kerja" name="status_kerja">
+                            <?php foreach ($status_kerja as $status) : ?>
+                                <option value="<?= $status->desc ?>"><?= $status->desc ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="status_perkawinan">Status Perkawinan</label>
-                        <input type="text" class="form-control" id="status_perkawinan" name="status_perkawinan">
+                        <select class="form-control" id="status_perkawinan" name="status_perkawinan">
+                            <?php foreach ($status_perkawinan as $perkawinan) : ?>
+                                <option value="<?= $perkawinan->desc ?>"><?= $perkawinan->desc ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="idtoko">Store</label>
                         <select class="form-control" id="idtoko" name="idtoko" style="width: 100%">
                             <?php foreach ($toko as $store) : ?>
-                            <option value="<?= $store->id; ?>"><?= $store->kodetoko . ' - ' . $store->nama_toko; ?></option>
+                                <option value="<?= $store->id; ?>"><?= $store->kodetoko . ' - ' . $store->nama_toko; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

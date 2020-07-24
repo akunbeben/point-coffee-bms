@@ -61,7 +61,6 @@
               <td class="text-center">
                 <?php if ($item->jumlah_item != null) : ?>
                   <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#detailItemModal" onclick="initNewDatatable('<?= base_url('inventory/data-retur-json/' . $item->kode_retur); ?>')" title="Detail"><i class="fas fa-eye"></i></button>
-                  <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" onclick="window.location.href = '<?= base_url('laporan/retur-barang/' . $item->kode_retur); ?>'" title="Print"><i class="fas fa-print"></i></button>
                 <?php endif; ?>
                 <?php if ($item->jumlah_item == null) : ?>
                   <button class="btn btn-warning btn-sm" onclick="editRetur('<?= base_url('inventory/form-retur/' . $item->kode_retur); ?>')" title="Edit"><i class="fas fa-pencil-alt"></i></button>

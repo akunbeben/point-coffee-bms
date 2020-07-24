@@ -77,7 +77,7 @@
   </div>
 </div> -->
 
-<div class="row mb-4">
+<!-- <div class="row mb-4">
   <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
     <?php foreach ($pendapatan as $earn) : ?>
       <div class="col-xl-3 col-md-6">
@@ -97,13 +97,13 @@
       </div>
     <?php endforeach; ?>
   <?php endif; ?>
-</div>
+</div> -->
 
-<div class="row">
+<!-- <div class="row">
   <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
     <div class="col-xl-12 col-lg-6">
 
-      <!-- Area Chart -->
+      Area Chart
       <div class="card shadow mb-4">
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Produk Terlaris</h6>
@@ -118,4 +118,67 @@
       </div>
     </div>
   <?php endif; ?>
-</div>
+</div> -->
+
+<?php if ($this->session->userdata('x-idm-store') == 1) : ?>
+  <div class="row mb-4">
+    <div class="col-xl-3 col-md-6">
+      <div class="card border-left-primary shadow h-100 py-2">
+        <div class="card-body">
+          <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Jumlah Toko</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800"><?= $jumlah_toko; ?> Toko</div>
+            </div>
+            <div class="col-auto">
+              <i class="fas fa-store fa-2x text-gray-300"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mb-4">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">Pendapatan Toko Perbulan</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="chartPendapatan" height="150">
+
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">Product Terlaris</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="chartProductTerlaris" height="150">
+
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card shadow">
+        <div class="card-header">
+          <h6 class="m-0 font-weight-bold text-primary">Statistik Kunjungan Pelanggan</h6>
+        </div>
+        <div class="card-body">
+          <canvas id="chartCustomer" height="250">
+
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+<?php endif; ?>

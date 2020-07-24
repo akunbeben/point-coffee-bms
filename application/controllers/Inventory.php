@@ -40,7 +40,7 @@ class Inventory extends CI_Controller
       'title' => 'Proses Barang',
       'sub_title' => '',
       'javascript'  => 'proses_barang.js',
-      'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter)->result()
+      'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter, [32, 34])->result()
     ];
 
     $this->template->load('layout/template', 'inventory/proses_barang', $data);
@@ -157,8 +157,6 @@ class Inventory extends CI_Controller
       'supplier' => $this->SupplierModel->get()->result()
     ];
 
-    // $this->form_validation->set_rules('supplier', 'Supplier', 'required');
-
     if ($dataPostSupplier != null) {
       $this->returBarang();
     }
@@ -257,12 +255,41 @@ class Inventory extends CI_Controller
 
   public function konversi()
   {
+    $dataFilter = [
+      'tanggal_awal' => date('Y-m-01', time()),
+      'tanggal_akhir' => date('Y-m-d', time())
+    ];
+
+    $filterBulan = $this->input->post('filter_month') == null ? date('Y-m-d', time()) : $this->input->post('filter_month');
+
+    if ($filterBulan != null) {
+      $dataFilter['tanggal_awal'] = date('Y-m-01', strtotime($filterBulan . ' 00:00:00'));
+      $dataFilter['tanggal_akhir'] = date('Y-m-d', time());
+    }
+
+    if (date('m', strtotime($dataFilter['tanggal_awal'])) != date('m', time())) {
+      $dataFilter['tanggal_akhir'] = date('Y-m-t', strtotime($filterBulan));
+    }
+
+    if ($this->input->post('filter_day') != null) {
+      $dataFilter['tanggal_awal'] = date('Y-m-d', strtotime($this->input->post('filter_day') . ' 00:00:00'));
+      $dataFilter['tanggal_akhir'] = date('Y-m-d', strtotime($this->input->post('filter_day') . ' 23:59:59'));
+    }
+
     $data = [
       'title' => 'Konversi',
       'javascript' => 'konversi.js',
-      'data' => $this->InventoryModel->getKonversi()->result(),
+      'data' => $this->InventoryModel->getKonversi(null, $dataFilter)->result(),
+      'data_bulan' => $this->InventoryModel->groupKonversiByMonth()->result(),
+      'current_period' => $this->InventoryModel->getCurrentPeriodKonversi($filterBulan)->row(),
+      'filter_data' => $dataFilter,
+      'filter_day' => null,
       'stock' => $this->StockModel->get()->result()
     ];
+
+    if ($this->input->post('filter_day') != null) {
+      $data['filter_day'] = $this->input->post('filter_day');
+    }
 
     $this->form_validation->set_rules('prdcd', 'Product Code', 'required');
     $this->form_validation->set_rules('jumlah', 'Jumlah Product', 'required');
@@ -273,25 +300,6 @@ class Inventory extends CI_Controller
 
     $this->template->load('layout/template', 'inventory/konversi', $data);
   }
-
-  // public function detail_proses_barang($suratJalan = null)
-  // {
-  //   $search         = $_POST['search']['value'];
-  //   $length         = $_POST['length'];
-  //   $start          = $_POST['start'];
-  //   $sortColumnName = $_POST['columns']['' . $_POST['order']['0']['column'] . '']['name'];
-  //   $sortDir        = $_POST['order']['0']['dir'];
-
-  //   $draw = $_POST['draw'];
-  //   $recordsFiltered = $this->InventoryModel->getRecordsFilteredRetur($search, $suratJalan)->num_rows();
-  //   $recordsTotal = $this->InventoryModel->getLineRetur($suratJalan)->num_rows();
-  //   $data = $this->InventoryModel->getDatatablesRetur($search, $length, $start, $sortColumnName, $sortDir, $suratJalan);
-
-  //   $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data];
-
-  //   header('Content-Type: application/json');
-  //   echo json_encode($output);
-  // }
 
   public function prosesKonversi()
   {

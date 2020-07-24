@@ -5,6 +5,7 @@ $(document).ready(function () {
 
 	$("#tunai").mask("000.000.000.000", { reverse: true });
 	$("#nontunai").mask("000.000.000.000", { reverse: true });
+	$("#quantity").mask("000", { reverse: true });
 
 	var message = $("#pesan"),
 		type = $("#typePesan");

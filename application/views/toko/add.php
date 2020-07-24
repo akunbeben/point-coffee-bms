@@ -27,7 +27,7 @@
                             <div class="form-group">
                                 <label for="rt">RT</label>
                                 <input type="text" class="form-control" id="rt" name="rt">
-                            </div>    
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -41,7 +41,7 @@
                             <div class="form-group">
                                 <label for="telp">Telp</label>
                                 <input type="text" class="form-control" id="telp" name="telp">
-                            </div>    
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
@@ -62,9 +62,17 @@
                         <label for="ka_toko">Kepala Toko</label>
                         <input type="text" class="form-control" id="ka_toko" name="ka_toko">
                     </div>
+                    <div class="form-group">
+                        <label for="latitude">Latitude</label>
+                        <input type="text" class="form-control" id="latitude" name="latitude">
+                    </div>
+                    <div class="form-group">
+                        <label for="longitude">Longitude</label>
+                        <input type="text" class="form-control" id="longitude" name="longitude">
+                    </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

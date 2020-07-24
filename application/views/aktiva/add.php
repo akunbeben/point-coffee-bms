@@ -17,17 +17,17 @@
                     <div class="form-group">
                         <label for="category">Category</label>
                         <select class="form-control" id="category" name="category">
-                        <?php foreach ($category as $cat ) : ?>
-                        <option value="<?= $cat->id ?>"><?= $cat->desc ?></option>
-                        <?php endforeach; ?>
+                            <?php foreach ($category as $cat) : ?>
+                                <option value="<?= $cat->id ?>"><?= $cat->desc ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="subcategory">Sub Category</label>
                         <select class="form-control" id="subcategory" name="subcategory">
-                        <?php foreach ($subcategory as $sct ) : ?>
-                        <option value="<?= $sct->id ?>"><?= $sct->desc ?></option>
-                        <?php endforeach; ?>
+                            <?php foreach ($subcategory as $sct) : ?>
+                                <option value="<?= $sct->id ?>"><?= $sct->desc ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

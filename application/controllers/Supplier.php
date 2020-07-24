@@ -1,14 +1,17 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Supplier extends CI_Controller{
-    public function __construct(){
+class Supplier extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         IsAuthenticate();
         $this->load->model('SupplierModel');
         $this->load->library('form_validation');
     }
-    public function index() {
+    public function index()
+    {
         $data = [
             'title'     => 'Supplier',
             'sub_title' => 'Daftar Supplier',
@@ -17,7 +20,7 @@ class Supplier extends CI_Controller{
         ];
         $this->template->load('layout/template', 'supplier/index', $data);
     }
-    
+
     public function add()
     {
         $data = [
@@ -30,7 +33,7 @@ class Supplier extends CI_Controller{
         $this->form_validation->set_rules('alamat1', 'Alamat Pusat', 'required');
         $this->form_validation->set_rules('alamat2', 'Alamat Cabang', 'required');
         $this->form_validation->set_rules('telp1', 'Telp Pusat', 'required');
-        $this->form_validation->set_rules('telp2', 'Telp Cabang', 'required'); 
+        $this->form_validation->set_rules('telp2', 'Telp Cabang', 'required');
         if ($this->form_validation->run() == FALSE) {
             $this->template->load('layout/template', 'supplier/add', $data);
         } else {
@@ -47,8 +50,7 @@ class Supplier extends CI_Controller{
             'alamat1'              => $this->input->post('alamat1'),
             'alamat2'              => $this->input->post('alamat2'),
             'telp1'                => $this->input->post('telp1'),
-            'telp2'                => $this->input->post('telp2'),
-            'idtoko'                => $this->input->post('idtoko')
+            'telp2'                => $this->input->post('telp2')
         ];
 
         $this->SupplierModel->save($supplier);
@@ -67,7 +69,7 @@ class Supplier extends CI_Controller{
         $this->form_validation->set_rules('alamat1', 'Alamat Pusat', 'required');
         $this->form_validation->set_rules('alamat2', 'Alamat Cabang', 'required');
         $this->form_validation->set_rules('telp1', 'Telp Pusat', 'required');
-        $this->form_validation->set_rules('telp2', 'Telp Cabang', 'required'); 
+        $this->form_validation->set_rules('telp2', 'Telp Cabang', 'required');
         if ($this->form_validation->run() == FALSE) {
             if ($id == null) {
                 redirect('supplier/');
@@ -103,6 +105,6 @@ class Supplier extends CI_Controller{
         } else {
             $this->SupplierModel->hapus($id);
             redirect('supplier/');
-    }
         }
+    }
 }

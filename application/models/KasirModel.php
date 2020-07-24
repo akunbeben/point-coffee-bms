@@ -26,9 +26,9 @@ class KasirModel extends CI_Model
         return $this->db->get();
     }
 
-    public function TambahJumlahProduct($id)
+    public function TambahJumlahProduct($id, $quantity)
     {
-        $query = "UPDATE kasir_keranjang SET quantity = quantity + 1 WHERE id = $id";
+        $query = "UPDATE kasir_keranjang SET quantity = quantity + {$quantity} WHERE id = $id";
         $this->db->query($query);
     }
 
@@ -52,7 +52,7 @@ class KasirModel extends CI_Model
 
     public function Keuntungan()
     {
-        $query = "SELECT ((kasir_keranjang.quantity * product.sellingprice) - (kasir_keranjang.quantity * product.price)) as total FROM `kasir_keranjang` LEFT JOIN `product` ON `kasir_keranjang`.`product_id` = `product`.`id`";
+        $query = "SELECT SUM((kasir_keranjang.quantity * product.sellingprice) - (kasir_keranjang.quantity * product.price)) as total FROM `kasir_keranjang` LEFT JOIN `product` ON `kasir_keranjang`.`product_id` = `product`.`id`";
 
         return $this->db->query($query)->row();
     }
@@ -92,6 +92,22 @@ class KasirModel extends CI_Model
         $query =
             "SELECT 
                 SUM(total_bayar) AS total 
+            FROM 
+                penjualan
+            WHERE 
+                tanggal_transaksi >= '$transactionDate'
+            AND 
+                tanggal_transaksi <=" . "'" . date('Y-m-d H:i:s', time()) . "'" .
+            "AND idtoko = " . "'" . $this->session->userdata('x-idm-store') . "'";
+
+        return $this->db->query($query);
+    }
+
+    public function getCurrentProfit($transactionDate)
+    {
+        $query =
+            "SELECT 
+                SUM(keuntungan) AS profit
             FROM 
                 penjualan
             WHERE 

@@ -1,7 +1,8 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class UsersModel extends CI_Model {
+class UsersModel extends CI_Model
+{
 
     public function Get($id = null)
     {
@@ -11,7 +12,7 @@ class UsersModel extends CI_Model {
 
         if ($id !== null)
             $this->db->where('users.id', $id);
-        
+
         $this->db->where('toko.id !=', 1);
         return $this->db->get();
     }
@@ -29,5 +30,17 @@ class UsersModel extends CI_Model {
         $this->db->set('idtoko', $data['idtoko']);
         $this->db->where('id', $currentData->id);
         $this->db->update('users');
+    }
+
+    public function editUserToko($data, $id)
+    {
+        $this->db->set('username', $data['kodetoko']);
+        $this->db->where('users.id', $id);
+        $this->db->update('users');
+    }
+
+    public function getUserByIdToko($idToko)
+    {
+        return $this->db->where('users.idtoko', $idToko)->get('users');
     }
 }

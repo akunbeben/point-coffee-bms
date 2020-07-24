@@ -1,5 +1,5 @@
 $(document).ready(function () {
-	globalDatatable.order([5, "asc"]).draw();
+	globalDatatable.order([2, "desc"], [5, "asc"]).draw();
 	$("#btnClose").on("click", function () {
 		newDatatable.destroy();
 		newDatatable = null;

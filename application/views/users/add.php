@@ -12,8 +12,8 @@
                     <div class="form-group">
                         <label for="username">Username</label>
                         <select class="form-control" id="username" name="username">
-                            <?php foreach($users as $user) : ?>
-                            <option value="<?= $user; ?>"><?= $user; ?></option>
+                            <?php foreach ($users as $user) : ?>
+                                <option value="<?= $user; ?>"><?= $user; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -28,14 +28,14 @@
                     <div class="form-group">
                         <label for="idtoko">Toko</label>
                         <select class="form-control" id="idtoko" name="idtoko">
-                            <?php foreach($toko as $store) : ?>
-                            <option value="<?= $store->id; ?>"><?= $store->kodetoko . ' - ' . $store->nama_toko; ?></option>
+                            <?php foreach ($toko as $store) : ?>
+                                <option value="<?= $store->id; ?>"><?= $store->kodetoko . ' - ' . $store->nama_toko; ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

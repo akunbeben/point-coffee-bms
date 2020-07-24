@@ -6,13 +6,13 @@
             <div class="card-body">
                 <form action="" method="post">
                     <div class="form-group">
-                        <input type="hidden" class="form-control" id="id" name="id" value="<?=$member->id?>">
+                        <input type="hidden" class="form-control" id="id" name="id" value="<?= $member->id ?>">
                         <label for="id_member">No Member</label>
                         <input type="text" class="form-control" id="id_member" name="id_member" value="<?= $member->id_member; ?>">
                     </div>
                     <div class="form-group">
                         <label for="nama">Nama</label>
-                        <input type="text" class="form-control" id="nama" name="nama"value="<?= $member->nama; ?>">
+                        <input type="text" class="form-control" id="nama" name="nama" value="<?= $member->nama; ?>">
                     </div>
                     <div class="form-group">
                         <label for="noktp">No Identitas</label>
@@ -25,18 +25,18 @@
                     <div class="form-group">
                         <label for="jk">Jenis Kelamin</label>
                         <select class="form-control" id="jk" name="jk">
-                        <?php foreach ($gender as $jk ) : ?>
-                        <option value="<?= $jk->id ?>"><?= $jk->desc ?></option>
-                        <?php endforeach; ?>
+                            <?php foreach ($gender as $jk) : ?>
+                                <option value="<?= $jk->id ?>"><?= $jk->desc ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="alamat">Alamat</label>
-                        <input type="text" class="form-control" id="alamat" name="alamat"value="<?= $member->alamat; ?>">
+                        <input type="text" class="form-control" id="alamat" name="alamat" value="<?= $member->alamat; ?>">
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

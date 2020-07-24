@@ -8,6 +8,7 @@ class Home extends CI_Controller
     {
         parent::__construct();
         IsAuthenticate();
+        $this->load->model('TokoModel');
         $this->load->model('LaporanModel');
         $this->load->helper('kasir');
     }
@@ -17,11 +18,13 @@ class Home extends CI_Controller
         $data = [
             'title' => 'Home',
             'javascript' => null,
-            'pendapatan' => $this->LaporanModel->getPendapatanToko()->result()
+            'jumlah_toko' => count($this->TokoModel->get()->result()),
         ];
 
-        // var_dump($data);
-        // die;
+        if ($this->session->userdata('x-idm-store') == 1) {
+            $data['javascript'] = 'home.js';
+        }
+
         $this->template->load('layout/template', 'home/index', $data);
     }
 }

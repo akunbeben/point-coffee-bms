@@ -52,8 +52,9 @@
               <tr>
                 <th style="border-bottom: 1px dotted;">No</th>
                 <th style="border-bottom: 1px dotted;">PLU</th>
-                <th style="border-bottom: 1px dotted; text-align: right;">Jumlah</th>
-                <th style="border-bottom: 1px dotted; width: 70px;">Harga Beli</th style="border-bottom: 1px dotted;">
+                <th style="border-bottom: 1px dotted;">Harga Pcs</th>
+                <th style="border-bottom: 1px dotted; text-align: right;">Jumlah Item</th>
+                <th style="border-bottom: 1px dotted; width: 70px;">Total</th style="border-bottom: 1px dotted;">
               </tr>
 
               <?php $no = 1;
@@ -61,8 +62,9 @@
                 <tr class="even_row">
                   <td style="text-align: center; "><?= $no++; ?></td>
                   <td><?= $line->prdcd . ' - ' . $line->deskripsi; ?></td>
-                  <td style="text-align: center; "><?= $line->jumlah; ?></td>
                   <td style="text-align: right; width: 70px;"><?= rupiah($line->harga); ?></td>
+                  <td style="text-align: center; "><?= $line->jumlah; ?></td>
+                  <td style="text-align: center; "><?= rupiah($line->total); ?></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>

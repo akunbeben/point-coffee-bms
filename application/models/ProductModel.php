@@ -1,26 +1,27 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class ProductModel extends CI_Model{
-    
+class ProductModel extends CI_Model
+{
+
     public function get($id = null)
     {
+        $this->db->select('product.*, unitTable.singkatan unitName, sizeTable.singkatan sizeName');
+        $this->db->from('product');
+        $this->db->join('lookupvalue unitTable', 'product.unit = unitTable.id');
+        $this->db->join('lookupvalue sizeTable', 'product.size = sizeTable.id');
         if ($id !== null) {
-            $this->db->where('id', $id);
+            $this->db->where('product.id', $id);
         }
 
-        if ($this->session->userdata('x-idm-store') != 1) {
-            $this->db->where('product.idtoko', $this->session->userdata('x-idm-store'));
-        }
-
-        return $this->db->get('product');
+        return $this->db->get();
     }
 
     public function save($product)
     {
         $this->db->insert('product', $product);
     }
-    
+
     public function edit($product)
     {
         $this->db->set('prdcd', $product['prdcd']);
@@ -39,4 +40,3 @@ class ProductModel extends CI_Model{
         $this->db->delete('product');
     }
 }
-

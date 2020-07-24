@@ -78,6 +78,7 @@
                     <th>Kategori</th>
                     <th>Satuan</th>
                     <th>Jumlah</th>
+                    <th>Total</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -89,6 +90,7 @@
                         <td><?= $line->ketegoriText; ?></td>
                         <td><?= $line->satuanText; ?></td>
                         <td><?= $line->jumlah; ?></td>
+                        <td><?= rupiah($line->total); ?></td>
                       </tr>
                     <?php endforeach; ?>
                   <?php endif; ?>

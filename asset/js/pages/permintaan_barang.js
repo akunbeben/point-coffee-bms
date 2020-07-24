@@ -66,6 +66,9 @@ function initNewDatatable(url) {
 	$("#detailpermintaanModalLabel").html(
 		"<i class='fas fa-paste'></i> Data : " + rfid
 	);
+
+	var status = null;
+
 	newDatatable = $("#newDatatable").DataTable({
 		processing: true,
 		serverSide: true,
@@ -102,6 +105,8 @@ function initNewDatatable(url) {
 		"onclick",
 		'reject("' + globalBaseUrl + "stock/reject/" + rfid + '")'
 	);
+
+	// console.log(status);
 }
 
 $(document).ready(function () {

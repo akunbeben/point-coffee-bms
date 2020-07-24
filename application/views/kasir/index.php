@@ -18,9 +18,9 @@
                             <label for="customer" class="col-md-4 mt-1">Customer</label>
                             <div class="col-md-8">
                                 <select name="customer" id="customer" class="form-control" style="width: 100%;" <?= $pembayaran != null ? 'disabled' : '' ?>>
-                                <?php foreach ($customer as $member) : ?>
-                                    <option value="<?= $member->nama; ?>"><?= $member->nama; ?></option>
-                                <?php endforeach;?>
+                                    <?php foreach ($customer as $member) : ?>
+                                        <option value="<?= $member->nama; ?>"><?= $member->nama; ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
                         </div>
@@ -33,15 +33,21 @@
                         <form action="<?= base_url('kasir/add-to-cart'); ?>" method="post">
                             <div class="form-group row">
                                 <label for="product" class="col-md-3 mt-1">Product</label>
-                                <div class="col-md-8">
+                                <div class="col-md-6">
                                     <select name="product" id="product" class="form-control" style="width: 100%;" required <?= $pembayaran != null ? 'disabled' : '' ?>>
-                                    <option value="">Masukkan PLU Product.</option>
-                                    <?php foreach ($product as $prd) : ?>
-                                        <option value="<?= $prd->id; ?>"><?= $prd->prdcd . ' - ' . $prd->singkatan; ?></option>
-                                    <?php endforeach;?>
+                                        <option value="">Masukkan PLU Product.</option>
+                                        <?php foreach ($product as $prd) : ?>
+                                            <option value="<?= $prd->id; ?>"><?= $prd->prdcd . ' - ' . $prd->singkatan; ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
-                                <div class="col-md-1 text-left">
+                            </div>
+                            <div class="form-group row">
+                                <label for="quantity" class="col-md-3">Quantity</label>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="quantity" id="quantity">
+                                </div>
+                                <div class="col-md-2">
                                     <button type="submit" class="btn btn-success" <?= $pembayaran != null ? 'disabled' : '' ?>><i class="fas fa-plus"></i></button>
                                 </div>
                             </div>
@@ -68,22 +74,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php 
+                        <?php
                         $no = 1;
                         foreach ($keranjang as $cart) : ?>
-                        <tr>
-                            <td><?= $no++; ?></td>
-                            <td><?= $cart->prdcd . ' - ' . $cart->singkatan; ?></td>
-                            <td><?= rupiah($cart->sellingprice); ?></td>
-                            <td><?= $cart->quantity; ?></td>
-                            <td class="text-center" style="max-width: 50px;">
-                            <?php if ($pembayaran == null) : ?>
-                                <button type="button" onclick="jumlahProduct('<?= base_url('kasir/plus-product/') . $cart->id; ?>')" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
-                                <button type="button" onclick="jumlahProduct('<?= base_url('kasir/minus-product/') . $cart->id; ?>')" class="btn btn-warning btn-sm"><i class="fas fa-minus"></i></button>
-                                <button type="button" onclick="jumlahProduct('<?= base_url('kasir/delete-product/') . $cart->id; ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
-                            <?php endif; ?>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $cart->prdcd . ' - ' . $cart->singkatan; ?></td>
+                                <td><?= rupiah($cart->sellingprice); ?></td>
+                                <td><?= $cart->quantity; ?></td>
+                                <td class="text-center" style="max-width: 50px;">
+                                    <?php if ($pembayaran == null) : ?>
+                                        <!-- <button type="button" onclick="jumlahProduct('<?= base_url('kasir/plus-product/') . $cart->id; ?>')" class="btn btn-success btn-sm"><i class="fas fa-plus"></i></button>
+                                        <button type="button" onclick="jumlahProduct('<?= base_url('kasir/minus-product/') . $cart->id; ?>')" class="btn btn-warning btn-sm"><i class="fas fa-minus"></i></button> -->
+                                        <button type="button" onclick="jumlahProduct('<?= base_url('kasir/delete-product/') . $cart->id; ?>')" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
@@ -160,80 +166,80 @@
 
 <!-- Modal -->
 <div class="modal fade" id="nontunaiModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="nontunaiModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="nontunaiModalLabel">Form Pembayaran Non-Tunai</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <?php if ($pembayaran != null) : ?>
-      <form action="" method="post">
-        <div class="modal-body">
-            <div class="form-group row">
-                <label for="nontunai_bank" class="col-md-4 mt-1">Bank</label>
-                <div class="col-md-8">
-                    <input name="nontunai_banks" id="nontunai_banks" class="form-control" style="width: 100%;" value="<?= $pembayaran->bank; ?>" readonly>
-                </div>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="nontunaiModalLabel">Form Pembayaran Non-Tunai</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group row">
-                <label for="nontunai_kartu" class="col-md-4 mt-1">No. Kartu</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="nontunai_kartu" name="nontunai_kartu" value="<?= $pembayaran->no_kartu; ?>" readonly>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="nontunai_approval" class="col-md-4 mt-1">Appsroval Code</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="nontunai_approval" name="nontunai_approval" value="<?= $pembayaran->approval; ?>" readonly>
-                </div>
-            </div>
-            <input type="hidden" class="form-control" id="nontunai_struk" name="nontunai_struk" value="<?= $pembayaran->no_struk; ?>">
-            <input type="hidden" class="form-control" id="nontunai_total" name="nontunai_total" value="<?= $pembayaran->total; ?>">
+            <?php if ($pembayaran != null) : ?>
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="nontunai_bank" class="col-md-4 mt-1">Bank</label>
+                            <div class="col-md-8">
+                                <input name="nontunai_banks" id="nontunai_banks" class="form-control" style="width: 100%;" value="<?= $pembayaran->bank; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nontunai_kartu" class="col-md-4 mt-1">No. Kartu</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="nontunai_kartu" name="nontunai_kartu" value="<?= $pembayaran->no_kartu; ?>" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nontunai_approval" class="col-md-4 mt-1">Appsroval Code</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="nontunai_approval" name="nontunai_approval" value="<?= $pembayaran->approval; ?>" readonly>
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" id="nontunai_struk" name="nontunai_struk" value="<?= $pembayaran->no_struk; ?>">
+                        <input type="hidden" class="form-control" id="nontunai_total" name="nontunai_total" value="<?= $pembayaran->total; ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" id="submit-nontunai" onclick="NonTunai('<?= base_url('kasir/non_tunai'); ?>')" class="btn btn-primary" disabled>Simpan</button>
+                    </div>
+                </form>
+            <?php else : ?>
+                <form action="" method="post">
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="nontunai_bank" class="col-md-4 mt-1">Bank</label>
+                            <div class="col-md-8">
+                                <select name="nontunai_bank" id="nontunai_bank" class="form-control" style="width: 100%;">
+                                    <option value="BRI">BRI</option>
+                                    <option value="BNI">BNI</option>
+                                    <option value="BCA">BCA</option>
+                                    <option value="MANDIRI">MANDIRI</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nontunai_kartu" class="col-md-4 mt-1">No. Kartu</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="nontunai_kartu" name="nontunai_kartu">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="nontunai_approval" class="col-md-4 mt-1">Appsroval Code</label>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="nontunai_approval" name="nontunai_approval">
+                            </div>
+                        </div>
+                        <input type="hidden" class="form-control" id="nontunai_struk" name="nontunai_struk" value="<?= $struk; ?>">
+                        <input type="hidden" class="form-control" id="nontunai_total" name="nontunai_total" value="<?= $totalBelanja; ?>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="button" id="submit-nontunai" onclick="NonTunai('<?= base_url('kasir/non_tunai'); ?>')" class="btn btn-primary">Simpan</button>
+                    </div>
+                </form>
+            <?php endif; ?>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <button type="button" id="submit-nontunai" onclick="NonTunai('<?= base_url('kasir/non_tunai'); ?>')" class="btn btn-primary" disabled>Simpan</button>
-        </div>
-      </form>
-      <?php else : ?>
-      <form action="" method="post">
-        <div class="modal-body">
-            <div class="form-group row">
-                <label for="nontunai_bank" class="col-md-4 mt-1">Bank</label>
-                <div class="col-md-8">
-                    <select name="nontunai_bank" id="nontunai_bank" class="form-control" style="width: 100%;">
-                        <option value="BRI">BRI</option>
-                        <option value="BNI">BNI</option>
-                        <option value="BCA">BCA</option>
-                        <option value="MANDIRI">MANDIRI</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="nontunai_kartu" class="col-md-4 mt-1">No. Kartu</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="nontunai_kartu" name="nontunai_kartu">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label for="nontunai_approval" class="col-md-4 mt-1">Appsroval Code</label>
-                <div class="col-md-8">
-                    <input type="text" class="form-control" id="nontunai_approval" name="nontunai_approval">
-                </div>
-            </div>
-            <input type="hidden" class="form-control" id="nontunai_struk" name="nontunai_struk" value="<?= $struk; ?>">
-            <input type="hidden" class="form-control" id="nontunai_total" name="nontunai_total" value="<?= $totalBelanja; ?>">
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-            <button type="button" id="submit-nontunai" onclick="NonTunai('<?= base_url('kasir/non_tunai'); ?>')" class="btn btn-primary">Simpan</button>
-        </div>
-      </form>
-      <?php endif; ?>
     </div>
-  </div>
 </div>
 
 <form action="<?= base_url('kasir/bayar'); ?>" method="post" style="display: none;" id="form-bayar">

@@ -1,16 +1,20 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Barista extends CI_Controller{
-    public function __construct(){
+class Barista extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         IsAuthenticate();
         $this->load->model('BaristaModel');
+        $this->load->model('LookupvalueModel');
         $this->load->model('TokoModel');
         $this->load->library('form_validation');
     }
-    public function index() {
-        
+    public function index()
+    {
+
         $data = [
             'title'     => 'Barista',
             'sub_title' => 'Daftar Barista',
@@ -26,7 +30,11 @@ class Barista extends CI_Controller{
             'title'     => 'Barista',
             'sub_title' => 'Tambah Barista',
             'javascript' => 'barista.js',
-            'toko' => $this->TokoModel->get()->result()
+            'toko' => $this->TokoModel->get()->result(),
+            'status_kerja' => $this->LookupvalueModel->getlookupvalue(1008)->result(),
+            'status_perkawinan' => $this->LookupvalueModel->getlookupvalue(1011)->result(),
+            'jabatan' => $this->LookupvalueModel->getlookupvalue(1007)->result(),
+            'jenis_kelamin' => $this->LookupvalueModel->getlookupvalue(1002)->result()
         ];
 
         $this->form_validation->set_rules('nik', 'NIK', 'required|is_unique[barista.nik]');
@@ -47,7 +55,7 @@ class Barista extends CI_Controller{
             $this->do_save();
         }
     }
-    
+
     function do_save()
     {
         $barista = [
@@ -88,7 +96,7 @@ class Barista extends CI_Controller{
         $this->form_validation->set_rules('status_kerja', 'Status Kerja', 'required');
         $this->form_validation->set_rules('status_perkawinan', 'Status Perkawinan', 'required');
         $this->form_validation->set_rules('idtoko', 'ID Toko', 'required');
-    
+
         if ($this->form_validation->run() == FALSE) {
             if ($id == null) {
                 redirect('barista/');
@@ -100,7 +108,7 @@ class Barista extends CI_Controller{
         }
     }
 
-function do_edit()
+    function do_edit()
     {
         $barista = [
             'id'                    => $this->input->post('id'),
@@ -121,7 +129,7 @@ function do_edit()
         redirect('barista/');
     }
 
-public function hapus($id = null)
+    public function hapus($id = null)
     {
         if ($id == null) {
             redirect('barista/');
@@ -129,5 +137,5 @@ public function hapus($id = null)
             $this->BaristaModel->hapus($id);
             redirect('barista/');
         }
-}
+    }
 }

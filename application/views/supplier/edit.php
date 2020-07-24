@@ -6,7 +6,6 @@
             <div class="card-body">
                 <form action="" method="post">
                     <div class="form-group">
-                    <input type="hidden" class="form-control" id="idtoko" name="idtoko" value="<?= $this->session->userdata('x-idm-store'); ?>">
                         <input type="hidden" class="form-control" id="id" name="id" value="<?= $supplier->id ?>">
                         <label for="supco">Supplier Code</label>
                         <input type="text" class="form-control" id="supco" name="supco" value="<?= $supplier->supco; ?>" readonly>
@@ -33,7 +32,7 @@
                     </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
-                        <button type="reset" class="btn btn-warning"><i class="fas fa-minus"></i> Batal</button>
+                        <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>
             </div>

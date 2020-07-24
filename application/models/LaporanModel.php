@@ -103,6 +103,20 @@ class LaporanModel extends CI_Model
     return $this->db->get();
   }
 
+  public function getProfit($dataFilter)
+  {
+    $this->db->from('profit')
+      ->join('toko', 'toko.id = profit.idtoko')
+      ->where('profit.tanggal >=', $dataFilter['tanggal_awal'])
+      ->where('profit.tanggal <=', $dataFilter['tanggal_akhir']);
+
+    if ($dataFilter['filter_toko'] != null) {
+      $this->db->where('profit.idtoko', $dataFilter['filter_toko']);
+    }
+
+    return $this->db->get();
+  }
+
   public function pendapatan_perbulan()
   {
     $query =
@@ -119,6 +133,28 @@ class LaporanModel extends CI_Model
         MONTH(penjualan.tanggal_transaksi) = MONTH(CURDATE())
       GROUP BY 
         toko.kodetoko, toko.nama_toko, MONTH(penjualan.tanggal_transaksi)";
+
+    return $this->db->query($query);
+  }
+
+  public function pengeluaran_perbulan()
+  {
+    $query =
+      "SELECT 
+        SUM(proses_barang_detail.total) as pengeluaran, 
+        toko.kodetoko, 
+        toko.nama_toko, 
+        MONTHNAME(proses_barang.tanggal_terima) AS periode
+      FROM 
+        proses_barang 
+      JOIN
+        proses_barang_detail ON proses_barang.surat_jalan = proses_barang_detail.surat_jalan
+      JOIN
+        toko ON proses_barang.idtoko = toko.id
+      WHERE 
+        MONTH(proses_barang.tanggal_terima) = MONTH(CURDATE())
+      GROUP BY 
+        toko.kodetoko, toko.nama_toko, MONTH(proses_barang.tanggal_terima)";
 
     return $this->db->query($query);
   }
@@ -181,5 +217,206 @@ class LaporanModel extends CI_Model
     $this->db->order_by('tanggal_tutup_harian DESC');
 
     return $this->db->get();
+  }
+
+  public function pendapatanPertoko($dataFilter)
+  {
+    $query =
+      "SELECT
+        SUM(penjualan.total_belanja) AS total_belanja,
+        MONTHNAME(penjualan.tanggal_transaksi) month_period,
+        SUM(penjualan_detail.quantity) total_items,
+        COUNT(penjualan_detail.id) total_customer,
+        penjualan.idtoko,
+        CONCAT(toko.kodetoko, ' - ', toko.nama_toko) nama_toko
+      FROM
+        penjualan
+      JOIN
+        penjualan_detail ON penjualan_detail.penjualan_id = penjualan.id
+      JOIN 
+        toko ON toko.id = penjualan.idtoko
+      WHERE 
+        penjualan.tanggal_transaksi >= '{$dataFilter['tanggal_awal']}'
+      AND 
+        penjualan.tanggal_transaksi <= '{$dataFilter['tanggal_akhir']}'";
+
+    if ($dataFilter['filter_toko'] != null) {
+      $query .=
+        " AND
+          penjualan.idtoko = '{$dataFilter['filter_toko']}' ";
+    }
+
+    $query .=
+      " GROUP BY
+        penjualan.idtoko, MONTH(tanggal_transaksi)";
+
+    return $this->db->query($query);
+  }
+
+  public function getTokoByData()
+  {
+    $query =
+      "SELECT
+        penjualan.idtoko as idtoko,
+        CONCAT(toko.kodetoko, ' - ', toko.nama_toko) as nama_toko
+      FROM
+        penjualan
+      JOIN
+        penjualan_detail ON penjualan_detail.penjualan_id = penjualan.id
+      JOIN 
+        toko ON toko.id = penjualan.idtoko
+      GROUP BY
+        toko.id, toko.nama_toko";
+
+    return $this->db->query($query);
+  }
+
+  public function getPengeluaranTokoByData()
+  {
+    $query =
+      "SELECT
+        proses_barang.idtoko as idtoko,
+        CONCAT(toko.kodetoko, ' - ', toko.nama_toko) as nama_toko
+      FROM
+        proses_barang
+      JOIN
+        proses_barang_detail ON proses_barang_detail.surat_jalan = proses_barang.surat_jalan
+      JOIN 
+        toko ON toko.id = proses_barang.idtoko
+      GROUP BY
+        toko.id, toko.nama_toko";
+
+    return $this->db->query($query);
+  }
+
+  public function getPengeluaranTokoBySupplier()
+  {
+    $query =
+      "SELECT
+        proses_barang.supplier
+      FROM
+        proses_barang
+      GROUP BY
+        proses_barang.supplier";
+
+    return $this->db->query($query);
+  }
+
+  public function getDataPengeluaran($dataFilter, $order = false)
+  {
+    $query =
+      "SELECT
+        header.*,
+        CONCAT(toko.kodetoko, ' - ', toko.nama_toko) nama_toko,
+        SUM(line.total) total
+      FROM 
+        proses_barang_detail line
+      JOIN 
+        proses_barang header ON line.surat_jalan = header.surat_jalan
+      JOIN 
+        toko ON toko.id = header.idtoko
+      WHERE 
+        header.status = 35
+      AND 
+        header.tanggal_terima >= '{$dataFilter['tanggal_awal']}'
+      AND 
+        header.tanggal_terima <= '{$dataFilter['tanggal_akhir']}'";
+
+    if ($dataFilter['filter_toko'] != null) {
+      $query .=
+        " AND
+          header.idtoko = '{$dataFilter['filter_toko']}' ";
+    }
+
+    if ($dataFilter['filter_supplier'] != null) {
+      $query .=
+        "AND
+          header.supplier = '{$dataFilter['filter_supplier']}' ";
+    }
+
+    $query .=
+      " GROUP BY
+          header.supplier, header.kodepermintaan, header.tanggal_terima, header.idtoko";
+
+    if ($order == true) {
+      $query .=
+        " ORDER BY
+          SUM(line.total)";
+    }
+
+    return $this->db->query($query);
+  }
+  public function getDataPengeluaranGrouped($dataFilter, $order = false)
+  {
+    $query =
+      "SELECT
+        MONTHNAME(header.tanggal_terima) periode,
+        CONCAT(toko.kodetoko, ' - ', toko.nama_toko) nama_toko,
+        SUM(line.total) total
+      FROM 
+        proses_barang_detail line
+      JOIN 
+        proses_barang header ON line.surat_jalan = header.surat_jalan
+      JOIN 
+        toko ON toko.id = header.idtoko
+      WHERE 
+        header.status = 35
+      AND 
+        header.tanggal_terima >= '{$dataFilter['tanggal_awal']}'
+      AND 
+        header.tanggal_terima <= '{$dataFilter['tanggal_akhir']}'";
+
+    if ($dataFilter['filter_toko'] != null) {
+      $query .=
+        " AND
+          header.idtoko = '{$dataFilter['filter_toko']}' ";
+    }
+
+    if ($dataFilter['filter_supplier'] != null) {
+      $query .=
+        "AND
+          header.supplier = '{$dataFilter['filter_supplier']}' ";
+    }
+
+    $query .=
+      " GROUP BY
+        MONTHNAME(header.tanggal_terima), header.idtoko";
+
+    if ($order == true) {
+      $query .=
+        " ORDER BY
+          SUM(line.total)";
+    }
+
+    return $this->db->query($query);
+  }
+
+  public function getProductTerlaris($dataFilter)
+  {
+    $query =
+      "SELECT
+        product.singkatan,
+        product.prdcd,
+        product.sellingprice,
+        product.price,
+        SUM(penjualan_detail.product_id) jumlah_terjual,
+        MONTHNAME('{$dataFilter['tanggal_awal']}') periode
+      FROM
+        penjualan
+      JOIN
+        penjualan_detail ON penjualan.id = penjualan_detail.penjualan_id
+      JOIN
+        product ON penjualan_detail.product_id = product.id
+      WHERE
+        penjualan.tanggal_transaksi >= '{$dataFilter['tanggal_awal']}'
+      AND
+        penjualan.tanggal_transaksi <= '{$dataFilter['tanggal_akhir']}'
+      GROUP BY 
+        penjualan_detail.product_id, product.prdcd
+      ORDER BY
+        SUM(penjualan_detail.product_id) DESC
+      LIMIT 3";
+
+    return $this->db->query($query);
   }
 }

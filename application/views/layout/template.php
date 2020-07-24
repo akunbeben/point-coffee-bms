@@ -61,131 +61,195 @@
         <hr class="sidebar-divider">
 
         <div class="sidebar-heading">
-          Back Office
+          Master Toko
         </div>
 
         <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('toko'); ?>">
-            <i class="fas fa-fw fa-store"></i>
-            <span>Toko</span>
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-database"></i>
+            <span>Master Data</span>
           </a>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('toko') ?>">Toko</a>
+              <a class="collapse-item" href="<?= base_url('product') ?>">Product</a>
+              <a class="collapse-item" href="<?= base_url('stock') ?>">Bahan Baku</a>
+              <a class="collapse-item" href="<?= base_url('supplier') ?>">Supplier</a>
+            </div>
+          </div>
         </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('stock/permintaan-barang'); ?>">
+            <i class="fas fa-fw fa-truck"></i>
+            <span>Request Item</span></a>
+        </li>
+
+      <?php endif; ?>
+
+      <hr class="sidebar-divider">
+      <?php if ($this->session->userdata('x-idm-store') != 1) : ?>
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+          Front Office
+        </div>
+
+        <!-- Nav Item - Pages Collapse Menu -->
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+            <i class="fas fa-fw fa-database"></i>
+            <span>Master Data</span>
+          </a>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('barista'); ?>">Barista</a>
+              <a class="collapse-item" href="<?= base_url('product') ?>">Product</a>
+              <a class="collapse-item" href="<?= base_url('stock') ?>">Stock</a>
+              <a class="collapse-item" href="<?= base_url('aktiva') ?>">Aktiva</a>
+              <a class="collapse-item" href="<?= base_url('supplier') ?>">Supplier</a>
+              <a class="collapse-item" href="<?= base_url('member') ?>">Member</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#initialmenu" aria-expanded="true" aria-controls="initialmenu">
+            <i class="fas fa-fw fa-calendar-check"></i>
+            <span>Initial</span>
+          </a>
+          <div id="initialmenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('initial'); ?>">Initial</a>
+              <a class="collapse-item" href="<?= base_url('initial/tutup-shift'); ?>">Tutup Shift</a>
+              <a class="collapse-item" href="<?= base_url('initial/tutup_harian') ?>">Tutup Harian</a>
+            </div>
+          </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+          Transaction
+        </div>
+
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('kasir'); ?>">
+            <i class="fas fa-fw fa-shopping-cart"></i>
+            <span>Pos Kasir</span></a>
+        </li>
+
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+          Inventory
+        </div>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#permintaanbarang" aria-expanded="true" aria-controls="permintaanbarang">
+            <i class="fas fa-fw fa-truck"></i>
+            <span>Permintaan Barang</span>
+          </a>
+          <div id="permintaanbarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('stock/permintaan-barang'); ?>">Permintaan Barang</a>
+              <a class="collapse-item" href="<?= base_url('inventory/proses-barang'); ?>">Proses Barang</a>
+              <a class="collapse-item" href="<?= base_url('inventory/data-retur-barang'); ?>">Retur Barang</a>
+              <a class="collapse-item" href="<?= base_url('inventory/konversi') ?>">Konversi Barang</a>
+            </div>
+          </div>
+        </li>
+
+        <hr class="sidebar-divider">
+
+      <?php endif; ?>
+
+      <div class="sidebar-heading">
+        REPORTING
+      </div>
+
+      <?php if ($this->session->userdata('x-idm-store') != 1) : ?>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reportingSales" aria-expanded="true" aria-controls="reportingSales">
+            <i class="fas fa-fw fa-receipt"></i>
+            <span>Reprint Reporting Sales</span>
+          </a>
+          <div id="reportingSales" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('reports/penjualan'); ?>">Struk</a>
+              <a class="collapse-item" href="<?= base_url('reports/shift'); ?>">Slip Tutup Shift</a>
+              <a class="collapse-item" href="<?= base_url('reports/harian'); ?>">Slip Tutup Harian</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reportingBpd" aria-expanded="true" aria-controls="reportingBpd">
+            <i class="fas fa-fw fa-file-invoice"></i>
+            <span>Lap. Pemprosesan Data</span>
+          </a>
+          <div id="reportingBpd" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('reports/data-proses-barang'); ?>">Bukti Penerimaan Barang</a>
+              <a class="collapse-item" href="<?= base_url('reports/data-retur-barang'); ?>">Bukti Retur Barang</a>
+              <a class="collapse-item" href="<?= base_url('reports/konversi'); ?>">Bukti Konversi</a>
+            </div>
+          </div>
+        </li>
+      <?php endif; ?>
+
+      <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reportPendapatan" aria-expanded="true" aria-controls="reportPendapatan">
+            <i class="fas fa-fw fa-dollar-sign"></i>
+            <span>Pendapatan</span>
+          </a>
+          <div id="reportPendapatan" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('reports/pendapatan'); ?>">Pendapatan : Overall</a>
+              <a class="collapse-item" href="<?= base_url('reports/pendapatan-pertoko'); ?>">Pendapatan : Pertoko</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reportPengeluaran" aria-expanded="true" aria-controls="reportPengeluaran">
+            <i class="fas fa-fw fa-dollar-sign"></i>
+            <span>Pengeluaran</span>
+          </a>
+          <div id="reportPengeluaran" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('reports/pengeluaran'); ?>">Pengeluaran : Overall</a>
+              <a class="collapse-item" href="<?= base_url('reports/pengeluaran-pertoko'); ?>">Pengeluaran : Pertoko</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('reports/product-terlaris'); ?>">
+            <i class="fas fa-fw fa-chart-bar"></i>
+            <span>Product Terlaris</span></a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url('reports/profit'); ?>">
+            <i class="fas fa-fw fa-money-bill-alt"></i>
+            <span>Profit</span></a>
+        </li>
+
+        <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+          Account
+        </div>
 
         <li class="nav-item">
           <a class="nav-link" href="<?= base_url('users'); ?>">
             <i class="fas fa-fw fa-users"></i>
             <span>Users</span>
           </a>
-        </li>
-      <?php endif; ?>
-
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Front Office
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-database"></i>
-          <span>Master Data</span>
-        </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url('barista'); ?>">Barista</a>
-            <a class="collapse-item" href="<?= base_url('product') ?>">Product</a>
-            <a class="collapse-item" href="<?= base_url('stock') ?>">Stock</a>
-            <a class="collapse-item" href="<?= base_url('aktiva') ?>">Aktiva</a>
-            <a class="collapse-item" href="<?= base_url('supplier') ?>">Supplier</a>
-            <a class="collapse-item" href="<?= base_url('member') ?>">Member</a>
-          </div>
-        </div>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#initialmenu" aria-expanded="true" aria-controls="initialmenu">
-          <i class="fas fa-fw fa-calendar-check"></i>
-          <span>Initial</span>
-        </a>
-        <div id="initialmenu" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url('initial'); ?>">Initial</a>
-            <a class="collapse-item" href="<?= base_url('initial/tutup-shift'); ?>">Tutup Shift</a>
-            <a class="collapse-item" href="<?= base_url('initial/tutup_harian') ?>">Tutup Harian</a>
-          </div>
-        </div>
-      </li>
-
-      <hr class="sidebar-divider">
-
-      <div class="sidebar-heading">
-        Transaction
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('kasir'); ?>">
-          <i class="fas fa-fw fa-shopping-cart"></i>
-          <span>Pos Kasir</span></a>
-      </li>
-
-      <hr class="sidebar-divider">
-
-      <div class="sidebar-heading">
-        Inventory
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#permintaanbarang" aria-expanded="true" aria-controls="permintaanbarang">
-          <i class="fas fa-fw fa-truck"></i>
-          <span>Permintaan Barang</span>
-        </a>
-        <div id="permintaanbarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url('stock/permintaan-barang'); ?>">Permintaan Barang</a>
-            <a class="collapse-item" href="<?= base_url('inventory/proses-barang'); ?>">Proses Barang</a>
-            <a class="collapse-item" href="<?= base_url('inventory/data-retur-barang'); ?>">Retur Barang</a>
-            <a class="collapse-item" href="<?= base_url('inventory/konversi') ?>">Konversi Barang</a>
-          </div>
-        </div>
-      </li>
-
-      <hr class="sidebar-divider">
-
-      <div class="sidebar-heading">
-        REPORTING
-      </div>
-
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('reports/penjualan'); ?>">
-          <i class="fas fa-fw fa-paste"></i>
-          <span>Penjualan</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('reports/shift'); ?>">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Shift</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('reports/harian'); ?>">
-          <i class="fas fa-fw fa-calendar"></i>
-          <span>Harian</span></a>
-      </li>
-
-      <li class="nav-item">
-        <a class="nav-link" href="<?= base_url('reports/proses-barang'); ?>">
-          <i class="fas fa-fw fa-exchange-alt"></i>
-          <span>Proses Barang</span></a>
-      </li>
-
-      <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
-        <li class="nav-item">
-          <a class="nav-link" href="<?= base_url('reports/pendapatan'); ?>">
-            <i class="fas fa-fw fa-dollar-sign"></i>
-            <span>Pendapatan</span></a>
         </li>
       <?php endif; ?>
 

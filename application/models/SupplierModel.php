@@ -1,16 +1,12 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class SupplierModel extends CI_Model{
-    
+class SupplierModel extends CI_Model
+{
     public function get($id = null)
     {
         if ($id !== null) {
             $this->db->where('id', $id);
-        }
-
-        if ($this->session->userdata('x-idm-store') != 1) {
-            $this->db->where('supplier.idtoko', $this->session->userdata('x-idm-store'));
         }
 
         return $this->db->get('supplier');
@@ -20,7 +16,7 @@ class SupplierModel extends CI_Model{
     {
         $this->db->insert('supplier', $supplier);
     }
-    
+
     public function edit($supplier)
     {
         $this->db->set('supco', $supplier['supco']);
@@ -38,4 +34,3 @@ class SupplierModel extends CI_Model{
         $this->db->delete('supplier');
     }
 }
-

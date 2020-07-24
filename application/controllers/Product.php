@@ -1,31 +1,39 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Product extends CI_Controller{
-    public function __construct(){
+class Product extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         IsAuthenticate();
         $this->load->model('ProductModel');
+        $this->load->model('LookupvalueModel');
         $this->load->library('form_validation');
+        $this->load->helper('kasir_helper');
     }
 
-    public function index() {
+    public function index()
+    {
         $data = [
             'title'     => 'Product',
             'sub_title' => 'Daftar Product',
             'javascript' => null,
             'product'   => $this->ProductModel->get()->result()
         ];
-        
+
         $this->template->load('layout/template', 'product/index', $data);
     }
-    
+
     public function add()
     {
+        IsAdmin();
         $data = [
             'title'     => 'Product',
             'sub_title' => 'Tambah Product',
             'javascript' => null,
+            'units'  => $this->LookupvalueModel->getlookupvalue(1000)->result(),
+            'sizes'  => $this->LookupvalueModel->getlookupvalue(1006)->result()
         ];
         $this->form_validation->set_rules('prdcd', 'Product Code', 'required');
         $this->form_validation->set_rules('singkatan', 'Abbreviation', 'required');
@@ -50,8 +58,7 @@ class Product extends CI_Controller{
             'unit'                  => $this->input->post('unit'),
             'size'                  => $this->input->post('size'),
             'price'                 => $this->input->post('price'),
-            'sellingprice'          => $this->input->post('sellingprice'),
-            'idtoko'                => $this->input->post('idtoko')
+            'sellingprice'          => $this->input->post('sellingprice')
         ];
 
         $this->ProductModel->save($product);
@@ -95,7 +102,7 @@ class Product extends CI_Controller{
             'price'                 => $this->input->post('price'),
             'sellingprice'          => $this->input->post('sellingprice')
         ];
-        
+
         $this->ProductModel->edit($product);
         redirect('product/');
     }
@@ -118,6 +125,6 @@ class Product extends CI_Controller{
         } else {
             $this->ProductModel->hapus($id);
             redirect('product/');
-    }
         }
+    }
 }

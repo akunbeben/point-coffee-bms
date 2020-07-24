@@ -24,7 +24,7 @@ class Kasir extends CI_Controller
             redirect(base_url('initial'));
         }
 
-        $keuntungan = $this->KasirModel->Keuntungan() == null ? 0 : $this->KasirModel->TotalBelanja()->total;
+        $keuntungan = $this->KasirModel->Keuntungan() == null ? 0 : $this->KasirModel->Keuntungan()->total;
         $totalBelanja = $this->KasirModel->TotalBelanja() == null ? 0 : $this->KasirModel->TotalBelanja()->total;
 
         $data = [
@@ -53,13 +53,13 @@ class Kasir extends CI_Controller
         $data = [
             'id'            => null,
             'product_id'    => $this->input->post('product'),
-            'quantity'      => 1
+            'quantity'      => $this->input->post('quantity')
         ];
 
         $currentProductOnCart = $this->KasirModel->KeranjangBelanja(null, $data['product_id'])->row();
 
         if ($currentProductOnCart->product_id == $data['product_id']) {
-            $this->plus_product($currentProductOnCart->id);
+            $this->plus_product($currentProductOnCart->id, $data['quantity']);
             redirect(base_url('kasir'));
         }
 
@@ -67,9 +67,9 @@ class Kasir extends CI_Controller
         redirect(base_url('kasir'));
     }
 
-    public function plus_product($id)
+    public function plus_product($id, $quantity)
     {
-        $this->KasirModel->TambahJumlahProduct($id);
+        $this->KasirModel->TambahJumlahProduct($id, $quantity);
         redirect(base_url('kasir'));
     }
 

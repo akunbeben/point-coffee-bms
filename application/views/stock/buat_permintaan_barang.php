@@ -84,39 +84,6 @@
             </div>
           </div>
           <div class="form-group row">
-            <label for="harga" class="col-sm-4 col-form-label">Harga</label>
-            <div class="col-md-8">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Rp</div>
-                </div>
-                <input type="text" class="form-control" id="harga" name="harga" autocomplete="off">
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="kategori" class="col-sm-4 col-form-label">Kategori</label>
-            <div class="col-md-8">
-              <select class="form-control" id="kategori" name="kategori" required>
-                <option value="">Pilih Kategori</option>
-                <?php foreach ($kategori as $ktgr) : ?>
-                  <option value="<?= $ktgr->id; ?>"><?= $ktgr->singkatan; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="satuan" class="col-sm-4 col-form-label">Satuan</label>
-            <div class="col-md-8">
-              <select class="form-control" id="satuan" name="satuan" required>
-                <option value="">Pilih Satuan</option>
-                <?php foreach ($satuan as $stn) : ?>
-                  <option value="<?= $stn->id; ?>"><?= $stn->singkatan; ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
             <label for="jumlah" class="col-sm-4 col-form-label">Jumlah</label>
             <div class="col-md-4">
               <input type="text" class="form-control" id="jumlah" name="jumlah">
@@ -151,17 +118,6 @@
                   <div class="input-group-text"><i class="fas fa-barcode"></i></div>
                 </div>
                 <input type="text" name="productName" id="productName" class="form-control" readonly>
-              </div>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="hargaBaru" class="col-sm-4 col-form-label">Harga</label>
-            <div class="col-md-8">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <div class="input-group-text">Rp</div>
-                </div>
-                <input type="text" class="form-control" id="hargaBaru" name="hargaBaru" autocomplete="off">
               </div>
             </div>
           </div>

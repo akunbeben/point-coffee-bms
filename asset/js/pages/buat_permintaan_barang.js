@@ -63,7 +63,6 @@ function prosesPermintaan(url) {
 }
 
 function submitForm() {
-	$("#harga").val($("#harga").val().replace(/[.]/g, ""));
 	var formData = $("#formPermintaan");
 	formData.submit();
 	$("#btnSave").attr("disabled", true);

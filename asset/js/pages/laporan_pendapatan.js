@@ -1,5 +1,9 @@
 drawChart();
 
+function submitFilter() {
+	document.getElementById("formFilter").submit();
+}
+
 function formatCurrency(total) {
 	var neg = false;
 	if (total < 0) {

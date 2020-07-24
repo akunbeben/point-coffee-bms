@@ -1,15 +1,19 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
-class Toko extends CI_Controller{
-    public function __construct(){
+class Toko extends CI_Controller
+{
+    public function __construct()
+    {
         parent::__construct();
         IsAuthenticate();
         IsAdmin();
         $this->load->model('TokoModel');
+        $this->load->model('UsersModel');
         $this->load->library('form_validation');
     }
-    public function index() {
+    public function index()
+    {
 
         $data = [
             'title'     => 'Toko',
@@ -40,6 +44,9 @@ class Toko extends CI_Controller{
         $this->form_validation->set_rules('buka', 'Tanggal Buka', 'required');
         $this->form_validation->set_rules('namafrc', 'Nama Perusahaan', 'required');
         $this->form_validation->set_rules('ka_toko', 'Kepala Toko', 'required');
+        $this->form_validation->set_rules('latitude', 'Latitude', 'required');
+        $this->form_validation->set_rules('longitude', 'Longitude', 'required');
+
         if ($this->form_validation->run() == FALSE) {
             $this->template->load('layout/template', 'toko/add', $data);
         } else {
@@ -62,6 +69,9 @@ class Toko extends CI_Controller{
             'buka'                 => $this->input->post('buka'),
             'namafrc'              => $this->input->post('namafrc'),
             'ka_toko'              => $this->input->post('ka_toko'),
+            'latitude'             => $this->input->post('latitude'),
+            'longitude'            => $this->input->post('longitude'),
+            'is_deleted'           => 0,
         ];
 
         $this->TokoModel->save($toko);
@@ -86,7 +96,9 @@ class Toko extends CI_Controller{
         $this->form_validation->set_rules('buka', 'Tanggal Buka', 'required');
         $this->form_validation->set_rules('namafrc', 'Nama Perusahaan', 'required');
         $this->form_validation->set_rules('ka_toko', 'Kepala Toko', 'required');
-    
+        $this->form_validation->set_rules('latitude', 'Latitude', 'required');
+        $this->form_validation->set_rules('longitude', 'Longitude', 'required');
+
         if ($this->form_validation->run() == FALSE) {
             if ($id == null) {
                 redirect('toko/');
@@ -113,10 +125,15 @@ class Toko extends CI_Controller{
             'buka'                 => $this->input->post('buka'),
             'namafrc'              => $this->input->post('namafrc'),
             'ka_toko'              => $this->input->post('ka_toko'),
+            'latitude'             => $this->input->post('latitude'),
+            'longitude'            => $this->input->post('longitude'),
+            'is_deleted'           => 0
         ];
-        // var_dump($toko);
-        // die;
+
+        $oldUser = $this->UsersModel->getUserByIdtoko($toko['id'])->row()->id;
+
         $this->TokoModel->edit($toko);
+        $this->UsersModel->editUsertoko($toko, $oldUser);
         redirect('toko/');
     }
 
@@ -127,6 +144,6 @@ class Toko extends CI_Controller{
         } else {
             $this->TokoModel->hapus($id);
             redirect('toko/');
-    }
         }
+    }
 }

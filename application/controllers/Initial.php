@@ -68,6 +68,7 @@ class Initial extends CI_Controller
                 'pergantian' => ((persen(intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total), 10) + intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total)) - intval($this->input->post('pendapatan'))) <= 0 ? 0 : ((persen(intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total), 10) + intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total)) - intval($this->input->post('pendapatan'))),
                 'variance' => (intval($this->input->post('pendapatan')) - (persen(intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total), 10) + intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total))) <= 0 ? 0 : (intval($this->input->post('pendapatan')) - (persen(intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total), 10) + intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total))),
                 'ppn' => persen(intval($this->KasirModel->getCurrentTotalSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->total), 10),
+                'profit' => intval($this->KasirModel->getCurrentProfit($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->profit),
                 'jumlah_struk' => intval($this->KasirModel->getCountSales($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->jumlah_struk),
                 'jumlah_item' => intval($this->KasirModel->getCountSalesItem($this->InitialModel->CheckInitialStatus()->lastinitialdate)->row()->jumlah_item),
                 'idtoko' => intval($this->session->userdata('x-idm-store'))
@@ -116,7 +117,7 @@ class Initial extends CI_Controller
             redirect(base_url('initial'));
         }
 
-        if ($countDataInitial == 3) {
+        if ($countDataInitial == 2) {
             $this->session->set_flashdata('initial', '<div class="alert alert-danger" role="alert">Akses initial ditutup!</div>');
             redirect(base_url('initial'));
         }
@@ -197,6 +198,18 @@ class Initial extends CI_Controller
                 'tanggal_tutup_harian' => date('Y-m-d H:i:s', time())
             ];
 
+            $dataProfit = [
+                'id' => null,
+                'shift_1' => $data['detail'][0]->total,
+                'shift_2' => $data['detail'][1]->total,
+                'pendapatan_kotor' => $data['detail'][0]->total + $data['detail'][1]->total,
+                'ppn' => $data['detail'][0]->ppn + $data['detail'][1]->ppn,
+                'profit' => $data['detail'][0]->profit + $data['detail'][0]->profit,
+                'tanggal' => date('Y-m-d', time()),
+                'idtoko' => $data['detail'][0]->idtoko
+            ];
+
+            $this->InitialModel->insertProfit($dataProfit);
             $this->InitialModel->insertTutupHarian($dataTutupHarian);
 
             $this->session->set_flashdata(

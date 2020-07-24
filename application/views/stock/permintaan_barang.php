@@ -52,6 +52,9 @@
                       <i class="fas fa-trash"></i>
                     </button>
                   <?php endif; ?>
+                  <?php if ($req->status == 30) : ?>
+                    <button type="button" onclick="initNewDatatable('<?= base_url('stock/get-item-json/' . $req->kodepermintaan); ?>')" data-toggle="modal" data-target="#detailpermintaanModal" class="btn btn-success btn-sm" title="Show detail"><i class="fas fa-eye"></i></button>
+                  <?php endif; ?>
                 <?php endif; ?>
               </td>
             </tr>
@@ -85,10 +88,12 @@
           </table>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" id="btnReject" class="btn btn-danger">Reject</button>
-        <button type="button" id="btnApprove" class="btn btn-primary">Approve</button>
-      </div>
+      <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
+        <div class="modal-footer">
+          <button type="button" id="btnReject" class="btn btn-danger">Reject</button>
+          <button type="button" id="btnApprove" class="btn btn-primary">Approve</button>
+        </div>
+      <?php endif; ?>
     </div>
   </div>
 </div>

@@ -7,10 +7,6 @@ function CountDataInitial($totalData)
             $dataToCast = 2;
             break;
 
-        case 2:
-            $dataToCast = 3;
-            break;
-
         default:
             $dataToCast = 1;
     }
