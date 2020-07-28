@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 25 Jul 2020 pada 20.02
+-- Waktu pembuatan: 28 Jul 2020 pada 19.41
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.1
 
@@ -93,7 +93,7 @@ CREATE TABLE `initial` (
 --
 
 INSERT INTO `initial` (`id`, `nik`, `lastinitialdate`, `modal`, `shift`, `idtoko`) VALUES
-(1, 2013137279, '2020-07-23 04:21:54', 200000, 1, 2),
+(1, 0, NULL, 0, 0, 2),
 (2, 0, NULL, 0, 0, 3);
 
 -- --------------------------------------------------------
@@ -120,8 +120,7 @@ INSERT INTO `initialog` (`id`, `nik`, `lastinitialdate`, `modal`, `shift`, `idto
 (2, 2013131313, '2020-07-19 22:27:17', 200000, 2, 2),
 (3, 2013131777, '2020-07-19 22:33:52', 200000, 1, 3),
 (4, 2013131777, '2020-07-19 22:39:29', 200000, 2, 3),
-(6, 2013131313, '2020-07-20 00:37:01', 200000, 1, 2),
-(7, 2013137279, '2020-07-23 04:21:54', 200000, 1, 2);
+(6, 2013131313, '2020-07-20 00:37:01', 200000, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -577,7 +576,11 @@ CREATE TABLE `profit` (
 
 INSERT INTO `profit` (`id`, `shift_1`, `shift_2`, `pendapatan_kotor`, `ppn`, `profit`, `tanggal`, `idtoko`) VALUES
 (1, 230000, 310000, 540000, 54000, 40000, '2020-07-19', 3),
-(2, 220000, 230000, 450000, 45000, 48000, '2020-07-19', 2);
+(2, 220000, 230000, 450000, 45000, 48000, '2020-07-19', 2),
+(3, 0, 0, 0, 0, 0, '2020-07-29', 2),
+(4, 0, 0, 0, 0, 0, '2020-07-29', 2),
+(5, 0, 0, 0, 0, 0, '2020-07-29', 2),
+(6, 0, 0, 0, 0, 0, '2020-07-29', 2);
 
 -- --------------------------------------------------------
 
@@ -874,7 +877,8 @@ INSERT INTO `toko` (`id`, `kodetoko`, `nama_toko`, `alamat`, `kota`, `rt`, `rw`,
 (3, 'TA4W', 'IDM A YANI KM 4', 'Jl. Gerilya No.5, Pemurus Luar', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-01', 'PT.Indomarco Prismatama', 'Riki Pratama', '-3.338527', '114.618411', 0),
 (4, 'TWH9', 'IDM MAYJEN SUTOYO', 'Jl. Mayjen Sutoyo S No.455a, Tlk. Dalam', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-14', 'PT.Indomarco Prismatama', 'Ferry Salim', '-3.320886', '114.581001', 0),
 (5, 'THXU', 'IDM A YANI KM 19', 'Jalan A Yani KM 19', 'Banjarbaru', '006', '002', '0811882288', '70723', '2020-06-01', 'PT.Indomarco Prismatama', 'Erick', '-3.444335', '114.699383', 0),
-(7, 'TE5H', 'A YANI KM 24.7', 'Landasan Ulin', 'Banjarbaru', '006', '002', '0811882288', '70724', '2015-07-20', 'PT.Indomarco Prismatama', 'Dedy Ways', '-3.441983', '114.744696', 0);
+(7, 'TE5H', 'A YANI KM 24.7', 'Landasan Ulin', 'Banjarbaru', '006', '002', '0811882288', '70724', '2015-07-20', 'PT.Indomarco Prismatama', 'Dedy Ways', '-3.441983', '114.744696', 0),
+(8, 'T4ES', 'IDM YOS SUDARSO PLK', 'Jl. Yos Sudarso', 'Palangkaraya', '006', '002', '0811882288', '70723', '2017-06-13', 'PT.Indomarco Prismatama', 'Ferdinand Napitupulu', '-2.211585', '113.908899', 0);
 
 -- --------------------------------------------------------
 
@@ -1162,7 +1166,7 @@ ALTER TABLE `initial`
 -- AUTO_INCREMENT untuk tabel `initialog`
 --
 ALTER TABLE `initialog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `kasir_keranjang`
@@ -1228,7 +1232,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT untuk tabel `profit`
 --
 ALTER TABLE `profit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `proses_barang`
@@ -1282,19 +1286,19 @@ ALTER TABLE `supplier`
 -- AUTO_INCREMENT untuk tabel `toko`
 --
 ALTER TABLE `toko`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT untuk tabel `tutup_harian`
 --
 ALTER TABLE `tutup_harian`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tutup_shift`
 --
 ALTER TABLE `tutup_shift`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
