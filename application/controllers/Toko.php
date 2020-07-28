@@ -21,8 +21,7 @@ class Toko extends CI_Controller
             'javascript' => null,
             'toko'   => $this->TokoModel->get()->result()
         ];
-        // var_dump($data);
-        // die;
+
         $this->template->load('layout/template', 'toko/index', $data);
     }
 
@@ -145,5 +144,37 @@ class Toko extends CI_Controller
             $this->TokoModel->hapus($id);
             redirect('toko/');
         }
+    }
+
+    public function lokasi()
+    {
+        $data = [
+            'title' => 'Lokasi semua Gerai',
+            'javascript' => 'lokasi.js'
+        ];
+
+        $this->template->load('layout/template', 'toko/lokasi', $data);
+    }
+
+    public function list_ajax()
+    {
+        $data = null;
+        $status = false;
+        $message = "HTTP Request cannot use POST";
+
+        if ($_SERVER['REQUEST_METHOD'] == "GET") {
+            $data = $this->TokoModel->get()->result();
+            $status = true;
+            $message = "Success";
+        }
+
+        $output = [
+            'status' => $status,
+            'data' => $data,
+            'message' => $message
+        ];
+
+        header('Content-Type: application/json');
+        echo json_encode($output);
     }
 }

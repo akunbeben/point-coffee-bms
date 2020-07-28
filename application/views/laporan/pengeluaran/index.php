@@ -2,7 +2,7 @@
   <div class="card-header">
     <div class="row">
       <div class="col-md-6 mt-2">
-        <h6 class="m-0 font-weight-bold text-primary">Data Pendapatan Pertoko</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Data Pengeluaran Pertoko</h6>
       </div>
     </div>
   </div>
@@ -82,11 +82,38 @@
                   <td><?= rupiah($key->total); ?></td>
                   <td><?= $key->nama_toko; ?></td>
                   <td class="text-center">
-                    <button class="btn btn-primary btn-sm" title="Detail"><i class="fas fa-eye"></i></button>
+                    <button class="btn btn-primary btn-sm" title="Detail" data-toggle="modal" data-target="#detailpermintaanModal" onclick="initNewDatatable('<?= base_url('stock/get-item-json/' . $key->kodepermintaan); ?>')"><i class="fas fa-eye"></i></button>
                   </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="detailpermintaanModal" data-backdrop="static" data-keyboard="false" role="dialog" aria-labelledby="detailpermintaanModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title font-weight-bold text-primary" id="detailpermintaanModalLabel">Detail Request: </h6>
+        <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-sm" id="newDatatable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Harga</th>
+                <th>Kategori</th>
+                <th>Satuan</th>
+                <th>Jumlah</th>
+              </tr>
+            </thead>
           </table>
         </div>
       </div>

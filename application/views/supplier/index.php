@@ -20,10 +20,9 @@
           <tr>
             <th>Supplier Code</th>
             <th>Nama Supplier</th>
-            <th>Alamat Pusat</th>
             <th>Alamat Cabang</th>
-            <th>Telp Pusat</th>
             <th>Telp Cabang</th>
+            <th>Kategori</th>
             <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
               <th>Action</th>
             <?php endif; ?>
@@ -34,10 +33,9 @@
             <tr>
               <td><?= $sup->supco; ?></td>
               <td><?= $sup->nama_supplier; ?></td>
-              <td><?= $sup->alamat1; ?></td>
               <td><?= $sup->alamat2; ?></td>
-              <td><?= $sup->telp1; ?></td>
               <td><?= $sup->telp2; ?></td>
+              <td><?= $sup->kategoriname; ?></td>
               <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
                 <td class="text-center" style="max-width: 50px;">
                   <a class="btn btn-warning btn-sm" href="<?= base_url('supplier/edit/') . $sup->id; ?>"><i class="fas fa-pencil-alt"></i></a>

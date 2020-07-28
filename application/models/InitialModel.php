@@ -66,6 +66,23 @@ class InitialModel extends CI_Model
         return $this->db->query($query);
     }
 
+    public function checkShiftInitial()
+    {
+        $query =
+            "SELECT 
+                *
+            FROM
+                initialog
+            WHERE 
+                initialog.lastinitialdate >= CURDATE() 
+            AND 
+                initialog.lastinitialdate <= NOW() 
+            AND 
+                initialog.idtoko = {$this->session->userdata('x-idm-store')}";
+
+        return $this->db->query($query);
+    }
+
     public function tutupShift($data)
     {
         $this->db->insert('tutup_shift', $data);
@@ -141,5 +158,22 @@ class InitialModel extends CI_Model
     public function insertTutupHarian($data)
     {
         $this->db->insert('tutup_harian', $data);
+    }
+
+    public function checkTutupHarian()
+    {
+        $query =
+            "SELECT 
+                *
+            FROM
+                tutup_harian
+            WHERE 
+                tutup_harian.tanggal_tutup_harian >= CURDATE() 
+            AND 
+                tutup_harian.tanggal_tutup_harian <= NOW() 
+            AND 
+                tutup_harian.idtoko = {$this->session->userdata('x-idm-store')}";
+
+        return $this->db->query($query);
     }
 }

@@ -48,6 +48,8 @@ class Initial extends CI_Controller
 
     public function tutup_shift()
     {
+        CheckDataInitial();
+
         $data = [
             'title'     => 'Tutup Shift',
             'sub_title' => '',
@@ -173,6 +175,21 @@ class Initial extends CI_Controller
 
     public function tutup_harian()
     {
+        if ($this->InitialModel->checkTutupHarian()->num_rows() > 0) {
+            $this->session->set_flashdata('initial', '<div class="alert alert-danger" role="alert">Anda sudah melakukan tutup harian!</div>');
+            redirect('initial');
+        }
+
+        if ($this->InitialModel->GetTutupShiftByDate()->num_rows() < 2) {
+            $this->session->set_flashdata('initial', '<div class="alert alert-danger" role="alert">Anda belum melakukan tutup shift!</div>');
+            redirect('initial/');
+        }
+
+        if ($this->InitialModel->checkShiftInitial()->num_rows() < 2) {
+            $this->session->set_flashdata('initial', '<div class="alert alert-danger" role="alert">Anda belum melakukan initial shift 2!</div>');
+            redirect('initial/');
+        }
+
         $data = [
             'title' => 'Tutup Harian',
             'javascript' => 'tutup_harian.js',

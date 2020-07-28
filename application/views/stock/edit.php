@@ -28,10 +28,18 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="subcategory">Satuan</label>
+                        <label for="satuan">Satuan</label>
                         <select class="form-control" id="satuan" name="satuan">
                             <?php foreach ($satuan as $sat) : ?>
                                 <option value="<?= $sat->id ?>"><?= $sat->singkatan ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="jenis">Jenis</label>
+                        <select class="form-control" id="jenis" name="jenis">
+                            <?php foreach ($jenis as $jns) : ?>
+                                <option value="<?= $jns->id ?>"><?= $jns->desc ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>

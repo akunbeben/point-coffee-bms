@@ -30,6 +30,14 @@
                         <label for="telp2">Telp Cabang</label>
                         <input type="text" class="form-control" id="telp2" name="telp2">
                     </div>
+                    <div class="form-group">
+                        <label for="kategori">Kategory</label>
+                        <select class="form-control" id="kategori" name="kategori">
+                            <?php foreach ($kategori as $kat) : ?>
+                                <option value="<?= $kat->id ?>"><?= $kat->desc ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
                         <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>

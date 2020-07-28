@@ -6,7 +6,7 @@
         <div class="row">
           <div class="col-md-6 text-left">
             <h6 class="m-0 font-weight-bold text-primary mt-2"><i class="fas fa-paste"></i> Request ID:
-              <?= $header->kodepermintaan . ' | ' . $header->supco . ' - ' . $header->nama_supplier; ?>
+              <?= $header->kodepermintaan; ?>
             </h6>
           </div>
           <div class="col-md-6 text-right">

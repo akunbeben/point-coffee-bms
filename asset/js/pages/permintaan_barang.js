@@ -99,14 +99,13 @@ function initNewDatatable(url) {
 
 	$("#btnApprove").attr(
 		"onclick",
-		'approve("' + globalBaseUrl + "stock/approve/" + rfid + '")'
+		'approve("' + globalBaseUrl + "stock/proses/" + rfid + '")'
 	);
+
 	$("#btnReject").attr(
 		"onclick",
 		'reject("' + globalBaseUrl + "stock/reject/" + rfid + '")'
 	);
-
-	// console.log(status);
 }
 
 $(document).ready(function () {

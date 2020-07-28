@@ -24,6 +24,7 @@
   <link href="<?= base_url('asset/'); ?>vendor/sweetalert2/dist/sweetalert2.css" rel="stylesheet">
   <link href="<?= base_url('asset/'); ?>vendor/select2/dist/css/select2.css" rel="stylesheet" />
   <link href="<?= base_url('asset/'); ?>vendor/select2-bootstrap4-theme/select2-bootstrap4.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
 
   <!-- Custom styles for this template-->
   <link href="<?= base_url('asset/'); ?>css/sb-admin-2.min.css" rel="stylesheet">
@@ -106,7 +107,6 @@
               <a class="collapse-item" href="<?= base_url('barista'); ?>">Barista</a>
               <a class="collapse-item" href="<?= base_url('product') ?>">Product</a>
               <a class="collapse-item" href="<?= base_url('stock') ?>">Stock</a>
-              <a class="collapse-item" href="<?= base_url('aktiva') ?>">Aktiva</a>
               <a class="collapse-item" href="<?= base_url('supplier') ?>">Supplier</a>
               <a class="collapse-item" href="<?= base_url('member') ?>">Member</a>
             </div>
@@ -154,7 +154,7 @@
           <div id="permintaanbarang" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
               <a class="collapse-item" href="<?= base_url('stock/permintaan-barang'); ?>">Permintaan Barang</a>
-              <a class="collapse-item" href="<?= base_url('inventory/proses-barang'); ?>">Proses Barang</a>
+              <a class="collapse-item" href="<?= base_url('inventory/proses-barang'); ?>">Penerimaan Barang</a>
               <a class="collapse-item" href="<?= base_url('inventory/data-retur-barang'); ?>">Retur Barang</a>
               <a class="collapse-item" href="<?= base_url('inventory/konversi') ?>">Konversi Barang</a>
             </div>
@@ -377,6 +377,7 @@
   <script src="<?= base_url('asset/'); ?>vendor/select2/dist/js/select2.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.min.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.plugin.autotable.js"></script>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
 
   <?php if ($javascript != null) : ?>
     <script src="<?= base_url('asset/'); ?>js/pages/<?= $javascript; ?>"></script>

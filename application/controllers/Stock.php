@@ -43,7 +43,8 @@ class Stock extends CI_Controller
       'sub_title' => 'Tambah Stock',
       'javascript' => null,
       'kategori'  => $this->LookupvalueModel->getlookupvalue(1001)->result(),
-      'satuan'    => $this->LookupvalueModel->getlookupvalue(1000)->result()
+      'satuan'    => $this->LookupvalueModel->getlookupvalue(1000)->result(),
+      'jenis'    => $this->LookupvalueModel->getlookupvalue(1012)->result()
     ];
 
     $this->form_validation->set_rules('prdcd', 'Product Code', 'required');
@@ -51,6 +52,7 @@ class Stock extends CI_Controller
     $this->form_validation->set_rules('harga', 'Harga', 'required');
     $this->form_validation->set_rules('kategori', 'Kategori', 'required');
     $this->form_validation->set_rules('satuan', 'Satuan', 'required');
+    $this->form_validation->set_rules('jenis', 'Jenis', 'required');
 
     if ($this->form_validation->run() == FALSE) {
       $this->template->load('layout/template', 'stock/add', $data);
@@ -67,7 +69,8 @@ class Stock extends CI_Controller
       'deskripsi'            => $this->input->post('deskripsi'),
       'harga'                => $this->input->post('harga'),
       'kategori'             => $this->input->post('kategori'),
-      'satuan'               => $this->input->post('satuan')
+      'satuan'               => $this->input->post('satuan'),
+      'jenis'                => $this->input->post('jenis')
     ];
 
     $this->StockModel->save($stock);
@@ -82,7 +85,8 @@ class Stock extends CI_Controller
       'javascript' => null,
       'stock'   => $this->StockModel->get($id)->row(),
       'kategori'  => $this->LookupvalueModel->getlookupvalue(1001)->result(),
-      'satuan'    => $this->LookupvalueModel->getlookupvalue(1000)->result()
+      'satuan'    => $this->LookupvalueModel->getlookupvalue(1000)->result(),
+      'jenis'    => $this->LookupvalueModel->getlookupvalue(1012)->result()
     ];
 
     $this->form_validation->set_rules('prdcd', 'Product Code', 'required');
@@ -90,6 +94,7 @@ class Stock extends CI_Controller
     $this->form_validation->set_rules('harga', 'Harga', 'required');
     $this->form_validation->set_rules('kategori', 'Kategori', 'required');
     $this->form_validation->set_rules('satuan', 'Satuan', 'required');
+    $this->form_validation->set_rules('jenis', 'Jenis', 'required');
 
     if ($this->form_validation->run() == FALSE) {
       if ($id == null) {
@@ -111,6 +116,7 @@ class Stock extends CI_Controller
       'harga'                => $this->input->post('harga'),
       'kategori'             => $this->input->post('kategori'),
       'satuan'               => $this->input->post('satuan'),
+      'jenis'                => $this->input->post('jenis'),
     ];
 
     $this->StockModel->edit($stock);
@@ -164,7 +170,7 @@ class Stock extends CI_Controller
       'javascript'    => 'buat_permintaan_barang.js',
       'header'        => $this->StockModel->GetDataPermintaan($requestNumber)->row(),
       'line'          => $this->StockModel->GetDataLinePermintaan($requestNumber)->result(),
-      'stock'         => $this->StockModel->get(null, $this->StockModel->GetDataLinePermintaan($requestNumber)->result(), null, $this->session->userdata('x-idm-store'), true)->result(),
+      'stock'         => $this->StockModel->get(null, $this->StockModel->GetDataLinePermintaan($requestNumber)->result(), null, $this->session->userdata('x-idm-store'), true, $this->StockModel->GetDataPermintaan($requestNumber)->row()->kategori)->result(),
       'kategori'      => $this->LookupvalueModel->getlookupvalue(1001)->result(),
       'satuan'        => $this->LookupvalueModel->getlookupvalue(1000)->result()
     ];
@@ -189,10 +195,10 @@ class Stock extends CI_Controller
       'title'         => 'Buat Permintaan Barang',
       'sub_title'     => '',
       'javascript'    => 'permintaan_barang_baru.js',
-      'supplier'      => $this->SupplierModel->get()->result()
+      'kategori'      => $this->LookupvalueModel->getlookupvalue(1012)->result()
     ];
 
-    $this->form_validation->set_rules('supplier', 'Supplier', 'required');
+    $this->form_validation->set_rules('kategori', 'Kategori', 'required');
 
     if ($this->form_validation->run() == true) {
       $this->generatePermintaanBarang();
@@ -209,12 +215,13 @@ class Stock extends CI_Controller
 
     $data = [
       'id'                => null,
-      'kodesupplier'      => $this->input->post('supplier'),
+      'kodesupplier'      => null,
       'kodepermintaan'    => RequestForm(SequenceNumber()),
       'tanggal'           => date('Y-m-d H:i:s', time()),
       'idtoko'            => $this->session->userdata('x-idm-store'),
       'idbarista'         => $this->BaristaModel->GetBaristaByNik($this->InitialModel->CheckInitialStatus()->nik)->row()->id,
       'status'            => 28,
+      'kategori'          => $this->input->post('kategori'),
       'is_deleted'        => 0
     ];
 
@@ -306,9 +313,8 @@ class Stock extends CI_Controller
     $recordsFiltered = $this->StockModel->GetRecordsFiltered($search, $requestNumber)->num_rows();
     $recordsTotal = $this->StockModel->GetItemsJson($requestNumber)->num_rows();
     $data = $this->StockModel->GetDatatables($search, $Length, $Start, $SortColumnName, $SortDir, $requestNumber);
-    $status = $this->StockModel->GetDataPermintaan($requestNumber)->row()->status;
 
-    $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data, 'status' => $status];
+    $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data];
     header('Content-Type: application/json');
     echo json_encode($output);
   }
@@ -351,9 +357,10 @@ class Stock extends CI_Controller
   public function approve($requestNumber)
   {
     $dataPermintaan = $this->StockModel->getGroupedData($requestNumber)->row();
+    $supplier = $this->SupplierModel->get($this->input->post('supplier'))->row();
 
     $data = [
-      'supplier'          => $dataPermintaan->supco . ' - ' . $dataPermintaan->nama_supplier,
+      'supplier'          => $supplier->supco . ' - ' . $supplier->nama_supplier,
       'kodepermintaan'    => $dataPermintaan->kodepermintaan,
       'jumlah_barang'     => $dataPermintaan->totalBarang,
       'status'            => 32,
@@ -362,7 +369,7 @@ class Stock extends CI_Controller
 
     $this->session->set_flashdata('pesanGlobal', 'Data ' . $requestNumber . ' berhasil di approve.');
     $this->session->set_flashdata('typePesanGlobal', 'success');
-    $this->StockModel->approve($requestNumber);
+    $this->StockModel->approve($requestNumber, $this->input->post('supplier'));
     $this->InventoryModel->generateDataProses($data);
     redirect('stock/permintaan-barang/');
   }
@@ -373,5 +380,19 @@ class Stock extends CI_Controller
     $this->session->set_flashdata('typePesanGlobal', 'success');
     $this->StockModel->reject($requestNumber);
     redirect('stock/permintaan-barang/');
+  }
+
+  public function proses($requestNumber)
+  {
+    $dataPermintaan = $this->StockModel->GetDataPermintaan($requestNumber)->row();
+
+    $data = [
+      'title' => 'Proses Permintaan',
+      'header' => $dataPermintaan,
+      'javascript' => 'permintaan_barang_baru.js',
+      'supplier' => $this->SupplierModel->get(null, $dataPermintaan->kategori)->result()
+    ];
+
+    $this->template->load('layout/template', 'stock/proses_permintaan_barang', $data);
   }
 }

@@ -26,6 +26,7 @@
             <?php endif; ?>
             <th>Kategori</th>
             <th>Satuan</th>
+            <th>Jenis</th>
             <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
               <th>Action</th>
             <?php endif; ?>
@@ -42,6 +43,7 @@
               <?php endif; ?>
               <td><?= $stk->kategoriname; ?></td>
               <td><?= $stk->satuanname; ?></td>
+              <td><?= $stk->jenisname; ?></td>
               <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
                 <td class="text-center" style="max-width: 50px;">
                   <a class="btn btn-warning btn-sm" href="<?= base_url('stock/edit/') . $stk->id; ?>"><i class="fas fa-pencil-alt"></i></a>

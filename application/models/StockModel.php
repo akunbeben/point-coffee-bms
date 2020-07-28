@@ -3,17 +3,18 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class StockModel extends CI_Model
 {
-  public function get($id = null, $exceptionCode = null, $productCode = null, $idToko = null, $noFilter = false)
+  public function get($id = null, $exceptionCode = null, $productCode = null, $idToko = null, $noFilter = false, $jenis = null)
   {
     if ($this->session->userdata('x-idm-store') == 1) {
-      $this->db->select('stock.*, kategori.singkatan as kategoriname, satuan.singkatan as satuanname');
+      $this->db->select('stock.*, kategori.singkatan as kategoriname, satuan.singkatan as satuanname, jenis.desc as jenisname');
     } else {
-      $this->db->select('stock.*, kategori.singkatan as kategoriname, satuan.singkatan as satuanname, stock_toko.jumlah, stock_toko.idtoko');
+      $this->db->select('stock.*, kategori.singkatan as kategoriname, satuan.singkatan as satuanname, jenis.desc as jenisname, stock_toko.jumlah, stock_toko.idtoko');
     }
 
     $this->db->from('stock');
     $this->db->join('lookupvalue as kategori', 'stock.kategori = kategori.id');
     $this->db->join('lookupvalue as satuan', 'stock.satuan = satuan.id');
+    $this->db->join('lookupvalue as jenis', 'stock.jenis = jenis.id');
 
     $queryLine = "stock.id = stock_toko.idstock";
 
@@ -44,6 +45,10 @@ class StockModel extends CI_Model
       }
     }
 
+    if ($jenis != null) {
+      $this->db->where('stock.jenis', $jenis);
+    }
+
     return $this->db->get();
   }
 
@@ -59,6 +64,7 @@ class StockModel extends CI_Model
     $this->db->set('harga', $stock['harga']);
     $this->db->set('kategori', $stock['kategori']);
     $this->db->set('satuan', $stock['satuan']);
+    $this->db->set('jenis', $stock['jenis']);
     $this->db->where('id', $stock['id']);
     $this->db->update('stock');
   }
@@ -87,7 +93,7 @@ class StockModel extends CI_Model
                 pos.permintaan_barang_detail 
             JOIN 
                 pos.permintaan_barang ON permintaan_barang_detail.kodepermintaan = permintaan_barang.kodepermintaan
-            JOIN 
+            LEFT JOIN 
                 pos.supplier ON permintaan_barang.kodesupplier = supplier.id
             WHERE
                 permintaan_barang_detail.kodepermintaan = " .  "'" . $kodePermintaan . "'" . "
@@ -100,8 +106,9 @@ class StockModel extends CI_Model
   public function GetDataPermintaan($kodePermintaan = null, $filterDeleted = true)
   {
     $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc, supplier.supco, supplier.nama_supplier');
+    // $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc');
     $this->db->join('barista', 'barista.id = permintaan_barang.idbarista');
-    $this->db->join('supplier', 'supplier.id = permintaan_barang.kodesupplier');
+    $this->db->join('supplier', 'supplier.id = permintaan_barang.kodesupplier', 'left');
     $this->db->join('toko', 'toko.id = permintaan_barang.idtoko');
     $this->db->join('lookupvalue', 'permintaan_barang.status = lookupvalue.id');
     $this->db->from('permintaan_barang');
@@ -265,9 +272,10 @@ class StockModel extends CI_Model
     $this->db->update('permintaan_barang_detail');
   }
 
-  public function approve($kodePermintaan)
+  public function approve($kodePermintaan, $supplier)
   {
     $this->db->set('status', 30);
+    $this->db->set('kodesupplier', $supplier);
     $this->db->where('kodepermintaan', $kodePermintaan);
     $this->db->update('permintaan_barang');
   }

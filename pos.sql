@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 21 Jul 2020 pada 20.38
+-- Waktu pembuatan: 25 Jul 2020 pada 20.02
 -- Versi server: 10.4.11-MariaDB
 -- Versi PHP: 7.4.1
 
@@ -93,7 +93,7 @@ CREATE TABLE `initial` (
 --
 
 INSERT INTO `initial` (`id`, `nik`, `lastinitialdate`, `modal`, `shift`, `idtoko`) VALUES
-(1, 2013131313, '2020-07-20 00:37:01', 200000, 1, 2),
+(1, 2013137279, '2020-07-23 04:21:54', 200000, 1, 2),
 (2, 0, NULL, 0, 0, 3);
 
 -- --------------------------------------------------------
@@ -120,7 +120,8 @@ INSERT INTO `initialog` (`id`, `nik`, `lastinitialdate`, `modal`, `shift`, `idto
 (2, 2013131313, '2020-07-19 22:27:17', 200000, 2, 2),
 (3, 2013131777, '2020-07-19 22:33:52', 200000, 1, 3),
 (4, 2013131777, '2020-07-19 22:39:29', 200000, 2, 3),
-(6, 2013131313, '2020-07-20 00:37:01', 200000, 1, 2);
+(6, 2013131313, '2020-07-20 00:37:01', 200000, 1, 2),
+(7, 2013137279, '2020-07-23 04:21:54', 200000, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -133,13 +134,6 @@ CREATE TABLE `kasir_keranjang` (
   `product_id` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data untuk tabel `kasir_keranjang`
---
-
-INSERT INTO `kasir_keranjang` (`id`, `product_id`, `quantity`) VALUES
-(1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -222,7 +216,11 @@ INSERT INTO `lookupvalue` (`id`, `desc`, `valuetype`, `singkatan`) VALUES
 (31, 'Rejected', '1009', 'Rjctd'),
 (32, '<span class=\"badge badge-danger\">Belum Diproses</span>', '1010', '-'),
 (34, '<span class=\"badge badge-warning\">Sedang Diproses</span>', '1010', '-'),
-(35, '<span class=\"badge badge-success\">Selesai Diproses</span>', '1010', '-');
+(35, '<span class=\"badge badge-success\">Selesai Diproses</span>', '1010', '-'),
+(36, 'Es Batu/Es Krim', '1012', 'ES'),
+(37, 'Susu', '1012', 'SS'),
+(38, 'Bahan Baku', '1012', 'BB'),
+(39, 'Plastic Cutlery', '1012', 'PC');
 
 -- --------------------------------------------------------
 
@@ -273,17 +271,17 @@ CREATE TABLE `penjualan` (
 --
 
 INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `total_bayar`, `keuntungan`, `kembalian`, `tanggal_transaksi`, `idtoko`) VALUES
-(1, '33701240', 'Danielle Kihn DDS', 'fugiat', 28425, 21768, 158230, 199896, '2020-07-09 03:58:15', 1),
-(2, '22190451', 'Mohammed Hilpert', 'temporibus', 24926, 111803, 12029, 35166, '2020-07-05 17:18:04', 1),
+(1, '33701240', 'Danielle Kihn DDS', 'fugiat', 28425, 21768, 158230, 199896, '2020-07-09 03:58:15', 2),
+(2, '22190451', 'Mohammed Hilpert', 'temporibus', 24926, 111803, 12029, 35166, '2020-07-05 17:18:04', 2),
 (3, '55336536', 'Kip Hills', 'quaerat', 67377, 63516, 167712, 145910, '2020-07-09 12:47:51', 3),
-(4, '64102993', 'Lydia Muller', 'alias', 84316, 119539, 22938, 51171, '2020-07-05 13:12:28', 1),
+(4, '64102993', 'Lydia Muller', 'alias', 84316, 119539, 22938, 51171, '2020-07-05 13:12:28', 2),
 (5, '35557302', 'Prof. Carrie Mann', 'sint', 64184, 121289, 81707, 151538, '2020-07-14 00:30:04', 4),
 (6, '16074606', 'Miss Helen Spinka IV', 'doloremque', 45444, 70704, 112139, 141912, '2020-07-18 18:52:47', 2),
 (7, '72391839', 'Evangeline Ledner', 'aut', 186829, 66974, 47741, 137049, '2020-07-12 13:02:19', 3),
 (8, '06404062', 'Hassie Rodriguez', 'occaecati', 148387, 104162, 80726, 24965, '2020-07-04 01:35:46', 2),
 (9, '44676209', 'Gerardo Moore', 'molestias', 10244, 148881, 114273, 50529, '2020-07-10 17:06:42', 2),
 (10, '88153513', 'Torrance Gusikowski', 'ratione', 17700, 102048, 59403, 184733, '2020-07-16 09:10:54', 2),
-(11, '93271622', 'Kenton Bogan', 'eveniet', 88056, 177727, 10645, 158082, '2020-07-04 08:39:46', 1),
+(11, '93271622', 'Kenton Bogan', 'eveniet', 88056, 177727, 10645, 158082, '2020-07-04 08:39:46', 2),
 (12, '80378914', 'Napoleon Hammes', 'et', 60781, 20471, 75478, 75398, '2020-07-21 00:44:50', 3),
 (13, '03017722', 'Lawson Gorczany', 'fuga', 167193, 92786, 26334, 38708, '2020-07-13 07:48:38', 3),
 (14, '52795633', 'Elian Doyle', 'voluptate', 194461, 17932, 38789, 30807, '2020-07-04 11:14:24', 2),
@@ -291,7 +289,7 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (16, '52042300', 'Glenda Kirlin I', 'nihil', 74392, 99885, 84807, 19648, '2020-07-16 08:38:43', 3),
 (17, '64783130', 'Cali Mohr', 'blanditiis', 35163, 86515, 171423, 129176, '2020-07-09 05:29:40', 3),
 (18, '70551396', 'Hadley Wolf', 'animi', 175690, 152889, 128068, 56148, '2020-07-16 19:48:55', 3),
-(19, '13723859', 'Dora Witting', 'possimus', 113286, 175852, 19164, 174481, '2020-06-24 16:43:54', 1),
+(19, '13723859', 'Dora Witting', 'possimus', 113286, 175852, 19164, 174481, '2020-06-24 16:43:54', 2),
 (20, '31767767', 'Xzavier Bosco', 'ipsa', 73546, 121641, 145352, 186704, '2020-06-28 23:56:26', 2),
 (21, '11500469', 'Ashleigh Leuschke', 'voluptas', 67632, 73128, 186430, 113707, '2020-07-05 04:44:13', 3),
 (22, '75520212', 'Mr. Hoyt Botsford DVM', 'aut', 87131, 20729, 101284, 45285, '2020-07-05 13:37:40', 3),
@@ -302,12 +300,12 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (27, '00115568', 'Dr. Rashad Willms', 'sed', 38828, 151134, 118287, 54534, '2020-07-04 05:12:31', 3),
 (28, '01494280', 'Miss Marianne Windler', 'ut', 178446, 190420, 33110, 146814, '2020-06-27 12:41:45', 4),
 (29, '28844501', 'Archibald Mosciski II', 'nihil', 33251, 28178, 132973, 182815, '2020-07-15 04:50:58', 4),
-(30, '03700433', 'Prof. Kaitlin Pacocha III', 'ipsum', 59951, 123303, 151625, 170037, '2020-06-25 05:56:40', 1),
+(30, '03700433', 'Prof. Kaitlin Pacocha III', 'ipsum', 59951, 123303, 151625, 170037, '2020-06-25 05:56:40', 2),
 (31, '45509070', 'Dejuan Mraz', 'similique', 186699, 18562, 108312, 87972, '2020-07-06 16:32:21', 3),
 (32, '18319699', 'Adam Paucek', 'tempora', 190131, 102728, 85369, 156919, '2020-07-16 15:50:21', 3),
 (33, '60633880', 'Amari Balistreri', 'magnam', 106667, 106730, 46421, 192117, '2020-07-14 17:35:33', 4),
 (34, '70910308', 'Titus Mitchell', 'suscipit', 139940, 74271, 80570, 94064, '2020-07-10 19:33:42', 2),
-(35, '88032771', 'Amos Heidenreich', 'labore', 188486, 11731, 12837, 107103, '2020-06-28 03:09:15', 1),
+(35, '88032771', 'Amos Heidenreich', 'labore', 188486, 11731, 12837, 107103, '2020-06-28 03:09:15', 2),
 (36, '33379272', 'Prof. Gabriella Jones III', 'at', 152469, 108493, 186318, 71677, '2020-07-16 11:37:06', 2),
 (37, '24565677', 'Isaias Volkman', 'molestias', 45181, 194756, 186193, 11076, '2020-07-01 10:41:10', 2),
 (38, '53291035', 'Carole Shanahan', 'non', 108044, 37889, 195041, 107440, '2020-07-10 11:44:06', 3),
@@ -315,7 +313,7 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (40, '16871663', 'Gussie Gerhold', 'minima', 56770, 10526, 113250, 46505, '2020-07-12 00:45:47', 3),
 (41, '63317206', 'Clement Hilpert', 'nobis', 194725, 136873, 104026, 48924, '2020-06-28 16:03:40', 4),
 (42, '79738200', 'Dr. Maryjane Feeney', 'eligendi', 49657, 81968, 22420, 96751, '2020-07-06 20:11:55', 4),
-(43, '75700508', 'Nicolette Will', 'est', 183827, 24911, 33375, 197398, '2020-07-10 08:04:39', 1),
+(43, '75700508', 'Nicolette Will', 'est', 183827, 24911, 33375, 197398, '2020-07-10 08:04:39', 2),
 (44, '35871705', 'Lysanne Cummerata', 'quod', 84539, 87997, 64821, 143446, '2020-07-13 07:34:06', 2),
 (45, '59617013', 'Adrian Ferry', 'nesciunt', 197477, 17242, 19784, 102302, '2020-07-09 20:16:41', 4),
 (46, '39275387', 'Joanne Larson', 'facilis', 61312, 93028, 107517, 43329, '2020-07-06 22:59:41', 2),
@@ -323,26 +321,26 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (48, '10293874', 'Flavie Littel', 'maiores', 10456, 15791, 139765, 14869, '2020-07-09 18:39:13', 4),
 (49, '57634708', 'Sammy Gulgowski', 'excepturi', 57594, 10477, 172359, 21101, '2020-07-15 11:31:46', 4),
 (50, '54420359', 'Juliana Prohaska IV', 'sed', 75824, 28686, 11502, 68785, '2020-06-28 04:32:38', 3),
-(51, '02548654', 'Jeanne Ondricka', 'et', 118988, 115647, 152609, 82483, '2020-07-04 01:46:34', 1),
-(52, '11149422', 'Jackeline Cole', 'soluta', 76977, 173139, 44903, 20282, '2020-06-29 20:23:52', 1),
+(51, '02548654', 'Jeanne Ondricka', 'et', 118988, 115647, 152609, 82483, '2020-07-04 01:46:34', 2),
+(52, '11149422', 'Jackeline Cole', 'soluta', 76977, 173139, 44903, 20282, '2020-06-29 20:23:52', 2),
 (53, '61137844', 'Marco O\'Hara', 'autem', 139087, 29654, 177355, 147877, '2020-06-28 23:30:48', 3),
 (54, '64911397', 'Dr. Brandyn Satterfield V', 'voluptatum', 166503, 127408, 128597, 123785, '2020-06-25 12:01:32', 2),
 (55, '90486579', 'Jada Boehm', 'ut', 151068, 192817, 146365, 165342, '2020-07-14 00:16:29', 3),
 (56, '20769178', 'Carolyne Zieme', 'odit', 199403, 52421, 39495, 189146, '2020-07-21 08:44:45', 2),
 (57, '50833535', 'Vivianne Rohan', 'maxime', 85218, 136088, 159119, 12033, '2020-06-28 06:16:20', 2),
 (58, '21915345', 'Dr. Reece Hoppe', 'repudiandae', 115597, 171720, 149023, 150351, '2020-06-28 10:41:28', 4),
-(59, '28932215', 'Buck Gutmann', 'delectus', 46919, 64446, 113380, 175087, '2020-07-15 13:49:04', 1),
+(59, '28932215', 'Buck Gutmann', 'delectus', 46919, 64446, 113380, 175087, '2020-07-15 13:49:04', 2),
 (60, '05982523', 'Prof. Zackery Prohaska DVM', 'in', 175246, 97021, 193742, 137107, '2020-07-21 15:14:20', 2),
-(61, '90756290', 'Mrs. Bria Leannon', 'ex', 103123, 87983, 95598, 90377, '2020-06-28 09:10:56', 1),
+(61, '90756290', 'Mrs. Bria Leannon', 'ex', 103123, 87983, 95598, 90377, '2020-06-28 09:10:56', 2),
 (62, '70870848', 'Ignacio Gusikowski', 'accusantium', 46039, 103205, 168475, 166158, '2020-06-30 07:11:19', 3),
 (63, '59764984', 'Kaitlyn Stokes Sr.', 'occaecati', 79416, 130869, 13580, 31650, '2020-06-22 01:09:24', 3),
 (64, '09443976', 'Miss Angelica Turner', 'consequatur', 170397, 128762, 102481, 58717, '2020-07-12 14:35:49', 2),
-(65, '72170458', 'Lindsey Kunde', 'et', 140633, 132641, 70645, 153358, '2020-06-26 04:20:11', 1),
+(65, '72170458', 'Lindsey Kunde', 'et', 140633, 132641, 70645, 153358, '2020-06-26 04:20:11', 2),
 (66, '75166397', 'Mr. Ramon Toy', 'repellat', 84842, 123704, 180433, 39123, '2020-07-07 02:00:10', 2),
 (67, '17099271', 'Jaiden Witting', 'ut', 191400, 61516, 127768, 70501, '2020-07-16 09:59:33', 2),
 (68, '93797221', 'Miss Tabitha Mayer', 'laboriosam', 163040, 101849, 194580, 30052, '2020-07-15 09:11:54', 4),
 (69, '47844896', 'Kylee Stamm III', 'ut', 94047, 59369, 60394, 134315, '2020-07-10 15:06:34', 2),
-(70, '37271725', 'Mylene King', 'iusto', 16625, 96319, 140884, 169355, '2020-07-21 01:29:33', 1),
+(70, '37271725', 'Mylene King', 'iusto', 16625, 96319, 140884, 169355, '2020-07-21 01:29:33', 2),
 (71, '29322374', 'Nayeli Hermann', 'minima', 95520, 142803, 44485, 31459, '2020-07-19 08:31:22', 3),
 (72, '92600263', 'Queen Wintheiser', 'eum', 80072, 77354, 155971, 12972, '2020-06-25 17:11:32', 3),
 (73, '85527775', 'Ole Wolff Jr.', 'consequatur', 73076, 119418, 163823, 42454, '2020-07-11 21:24:09', 2),
@@ -353,11 +351,11 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (78, '96821060', 'Brandi Harvey', 'quo', 160295, 138731, 56252, 107779, '2020-07-19 10:08:45', 2),
 (79, '70673494', 'Destany Koelpin', 'expedita', 91993, 135916, 56664, 115839, '2020-07-09 15:01:46', 3),
 (80, '37466640', 'Cielo Sauer V', 'esse', 92689, 32670, 120921, 13505, '2020-07-17 10:43:01', 3),
-(81, '52407116', 'Mr. Harley Kreiger I', 'repellat', 166404, 177211, 183999, 65791, '2020-07-19 05:24:44', 1),
+(81, '52407116', 'Mr. Harley Kreiger I', 'repellat', 166404, 177211, 183999, 65791, '2020-07-19 05:24:44', 2),
 (82, '68795481', 'Coy Johns', 'magni', 40404, 83876, 128278, 63341, '2020-07-08 14:02:37', 4),
-(83, '58672693', 'Arlo Hudson', 'ex', 120391, 94259, 150585, 56433, '2020-06-30 17:16:08', 1),
+(83, '58672693', 'Arlo Hudson', 'ex', 120391, 94259, 150585, 56433, '2020-06-30 17:16:08', 2),
 (84, '70699692', 'Alex Windler Jr.', 'quos', 58150, 73173, 135960, 142767, '2020-07-10 00:31:21', 2),
-(85, '42837343', 'Mrs. Ramona Rau', 'asperiores', 69625, 163966, 68593, 40227, '2020-06-26 12:01:00', 1),
+(85, '42837343', 'Mrs. Ramona Rau', 'asperiores', 69625, 163966, 68593, 40227, '2020-06-26 12:01:00', 2),
 (86, '01501117', 'Conor Reynolds', 'nam', 48726, 163949, 31432, 51517, '2020-07-17 20:48:04', 2),
 (87, '38259494', 'Nella Weissnat', 'vel', 187015, 13655, 115073, 80266, '2020-07-07 18:49:35', 2),
 (88, '74161355', 'Etha McCullough', 'enim', 82561, 175372, 120285, 25789, '2020-06-22 10:36:35', 2),
@@ -365,14 +363,15 @@ INSERT INTO `penjualan` (`id`, `struk`, `kasir`, `member`, `total_belanja`, `tot
 (90, '79530590', 'Consuelo Hammes', 'alias', 32111, 114079, 185037, 46701, '2020-06-22 05:12:18', 3),
 (91, '24381543', 'Barney Sporer', 'nam', 186101, 57431, 189795, 144133, '2020-07-15 06:49:01', 3),
 (92, '37817565', 'Rafael Gerhold', 'dicta', 182305, 141118, 170332, 27536, '2020-07-04 02:09:58', 4),
-(93, '98785780', 'Magdalena Weimann', 'impedit', 146631, 83335, 136758, 102631, '2020-06-28 19:01:42', 1),
+(93, '98785780', 'Magdalena Weimann', 'impedit', 146631, 83335, 136758, 102631, '2020-06-28 19:01:42', 2),
 (94, '54632196', 'Green Berge', 'perspiciatis', 61144, 146909, 51209, 158646, '2020-07-12 21:02:42', 4),
 (95, '71994819', 'David Quigley', 'ut', 129706, 129602, 110516, 60834, '2020-06-24 16:28:58', 3),
 (96, '82443733', 'Dr. Jackeline Kris', 'reprehenderit', 19675, 182442, 72584, 189996, '2020-07-05 20:28:09', 2),
-(97, '20315955', 'Mr. Willis Goyette', 'eos', 93112, 120281, 67180, 54059, '2020-07-06 20:39:02', 1),
-(98, '53576866', 'Rosalyn Maggio', 'itaque', 129494, 67275, 73043, 130350, '2020-07-01 08:39:48', 1),
+(97, '20315955', 'Mr. Willis Goyette', 'eos', 93112, 120281, 67180, 54059, '2020-07-06 20:39:02', 2),
+(98, '53576866', 'Rosalyn Maggio', 'itaque', 129494, 67275, 73043, 130350, '2020-07-01 08:39:48', 2),
 (99, '52595707', 'Mr. Eleazar Conn DDS', 'aliquam', 11571, 61816, 44392, 136490, '2020-06-25 06:24:09', 2),
-(100, '40384245', 'Margarett Block', 'sunt', 164270, 20028, 80731, 93375, '2020-07-03 21:40:37', 4);
+(100, '40384245', 'Margarett Block', 'sunt', 164270, 20028, 80731, 93375, '2020-07-03 21:40:37', 4),
+(101, '0000000101', '2013131313', 'Umum', 23000, 23000, 2000, 0, '2020-07-22 02:44:37', 2);
 
 -- --------------------------------------------------------
 
@@ -398,7 +397,8 @@ INSERT INTO `penjualan_detail` (`id`, `penjualan_id`, `product_id`, `quantity`) 
 (4, 4, 1, 10),
 (5, 5, 1, 10),
 (6, 5, 13, 5),
-(8, 6, 2, 7);
+(8, 6, 2, 7),
+(9, 101, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -430,12 +430,13 @@ INSERT INTO `penjualan_non_tunai` (`id`, `no_struk`, `no_kartu`, `bank`, `approv
 
 CREATE TABLE `permintaan_barang` (
   `id` int(11) NOT NULL,
-  `kodesupplier` int(11) NOT NULL,
+  `kodesupplier` int(11) DEFAULT NULL,
   `kodepermintaan` varchar(128) NOT NULL,
   `idtoko` int(11) NOT NULL,
   `tanggal` datetime NOT NULL,
   `idbarista` int(11) NOT NULL,
   `status` int(1) NOT NULL,
+  `kategori` int(11) NOT NULL,
   `is_deleted` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -443,24 +444,35 @@ CREATE TABLE `permintaan_barang` (
 -- Dumping data untuk tabel `permintaan_barang`
 --
 
-INSERT INTO `permintaan_barang` (`id`, `kodesupplier`, `kodepermintaan`, `idtoko`, `tanggal`, `idbarista`, `status`, `is_deleted`) VALUES
-(1, 2, 'RF0000001', 2, '2020-06-22 01:44:21', 4, 30, 0),
-(2, 1, 'RF0000002', 2, '2020-06-22 01:49:19', 4, 30, 0),
-(3, 2, 'RF0000003', 2, '2020-06-22 23:14:38', 4, 30, 0),
-(4, 1, 'RF0000004', 2, '2020-07-09 20:39:41', 3, 30, 0),
-(5, 1, 'RF0000005', 2, '2020-07-14 21:22:08', 3, 30, 0),
-(6, 1, 'RF0000006', 2, '2020-07-14 21:23:39', 3, 30, 0),
-(7, 1, 'RF0000007', 2, '2020-07-14 21:24:36', 3, 30, 0),
-(8, 1, 'RF0000008', 2, '2020-07-14 23:51:49', 3, 30, 0),
-(9, 1, 'RF0000009', 2, '2020-07-15 02:16:28', 3, 30, 0),
-(10, 1, 'RF0000010', 3, '2020-07-16 23:32:57', 6, 30, 0),
-(11, 1, 'RF0000011', 2, '2020-07-16 23:46:38', 3, 30, 0),
-(12, 1, 'RF0000012', 2, '2020-07-17 00:19:16', 3, 30, 0),
-(13, 1, 'RF0000013', 3, '2020-07-18 21:46:05', 6, 30, 0),
-(14, 2, 'RF0000014', 3, '2020-07-18 22:27:59', 6, 28, 0),
-(15, 2, 'RF0000015', 4, '2020-07-18 22:28:59', 5, 30, 0),
-(16, 1, 'RF0000016', 4, '2020-07-18 22:41:49', 5, 28, 0),
-(17, 1, 'RF0000017', 5, '2020-07-18 22:43:18', 7, 30, 0);
+INSERT INTO `permintaan_barang` (`id`, `kodesupplier`, `kodepermintaan`, `idtoko`, `tanggal`, `idbarista`, `status`, `kategori`, `is_deleted`) VALUES
+(1, 2, 'RF0000001', 2, '2020-06-22 01:44:21', 4, 30, 0, 0),
+(2, 1, 'RF0000002', 2, '2020-06-22 01:49:19', 4, 30, 0, 0),
+(3, 2, 'RF0000003', 2, '2020-06-22 23:14:38', 4, 30, 0, 0),
+(4, 1, 'RF0000004', 2, '2020-07-09 20:39:41', 3, 30, 0, 0),
+(5, 1, 'RF0000005', 2, '2020-07-14 21:22:08', 3, 30, 0, 0),
+(6, 1, 'RF0000006', 2, '2020-07-14 21:23:39', 3, 30, 0, 0),
+(7, 1, 'RF0000007', 2, '2020-07-14 21:24:36', 3, 30, 0, 0),
+(8, 1, 'RF0000008', 2, '2020-07-14 23:51:49', 3, 30, 0, 0),
+(9, 1, 'RF0000009', 2, '2020-07-15 02:16:28', 3, 30, 0, 0),
+(10, 1, 'RF0000010', 3, '2020-07-16 23:32:57', 6, 30, 0, 0),
+(11, 1, 'RF0000011', 2, '2020-07-16 23:46:38', 3, 30, 0, 0),
+(12, 1, 'RF0000012', 2, '2020-07-17 00:19:16', 3, 30, 0, 0),
+(13, 1, 'RF0000013', 3, '2020-07-18 21:46:05', 6, 30, 0, 0),
+(14, 2, 'RF0000014', 3, '2020-07-18 22:27:59', 6, 28, 0, 0),
+(15, 2, 'RF0000015', 4, '2020-07-18 22:28:59', 5, 30, 0, 0),
+(16, 1, 'RF0000016', 4, '2020-07-18 22:41:49', 5, 28, 0, 0),
+(17, 1, 'RF0000017', 5, '2020-07-18 22:43:18', 7, 30, 0, 0),
+(18, 3, 'RF0000018', 2, '2020-07-22 19:49:19', 4, 30, 0, 0),
+(19, 1, 'RF0000019', 2, '2020-07-22 23:48:05', 4, 28, 0, 1),
+(20, 1, 'RF0000020', 2, '2020-07-22 23:48:49', 4, 28, 0, 1),
+(21, 3, 'RF0000021', 2, '2020-07-22 23:55:04', 4, 28, 0, 1),
+(22, 3, 'RF0000022', 2, '2020-07-23 00:02:24', 4, 30, 0, 0),
+(23, 1, 'RF0000023', 2, '2020-07-25 22:12:11', 3, 28, 0, 1),
+(24, 1, 'RF0000024', 2, '2020-07-25 22:37:12', 3, 30, 0, 0),
+(25, 1, 'RF0000025', 2, '2020-07-25 22:44:52', 3, 30, 36, 0),
+(26, 3, 'RF0000026', 2, '2020-07-26 00:29:48', 3, 30, 36, 0),
+(27, 2, 'RF0000027', 2, '2020-07-26 00:44:59', 3, 30, 37, 0),
+(28, 5, 'RF0000028', 2, '2020-07-26 00:58:07', 3, 30, 38, 0);
 
 -- --------------------------------------------------------
 
@@ -472,9 +484,6 @@ CREATE TABLE `permintaan_barang_detail` (
   `id` int(11) NOT NULL,
   `kodepermintaan` varchar(128) NOT NULL,
   `prdcd` varchar(128) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `kategori` int(11) NOT NULL,
-  `satuan` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -482,33 +491,42 @@ CREATE TABLE `permintaan_barang_detail` (
 -- Dumping data untuk tabel `permintaan_barang_detail`
 --
 
-INSERT INTO `permintaan_barang_detail` (`id`, `kodepermintaan`, `prdcd`, `harga`, `kategori`, `satuan`, `jumlah`) VALUES
-(1, 'RF0000001', '20034422', 20000, 6, 1, 10),
-(2, 'RF0000001', '20410023', 30000, 9, 2, 10),
-(3, 'RF0000002', '20034422', 10000, 6, 1, 5),
-(4, 'RF0000003', '20410023', 5000, 6, 1, 10),
-(5, 'RF0000003', '20034422', 20000, 6, 1, 5),
-(6, 'RF0000004', '20034422', 20000, 7, 2, 5),
-(7, 'RF0000005', '20034422', 5000, 6, 1, 5),
-(8, 'RF0000007', '20034422', 500000, 7, 1, 10),
-(9, 'RF0000006', '20034422', 0, 6, 1, 7),
-(10, 'RF0000008', '20034422', 0, 6, 1, 3),
-(11, 'RF0000008', '20410023', 0, 6, 2, 5),
-(12, 'RF0000009', '20034422', 0, 6, 2, 10),
-(13, 'RF0000009', '20410023', 0, 7, 1, 5),
-(14, 'RF0000010', '20034422', 0, 6, 1, 100),
-(15, 'RF0000010', '20410023', 0, 7, 1, 100),
-(17, 'RF0000011', '20410072', 0, 6, 1, 100),
-(18, 'RF0000012', '20410025', 0, 6, 1, 5),
-(19, 'RF0000013', '20034422', 0, 6, 1, 10),
-(20, 'RF0000013', '20410072', 0, 6, 1, 100),
-(21, 'RF0000013', '20410025', 0, 6, 1, 100),
-(22, 'RF0000015', '20034422', 0, 6, 1, 100),
-(23, 'RF0000017', '20034422', 0, 6, 1, 10),
-(24, 'RF0000017', '20410023', 0, 6, 1, 10),
-(25, 'RF0000017', '20410072', 0, 6, 1, 10),
-(26, 'RF0000017', '20410025', 0, 6, 1, 10),
-(27, 'RF0000017', '20410056', 0, 6, 1, 10);
+INSERT INTO `permintaan_barang_detail` (`id`, `kodepermintaan`, `prdcd`, `jumlah`) VALUES
+(1, 'RF0000001', '20034422', 10),
+(2, 'RF0000001', '20410023', 10),
+(3, 'RF0000002', '20034422', 5),
+(4, 'RF0000003', '20410023', 10),
+(5, 'RF0000003', '20034422', 5),
+(6, 'RF0000004', '20034422', 5),
+(7, 'RF0000005', '20034422', 5),
+(8, 'RF0000007', '20034422', 10),
+(9, 'RF0000006', '20034422', 7),
+(10, 'RF0000008', '20034422', 3),
+(11, 'RF0000008', '20410023', 5),
+(12, 'RF0000009', '20034422', 10),
+(13, 'RF0000009', '20410023', 5),
+(14, 'RF0000010', '20034422', 100),
+(15, 'RF0000010', '20410023', 100),
+(17, 'RF0000011', '20410072', 100),
+(18, 'RF0000012', '20410025', 5),
+(19, 'RF0000013', '20034422', 10),
+(20, 'RF0000013', '20410072', 100),
+(21, 'RF0000013', '20410025', 100),
+(22, 'RF0000015', '20034422', 100),
+(23, 'RF0000017', '20034422', 10),
+(24, 'RF0000017', '20410023', 10),
+(25, 'RF0000017', '20410072', 10),
+(26, 'RF0000017', '20410025', 10),
+(27, 'RF0000017', '20410056', 10),
+(28, 'RF0000018', '20034422', 10),
+(29, 'RF0000018', '20410025', 10),
+(30, 'RF0000022', '20034422', 20),
+(31, 'RF0000022', '20410072', 8),
+(32, 'RF0000024', '20034422', 8),
+(33, 'RF0000025', '20034422', 7),
+(35, 'RF0000026', '20034422', 10),
+(36, 'RF0000027', '20410023', 10),
+(37, 'RF0000028', '20410072', 10);
 
 -- --------------------------------------------------------
 
@@ -532,9 +550,9 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `prdcd`, `singkatan`, `desc`, `unit`, `size`, `price`, `sellingprice`) VALUES
-(1, '20034422', 'P/C Hot Ice', 'Point Coffe Panas Dingin Panas', 1, 14, 21000, 23000),
-(2, '20410023', 'Yummy Coffee', 'Yummy Coffee', 2, 15, 20000, 30000),
-(13, '20410042', 'Barang Aja', 'Barang Aja', 2, 15, 13000, 16000);
+(1, '20034422', 'Espresso', 'Point Coffe Panas Dingin Panas', 1, 14, 21000, 23000),
+(2, '20410023', 'Affogato', 'Affogato', 2, 15, 20000, 30000),
+(13, '20410042', 'Cold Brew - Caramel', 'Cold Brew - Caramel', 2, 15, 13000, 16000);
 
 -- --------------------------------------------------------
 
@@ -596,7 +614,14 @@ INSERT INTO `proses_barang` (`id`, `surat_jalan`, `supplier`, `kodepermintaan`, 
 (12, 'SJ12938018', 'S6JH - PT Indogrosir 6', 'RF0000012', 5, '2020-07-17 01:10:55', 35, 2),
 (13, 'SJ120398', 'S6JH - PT Indogrosir 6', 'RF0000013', 210, '2020-07-18 22:07:15', 35, 3),
 (14, 'SJ091231', 'HD12 - HD Supplier', 'RF0000015', 100, '2020-07-18 22:39:40', 35, 4),
-(15, '019283019823', 'S6JH - PT Indogrosir 6', 'RF0000017', 50, '2020-07-18 22:44:55', 35, 5);
+(15, '019283019823', 'S6JH - PT Indogrosir 6', 'RF0000017', 50, '2020-07-18 22:44:55', 35, 5),
+(16, '7878', 'S8J6 - PT Diamond Ice', 'RF0000018', 20, '2020-07-22 23:45:53', 35, 2),
+(17, '65465', 'S8J6 - PT Diamond Ice', 'RF0000022', 28, '2020-07-25 22:33:53', 35, 2),
+(18, 'AGCAS0912', 'S6JH - PT Indogrosir 6', 'RF0000024', 8, '2020-07-26 01:33:56', 35, 2),
+(19, 'ASKJH', 'S6JG - PT Indogrosir 7', 'RF0000028', 10, '2020-07-26 01:29:59', 35, 2),
+(20, '98712009', 'HD12 - HD Supplier', 'RF0000027', 10, '2020-07-26 01:31:57', 35, 2),
+(21, 'AVSSCA0912', 'S8J6 - PT Diamond Ice', 'RF0000026', 10, '2020-07-26 01:33:37', 35, 2),
+(22, 'ASGEUA01928', 'S6JH - PT Indogrosir 6', 'RF0000025', 7, '2020-07-26 01:41:39', 35, 2);
 
 -- --------------------------------------------------------
 
@@ -645,7 +670,15 @@ INSERT INTO `proses_barang_detail` (`id`, `surat_jalan`, `prdcd`, `harga`, `kate
 (37, '019283019823', '20410023', 0, 6, 1, 10, 50000),
 (38, '019283019823', '20410072', 0, 6, 1, 10, 200000),
 (39, '019283019823', '20410025', 0, 6, 1, 10, 130000),
-(40, '019283019823', '20410056', 0, 6, 1, 10, 20000);
+(40, '019283019823', '20410056', 0, 6, 1, 10, 20000),
+(41, '7878', '20034422', 0, 0, 0, 10, 200000),
+(42, '7878', '20410025', 0, 0, 0, 10, 130000),
+(43, '65465', '20034422', 0, 0, 0, 20, 400000),
+(44, 'ASKJH', '20410072', 0, 0, 0, 10, 200000),
+(45, '98712009', '20410023', 0, 0, 0, 10, 50000),
+(46, 'AVSSCA0912', '20034422', 0, 0, 0, 10, 200000),
+(47, 'AGCAS0912', '20034422', 0, 0, 0, 8, 160000),
+(48, 'ASGEUA01928', '20034422', 0, 0, 0, 7, 140000);
 
 -- --------------------------------------------------------
 
@@ -657,9 +690,6 @@ CREATE TABLE `proses_barang_detail_temp` (
   `id` int(11) NOT NULL,
   `surat_jalan` varchar(128) NOT NULL,
   `prdcd` varchar(128) NOT NULL,
-  `harga` int(11) NOT NULL,
-  `kategori` int(11) NOT NULL,
-  `satuan` int(11) NOT NULL,
   `jumlah` int(11) NOT NULL,
   `total` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -734,19 +764,20 @@ CREATE TABLE `stock` (
   `deskripsi` varchar(30) NOT NULL,
   `harga` int(11) NOT NULL,
   `kategori` int(11) NOT NULL,
-  `satuan` int(11) NOT NULL
+  `satuan` int(11) NOT NULL,
+  `jenis` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `stock`
 --
 
-INSERT INTO `stock` (`id`, `prdcd`, `deskripsi`, `harga`, `kategori`, `satuan`) VALUES
-(2, '20034422', 'Cokelat Panas', 20000, 6, 1),
-(3, '20410023', 'Susu Kaleng', 5000, 9, 2),
-(4, '20410072', 'Barang Aja', 20000, 8, 3),
-(5, '20410025', 'Milk', 13000, 7, 2),
-(6, '20410056', 'Test', 2000, 6, 1);
+INSERT INTO `stock` (`id`, `prdcd`, `deskripsi`, `harga`, `kategori`, `satuan`, `jenis`) VALUES
+(2, '20034422', 'Es Batu', 20000, 6, 1, 36),
+(3, '20410023', 'Diamond Milk', 5000, 9, 2, 37),
+(4, '20410072', 'Oreo Vanilla 137 gr', 20000, 8, 3, 38),
+(5, '20410025', 'Cup 16 Oz', 13000, 7, 2, 39),
+(6, '20410056', 'Cup 8 Oz', 2000, 6, 1, 39);
 
 -- --------------------------------------------------------
 
@@ -766,12 +797,12 @@ CREATE TABLE `stock_toko` (
 --
 
 INSERT INTO `stock_toko` (`id`, `idtoko`, `idstock`, `jumlah`) VALUES
-(1, 2, 2, 22),
-(2, 2, 3, 7),
+(1, 2, 2, 77),
+(2, 2, 3, 17),
 (3, 3, 2, 110),
 (4, 3, 3, 100),
-(5, 2, 4, 100),
-(6, 2, 5, 5),
+(5, 2, 4, 110),
+(6, 2, 5, 15),
 (7, 3, 4, 100),
 (8, 3, 5, 100),
 (9, 4, 2, 100),
@@ -794,17 +825,20 @@ CREATE TABLE `supplier` (
   `alamat1` varchar(40) NOT NULL,
   `alamat2` varchar(40) NOT NULL,
   `telp1` varchar(13) NOT NULL,
-  `telp2` varchar(13) NOT NULL
+  `telp2` varchar(13) NOT NULL,
+  `kategori` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `supplier`
 --
 
-INSERT INTO `supplier` (`id`, `supco`, `nama_supplier`, `alamat1`, `alamat2`, `telp1`, `telp2`) VALUES
-(1, 'S6JH', 'PT Indogrosir 6', 'Jakarta Pusat', 'Jl A Yani KM 12', '0511232134', '0511255882'),
-(2, 'HD12', 'HD Supplier', 'Banjarmasin', 'Banjarmasin', '123123', '1123123'),
-(3, 'S8J6', 'PT Diamond Ice', 'Banjarmasin', 'Banjarmasin', '0811127621', '0811127621');
+INSERT INTO `supplier` (`id`, `supco`, `nama_supplier`, `alamat1`, `alamat2`, `telp1`, `telp2`, `kategori`) VALUES
+(1, 'S6JH', 'PT Indogrosir 6', 'Jakarta Pusat', 'Jl A Yani KM 12', '0511232134', '0511255882', 36),
+(2, 'HD12', 'HD Supplier', 'Banjarmasin', 'Banjarmasin', '123123', '1123123', 37),
+(3, 'S8J6', 'PT Diamond Ice', 'Banjarmasin', 'Banjarmasin', '0811127621', '0811127621', 36),
+(4, 'S8J7', 'PT Diamond', 'Banjarmasin', 'Banjarmasin', '123123', '1123123', 39),
+(5, 'S6JG', 'PT Indogrosir 7', 'Banjarmasin', 'Banjarmasin', '0811127621', '0811127621', 38);
 
 -- --------------------------------------------------------
 
@@ -824,19 +858,23 @@ CREATE TABLE `toko` (
   `kodepos` varchar(5) NOT NULL,
   `buka` date NOT NULL,
   `namafrc` varchar(30) NOT NULL,
-  `ka_toko` varchar(30) NOT NULL
+  `ka_toko` varchar(30) NOT NULL,
+  `latitude` varchar(128) NOT NULL,
+  `longitude` varchar(128) NOT NULL,
+  `is_deleted` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `toko`
 --
 
-INSERT INTO `toko` (`id`, `kodetoko`, `nama_toko`, `alamat`, `kota`, `rt`, `rw`, `telp`, `kodepos`, `buka`, `namafrc`, `ka_toko`) VALUES
-(1, 'OFC0', 'PT. Indomarco Prismatama', 'Jalan A Yani KM 12.2', 'Kab. Banjar', '001', '001', '0511608159', '70712', '2015-05-01', 'PT.Indomarco Prismatama', 'Dika'),
-(2, 'TD7A', 'IDM SUKAMARA', 'Banjarbaru', 'Banjarbaru', '006', '002', '0811882288', '70723', '2020-06-13', 'PT.Indomarco Prismatama', 'Dika'),
-(3, 'TFCP', 'IDM PRAMUKA 87', 'Banjarmasin', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-01', 'PT.Indomarco Prismatama', 'Tidak Diketahui'),
-(4, 'TFKM', 'IDM KELAYAN A', 'Banjarmasin', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-14', 'PT.Indomarco Prismatama', 'Tidak Diketahui'),
-(5, 'PUHN', 'PT. Indomarco Prismatama', 'Banjarbaru', 'Banjarbaru', '006', '002', '0811882288', '70723', '2020-06-01', 'PT.Indomarco Prismatama', 'Tidak Diketahui');
+INSERT INTO `toko` (`id`, `kodetoko`, `nama_toko`, `alamat`, `kota`, `rt`, `rw`, `telp`, `kodepos`, `buka`, `namafrc`, `ka_toko`, `latitude`, `longitude`, `is_deleted`) VALUES
+(1, 'OFC0', 'PT. Indomarco Prismatama', 'Jalan A Yani KM 12.2', 'Kab. Banjar', '001', '001', '0511608159', '70712', '2015-05-01', 'PT.Indomarco Prismatama', 'Dika', '', '', 0),
+(2, 'TPAJ', 'IDM A YANI KM 33.9', 'Jalan A Yani KM 33.9', 'Banjarbaru', '006', '002', '0811882288', '70723', '2020-06-13', 'PT.Indomarco Prismatama', 'Dika', '-3.442587', '114.826237', 0),
+(3, 'TA4W', 'IDM A YANI KM 4', 'Jl. Gerilya No.5, Pemurus Luar', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-01', 'PT.Indomarco Prismatama', 'Riki Pratama', '-3.338527', '114.618411', 0),
+(4, 'TWH9', 'IDM MAYJEN SUTOYO', 'Jl. Mayjen Sutoyo S No.455a, Tlk. Dalam', 'Banjarmasin', '001', '001', '0811882288', '70706', '2020-06-14', 'PT.Indomarco Prismatama', 'Ferry Salim', '-3.320886', '114.581001', 0),
+(5, 'THXU', 'IDM A YANI KM 19', 'Jalan A Yani KM 19', 'Banjarbaru', '006', '002', '0811882288', '70723', '2020-06-01', 'PT.Indomarco Prismatama', 'Erick', '-3.444335', '114.699383', 0),
+(7, 'TE5H', 'A YANI KM 24.7', 'Landasan Ulin', 'Banjarbaru', '006', '002', '0811882288', '70724', '2015-07-20', 'PT.Indomarco Prismatama', 'Dedy Ways', '-3.441983', '114.744696', 0);
 
 -- --------------------------------------------------------
 
@@ -896,7 +934,8 @@ INSERT INTO `tutup_shift` (`id`, `nik`, `tanggal_tutup_shift`, `total`, `kas`, `
 (1, '2013137279', '2020-07-19 22:25:44', 220000, 201000, 1, 41000, 0, 22000, 0, 2, 11, 2),
 (2, '2013131313', '2020-07-19 22:27:49', 230000, 230000, 2, 23000, 0, 23000, 0, 1, 10, 2),
 (3, '2013131777', '2020-07-19 22:34:33', 230000, 230000, 1, 23000, 0, 23000, 20000, 1, 10, 3),
-(4, '2013131777', '2020-07-19 22:40:10', 310000, 310000, 2, 31000, 0, 31000, 35000, 1, 15, 3);
+(4, '2013131777', '2020-07-19 22:40:10', 310000, 310000, 2, 31000, 0, 31000, 35000, 1, 15, 3),
+(6, '2013131313', '2020-07-23 03:38:15', 354287, 200000, 1, 189716, 0, 35429, 340980, 4, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -917,11 +956,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `username`, `password`, `idtoko`) VALUES
 (1, 'admin', '$2y$10$EzGeMY.gkbnxFgZW94drFO6f946a5X0vGXLoXVYz86u3iS.dZPRE2', 1),
-(2, 'TD7A', '$2y$10$Zxnr5ZFT/iKkefEKdYFu3OeeSnjznZSDKHMgyl3iofRneRZHYeWFq', 2),
-(3, 'TFCP', '$2y$10$jh8A5XQTSCfUTz1nzqoEPu/Fjb9ovPzNkaeHxEXO31oxMHfzfECQa', 3),
-(4, 'TFKM', '$2y$10$CVcJuJDNl37vi15E0KKeI.SWG9Fclls8.z9RpTibXKJdNSMsjyJTm', 4),
-(5, 'PUHN', '$2y$10$rqZIQgKXWYs2Wvce1rG6s.P/YcO1UCxunvIlrXUHJRt554qwatOpC', 5),
-(6, 'TKYD', '$2y$10$i1Qygo4TyIUnThIO1JounOdUYlP6F.EoNpvS4dg6tzbfUxmW5LwSi', 6);
+(2, 'TPAJ', '$2y$10$Zxnr5ZFT/iKkefEKdYFu3OeeSnjznZSDKHMgyl3iofRneRZHYeWFq', 2),
+(3, 'TA4W', '$2y$10$jh8A5XQTSCfUTz1nzqoEPu/Fjb9ovPzNkaeHxEXO31oxMHfzfECQa', 3),
+(4, 'TWH9', '$2y$10$CVcJuJDNl37vi15E0KKeI.SWG9Fclls8.z9RpTibXKJdNSMsjyJTm', 4),
+(5, 'THXU', '$2y$10$rqZIQgKXWYs2Wvce1rG6s.P/YcO1UCxunvIlrXUHJRt554qwatOpC', 5),
+(6, 'TKYD', '$2y$10$i1Qygo4TyIUnThIO1JounOdUYlP6F.EoNpvS4dg6tzbfUxmW5LwSi', 6),
+(7, 'TE5H', '$2y$10$mjSuCBEQXJZImvIs/SWJLeE8m7lmkRExY9h2z12P0e4WgpjXaJoFS', 7);
 
 --
 -- Indexes for dumped tables
@@ -1056,7 +1096,8 @@ ALTER TABLE `retur_barang_detail`
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`id`),
   ADD KEY `kategori` (`kategori`),
-  ADD KEY `satuan` (`satuan`);
+  ADD KEY `satuan` (`satuan`),
+  ADD KEY `jenis` (`jenis`);
 
 --
 -- Indeks untuk tabel `stock_toko`
@@ -1121,13 +1162,13 @@ ALTER TABLE `initial`
 -- AUTO_INCREMENT untuk tabel `initialog`
 --
 ALTER TABLE `initialog`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `kasir_keranjang`
 --
 ALTER TABLE `kasir_keranjang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `konversi`
@@ -1139,7 +1180,7 @@ ALTER TABLE `konversi`
 -- AUTO_INCREMENT untuk tabel `lookupvalue`
 --
 ALTER TABLE `lookupvalue`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `member`
@@ -1151,13 +1192,13 @@ ALTER TABLE `member`
 -- AUTO_INCREMENT untuk tabel `penjualan`
 --
 ALTER TABLE `penjualan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=102;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan_detail`
 --
 ALTER TABLE `penjualan_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `penjualan_non_tunai`
@@ -1169,13 +1210,13 @@ ALTER TABLE `penjualan_non_tunai`
 -- AUTO_INCREMENT untuk tabel `permintaan_barang`
 --
 ALTER TABLE `permintaan_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT untuk tabel `permintaan_barang_detail`
 --
 ALTER TABLE `permintaan_barang_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT untuk tabel `product`
@@ -1193,13 +1234,13 @@ ALTER TABLE `profit`
 -- AUTO_INCREMENT untuk tabel `proses_barang`
 --
 ALTER TABLE `proses_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT untuk tabel `proses_barang_detail`
 --
 ALTER TABLE `proses_barang_detail`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT untuk tabel `proses_barang_detail_temp`
@@ -1235,13 +1276,13 @@ ALTER TABLE `stock_toko`
 -- AUTO_INCREMENT untuk tabel `supplier`
 --
 ALTER TABLE `supplier`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `toko`
 --
 ALTER TABLE `toko`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT untuk tabel `tutup_harian`
@@ -1253,13 +1294,13 @@ ALTER TABLE `tutup_harian`
 -- AUTO_INCREMENT untuk tabel `tutup_shift`
 --
 ALTER TABLE `tutup_shift`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

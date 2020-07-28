@@ -1,4 +1,4 @@
-<div class="card shadow mb-4">
+<!-- <div class="card shadow mb-4">
   <div class="card-header">
     <h6 class="m-0 font-weight-bold text-primary">Filter Data</h6>
   </div>
@@ -23,12 +23,12 @@
       </div>
     </form>
   </div>
-</div>
+</div> -->
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
   <div class="card-header py-3">
     <div class="float-left">
-      <h6 class="m-0 font-weight-bold text-primary">Data Proses Barang</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Data Penerimaan Barang</h6>
     </div>
   </div>
   <div class="card-body">
