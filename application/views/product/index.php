@@ -9,8 +9,8 @@
     </div>
     <?php if ($this->session->userdata('x-idm-store') == 1) : ?>
       <div class="float-right">
+        <!-- <a class="btn btn-primary" href="<?= base_url('product/discount') ?>"><i class="fas fa-percent"></i> Discount</a> -->
         <a class="btn btn-primary" href="<?= base_url('product/add') ?>"><i class="fas fa-plus"></i> Tambah Product</a>
-        <a class="btn btn-primary" href="<?= base_url('product/discount') ?>"><i class="fas fa-percent"></i> Discount</a>
       </div>
     <?php endif; ?>
   </div>

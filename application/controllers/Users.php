@@ -20,7 +20,7 @@ class Users extends CI_Controller
         $data = [
             'title'         => 'Users',
             'sub_title'     => '',
-            'javascript'    => null,
+            'javascript'    => 'users.js',
             'users'         => $this->UsersModel->Get()->result()
         ];
 
@@ -75,6 +75,16 @@ class Users extends CI_Controller
         }
 
         $this->template->load('layout/template', 'users/edit', $data);
+    }
+
+    public function hapus($id = null)
+    {
+        if ($id == null) {
+            redirect('users/');
+        }
+
+        $this->UsersModel->delete($id);
+        redirect('users/');
     }
 
     private function Update()

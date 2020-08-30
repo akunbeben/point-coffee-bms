@@ -30,7 +30,7 @@ class Barista extends CI_Controller
             'title'     => 'Barista',
             'sub_title' => 'Tambah Barista',
             'javascript' => 'barista.js',
-            'toko' => $this->TokoModel->get()->result(),
+            'toko' => $this->session->userdata('x-idm-store'),
             'status_kerja' => $this->LookupvalueModel->getlookupvalue(1008)->result(),
             'status_perkawinan' => $this->LookupvalueModel->getlookupvalue(1011)->result(),
             'jabatan' => $this->LookupvalueModel->getlookupvalue(1007)->result(),
@@ -84,7 +84,7 @@ class Barista extends CI_Controller
             'sub_title' => 'Edit',
             'javascript' => 'barista.js',
             'barista'   => $this->BaristaModel->get($id)->row(),
-            'toko' => $this->TokoModel->get()->result()
+            'toko' => $this->session->userdata('x-idm-store')
         ];
         $this->form_validation->set_rules('nik', 'NIK', 'required');
         $this->form_validation->set_rules('nama', 'Nama', 'required');

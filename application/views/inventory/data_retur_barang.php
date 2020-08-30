@@ -8,13 +8,13 @@
         <div class="col-md-5">
           <div class="form-group">
             <label for="tanggal_awal">Tanggal Awal</label>
-            <input type="date" class="form-control form-control-sm" id="tanggal_awal" name="tanggal_awal">
+            <input type="date" class="form-control form-control-sm" id="tanggal_awal" name="tanggal_awal" value="<?= $this->input->post('tanggal_awal'); ?>">
           </div>
         </div>
         <div class="col-md-5">
           <div class="form-group">
             <label for="tanggal_akhir">Tanggal Akhir</label>
-            <input type="date" class="form-control form-control-sm" id="tanggal_akhir" name="tanggal_akhir">
+            <input type="date" class="form-control form-control-sm" id="tanggal_akhir" name="tanggal_akhir" value="<?= $this->input->post('tanggal_akhir'); ?>">
           </div>
         </div>
         <div class="col-md-2 text-center" style="margin-top: 31.5px;">

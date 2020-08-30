@@ -127,7 +127,8 @@
                         </div>
                     </div>
                     <div class="col-md-3 text-right">
-                        <button class="btn btn-warning btn-lg"><i class="fas fa-retweet"></i> Cancel Order</button>
+                        <!-- <button class="btn btn-warning btn-lg"><i class="fas fa-retweet"></i> Cancel Order</button> -->
+                        <button type="button" onclick="bayar()" class="btn btn-success btn-lg"><i class="fas fa-paper-plane"></i> Process Order</button>
                     </div>
                 </div>
                 <div class="row">
@@ -156,7 +157,7 @@
                         </div>
                     </div>
                     <div class="col-md-3 text-right">
-                        <button type="button" onclick="bayar()" class="btn btn-success btn-lg"><i class="fas fa-paper-plane"></i> Process Order</button>
+
                     </div>
                 </div>
             </div>

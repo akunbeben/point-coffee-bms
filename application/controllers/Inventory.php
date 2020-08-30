@@ -16,6 +16,7 @@ class Inventory extends CI_Controller
     $this->load->model('SupplierModel');
     $this->load->library('form_validation');
     $this->load->helper('inventory');
+    $this->load->helper('initial');
   }
 
   public function proses_barang()
@@ -42,6 +43,9 @@ class Inventory extends CI_Controller
       'javascript'  => 'proses_barang.js',
       'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter, [32, 34])->result()
     ];
+
+    // var_dump($data);
+    // die;
 
     $this->template->load('layout/template', 'inventory/proses_barang', $data);
   }
@@ -166,6 +170,8 @@ class Inventory extends CI_Controller
 
   private function returBarang()
   {
+    CheckDataInitial();
+
     $data = [
       'id' => null,
       'kode_retur' => returCode(returSequence()),
@@ -188,8 +194,11 @@ class Inventory extends CI_Controller
       'javascript' => 'form_retur.js',
       'header' => $this->InventoryModel->getData($kodeRetur)->row(),
       'lines' => $this->InventoryModel->getLineRetur($kodeRetur)->result(),
-      'items' => $this->StockModel->get(null, $this->InventoryModel->getLineRetur($kodeRetur)->result())->result()
+      'items' => $this->StockModel->get(null, $this->InventoryModel->getLineRetur($kodeRetur)->result(), null, $this->session->userdata('x-idm-store'))->result()
     ];
+
+    // var_dump($data);
+    // die;
 
     $this->template->load('layout/template', 'inventory/form_retur_barang', $data);
   }
@@ -284,11 +293,16 @@ class Inventory extends CI_Controller
       'current_period' => $this->InventoryModel->getCurrentPeriodKonversi($filterBulan)->row(),
       'filter_data' => $dataFilter,
       'filter_day' => null,
-      'stock' => $this->StockModel->get()->result()
+      'stock' => $this->StockModel->get(null, null, null, $this->session->userdata('x-idm-store'))->result()
     ];
 
     if ($this->input->post('filter_day') != null) {
       $data['filter_day'] = $this->input->post('filter_day');
+    }
+
+    if ($data['current_period'] == NULL) {
+      $data['current_period'] = new stdClass;
+      $data['current_period']->bulan = date('F', time());
     }
 
     $this->form_validation->set_rules('prdcd', 'Product Code', 'required');

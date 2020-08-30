@@ -25,13 +25,15 @@ class InventoryModel extends CI_Model
 
     if ($status != null) {
       foreach ($status as $key) {
-        $this->db->or_like('status', $key);
+        $this->db->or_where('status', $key);
       }
     }
 
     if ($this->session->userdata('x-idm-store') != 1) {
       $this->db->where('proses_barang.idtoko', $this->session->userdata('x-idm-store'));
     }
+
+    $this->db->order_by('proses_barang.tanggal_terima ASC');
 
     return $this->db->get();
   }
@@ -465,6 +467,20 @@ class InventoryModel extends CI_Model
     if ($suratJalan != null) {
       $this->db->where('surat_jalan', $suratJalan);
     }
+
+    return $this->db->get();
+  }
+
+  public function penerimaanBelumDiproses()
+  {
+    $this->db->select('proses_barang.*, lookupvalue.desc');
+    $this->db->from('proses_barang');
+    $this->db->join('lookupvalue', 'proses_barang.status = lookupvalue.id');
+
+    $this->db->where('proses_barang.idtoko', $this->session->userdata('x-idm-store'));
+    $this->db->where('proses_barang.status', 32);
+
+    $this->db->order_by('proses_barang.tanggal_terima ASC');
 
     return $this->db->get();
   }

@@ -8,7 +8,7 @@
                 <h6 class="m-0 font-weight-bold text-primary">Form Tambah User</h6>
             </div>
             <div class="card-body">
-                <form action="" method="post">
+                <form action="" method="post" id="create-user">
                     <div class="form-group">
                         <label for="username">Username</label>
                         <select class="form-control" id="username" name="username">
@@ -34,7 +34,7 @@
                         </select>
                     </div>
                     <div class="row justify-content-end">
-                        <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
+                        <button type="button" onclick="checkNewPassword()" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
                         <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>
                     </div>
                 </form>

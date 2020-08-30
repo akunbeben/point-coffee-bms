@@ -16,9 +16,9 @@ class LaporanModel extends CI_Model
       $this->db->where('penjualan.id', $id);
     }
 
-    if ($this->session->userdata('x-idm-store') != 1) {
-      $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
-    }
+    // if ($this->session->userdata('x-idm-store') != 1) {
+    //   $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
+    // }
 
     if ($invoiceNumber != null) {
       $this->db->where('penjualan.struk', $invoiceNumber);
@@ -66,16 +66,21 @@ class LaporanModel extends CI_Model
 
   // Ajax 
 
-  private function getAjaxQuery($search)
+  private function getAjaxQuery($search, $filter = null)
   {
     $this->db->select('penjualan.*, barista.nama');
     $this->db->from('penjualan');
     $this->db->join('barista', 'penjualan.kasir = barista.nik');
     $this->db->where('penjualan.idtoko', $this->session->userdata('x-idm-store'));
 
-    if ($this->session->userdata('x-idm-store') != 1) {
-      $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
+    if ($filter != null) {
+      $this->db->where('penjualan.tanggal_transaksi >=', $filter['dateFrom']);
+      $this->db->where('penjualan.tanggal_transaksi <=', $filter['dateTo']);
     }
+
+    // if ($this->session->userdata('x-idm-store') != 1) {
+    //   $this->db->where('penjualan.tanggal_transaksi >', date('Y-m-d H:i:s', strtotime('today midnight')));
+    // }
 
     if ($search != null) {
       $this->db->group_start();
@@ -88,9 +93,9 @@ class LaporanModel extends CI_Model
     }
   }
 
-  public function getDatatables($search, $length, $start, $orderColumn, $orderDir)
+  public function getDatatables($search, $length, $start, $orderColumn, $orderDir, $filter = null)
   {
-    $this->getAjaxQuery($search);
+    $this->getAjaxQuery($search, $filter);
     $this->db->order_by($orderColumn, $orderDir);
     $this->db->limit($length, $start);
 
@@ -249,6 +254,49 @@ class LaporanModel extends CI_Model
     $query .=
       " GROUP BY
         penjualan.idtoko, MONTH(tanggal_transaksi)";
+
+    return $this->db->query($query);
+  }
+
+  public function pendapatanAllToko()
+  {
+    $query =
+      "SELECT
+        SUM(penjualan.total_belanja) AS pendapatan,
+        MONTHNAME(penjualan.tanggal_transaksi) month_period
+      FROM
+        penjualan
+      WHERE 
+        penjualan.tanggal_transaksi >= DATE_ADD(DATE_ADD(LAST_DAY(CURDATE()), INTERVAL 1 DAY), INTERVAL - 1 MONTH)
+      AND 
+        penjualan.tanggal_transaksi <= NOW()";
+
+    return $this->db->query($query);
+  }
+
+  public function pendapatanAllTokoPertahun()
+  {
+    $query =
+      "SELECT
+        SUM(penjualan.total_belanja) AS pendapatan
+      FROM
+        penjualan
+      WHERE 
+        penjualan.tanggal_transaksi >= DATE_FORMAT(NOW() ,'%Y-01-01')
+      AND 
+        penjualan.tanggal_transaksi <= NOW()";
+
+    return $this->db->query($query);
+  }
+
+  public function grandTotalCustomer()
+  {
+    $query =
+      "SELECT
+        COUNT(penjualan.id) customer
+      FROM
+        penjualan
+    ";
 
     return $this->db->query($query);
   }
@@ -414,8 +462,43 @@ class LaporanModel extends CI_Model
       GROUP BY 
         penjualan_detail.product_id, product.prdcd
       ORDER BY
-        SUM(penjualan_detail.product_id) DESC
-      LIMIT 3";
+        SUM(penjualan_detail.product_id) DESC";
+
+    return $this->db->query($query);
+  }
+
+  public function groupedProfit()
+  {
+    $query =
+      "SELECT
+        SUM(profit.profit) profit,
+        profit.tanggal,
+        profit.idtoko
+      FROM
+        profit
+      WHERE
+        (profit.tanggal BETWEEN DATE_FORMAT(NOW(), '%Y-01-01') AND NOW())
+      GROUP BY
+        profit.idtoko, profit.tanggal";
+
+    return $this->db->query($query);
+  }
+
+  public function profitPerbulan()
+  {
+    $query =
+      "SELECT
+        SUM(profit.profit) AS profit,
+        MONTHNAME(profit.tanggal) periode,
+        toko.kodetoko AS toko
+      FROM
+        profit
+      JOIN
+        toko on profit.idtoko = toko.id
+      WHERE
+        profit.tanggal BETWEEN NOW() - INTERVAL 30 DAY AND NOW()
+      GROUP BY
+        toko.kodetoko, periode";
 
     return $this->db->query($query);
   }

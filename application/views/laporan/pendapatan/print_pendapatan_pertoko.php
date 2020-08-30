@@ -17,6 +17,19 @@
       <div id="content">
 
         <div class="page">
+          <table style="width: 100%;">
+            <tr>
+              <td>
+                <p style="font-style: normal; font-family: Calibri; font-size: 6pt;">PT. Indomarco Prismatama</p>
+                <p style="font-style: normal; font-family: Calibri; font-size: 6pt;">JL ANCOL I/9-10 ANCOL</p>
+                <p style="font-style: normal; font-family: Calibri; font-size: 6pt;">BARAT-JAKARTA UTARA</p>
+                <p style="font-style: normal; font-family: Calibri; font-size: 6pt;">NPWP 01 337 994 6-092 000</p>
+              </td>
+              <td style="text-align: right;">
+                <img src="<?= base_url('asset/img/' . 'idm.png'); ?>" alt="Logo" width="120">
+              </td>
+            </tr>
+          </table>
           <table style="width: 100%;" class="header">
             <tr>
               <td style="text-align: center;">

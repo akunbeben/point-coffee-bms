@@ -46,14 +46,7 @@
                         <label for="status_perkawinan">Status Perkawinan</label>
                         <input type="text" class="form-control" id="status_perkawinan" name="status_perkawinan" value="<?= $barista->status_perkawinan; ?>">
                     </div>
-                    <div class="form-group">
-                        <label for="idtoko">Store</label>
-                        <select class="form-control" id="idtoko" name="idtoko">
-                            <?php foreach ($toko as $store) : ?>
-                                <option value="<?= $store->id; ?>"><?= $store->kodetoko . ' - ' . $store->nama_toko; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
+                    <input type="hidden" name="idtoko" id="idtoko" value="<?= $toko; ?>">
                     <div class="row justify-content-end">
                         <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Simpan</button>&nbsp;
                         <button type="button" onclick="window.history.back()" class="btn btn-warning"><i class="fas fa-minus"></i> Kembali</button>

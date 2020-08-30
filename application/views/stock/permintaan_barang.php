@@ -23,6 +23,7 @@
             <th>Kode Permintaan</th>
             <th>Tanggal Permintaan</th>
             <th>Diminta Oleh</th>
+            <th>Toko</th>
             <th>Status</th>
             <th>Action</th>
           </tr>
@@ -34,6 +35,7 @@
               <td><?= $req->kodepermintaan; ?></td>
               <td><?= date('d M Y H:i:s', strtotime($req->tanggal)); ?></td>
               <td><?= $req->nama; ?></td>
+              <td><?= $req->kodetoko . ' - ' . $req->nama_toko; ?></td>
               <td>
                 <?= $req->status == 28 ? '<span class="badge badge-secondary">Draft</span>' : ($req->status == 29 ? '<span class="badge badge-warning">Pending</span>' : ($req->status == 30 ? '<span class="badge badge-success">Approved</span>' : ($req->status == 31 ? '<span class="badge badge-danger">Rejected</span>' : null))); ?>
               </td>

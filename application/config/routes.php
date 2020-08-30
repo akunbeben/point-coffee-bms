@@ -65,3 +65,4 @@ $route['reports/pengeluaran-pertoko'] = 'laporan/pengeluaran_pertoko';
 $route['api/reports/penjualan'] = 'laporan/api_laporan_penjualan';
 $route['reports/product-terlaris'] = 'laporan/product_terlaris';
 $route['reports/profit'] = 'laporan/laporan_profit';
+$route['reports/profit-overall'] = 'laporan/profit_overall';

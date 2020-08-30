@@ -146,6 +146,9 @@ class Stock extends CI_Controller
       'permintaan'    => $this->StockModel->GetDataPermintaan()->result()
     ];
 
+    // var_dump($data);
+    // die;
+
     $this->template->load('layout/template', 'stock/permintaan_barang', $data);
   }
 

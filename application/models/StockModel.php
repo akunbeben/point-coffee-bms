@@ -266,7 +266,6 @@ class StockModel extends CI_Model
 
   public function updateItem($data)
   {
-    $this->db->set('harga', $data['harga']);
     $this->db->set('jumlah', $data['jumlah']);
     $this->db->where('id', $data['id']);
     $this->db->update('permintaan_barang_detail');
@@ -293,14 +292,99 @@ class StockModel extends CI_Model
       permintaan_barang_detail.id,
       permintaan_barang_detail.kodepermintaan,
       permintaan_barang_detail.prdcd,
-      permintaan_barang_detail.kategori,
-      permintaan_barang_detail.satuan,
       permintaan_barang_detail.jumlah, 
       stock.deskripsi as nama_item,
       stock.harga');
     $this->db->where('permintaan_barang_detail.id', $id);
     $this->db->from('permintaan_barang_detail');
     $this->db->join('stock', 'stock.prdcd = permintaan_barang_detail.prdcd');
+    return $this->db->get();
+  }
+
+  public function GetDataPermintaanPending($kodePermintaan = null, $filterDeleted = true)
+  {
+    $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc, supplier.supco, supplier.nama_supplier');
+    // $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc');
+    $this->db->join('barista', 'barista.id = permintaan_barang.idbarista');
+    $this->db->join('supplier', 'supplier.id = permintaan_barang.kodesupplier', 'left');
+    $this->db->join('toko', 'toko.id = permintaan_barang.idtoko');
+    $this->db->join('lookupvalue', 'permintaan_barang.status = lookupvalue.id');
+    $this->db->from('permintaan_barang');
+
+    if ($filterDeleted == true) {
+      $this->db->where('permintaan_barang.is_deleted', 0);
+    }
+
+    if ($kodePermintaan != null) {
+      $this->db->where('permintaan_barang.kodepermintaan', $kodePermintaan);
+    }
+
+    if ($this->session->userdata('x-idm-store') == 1) {
+      $this->db->where('permintaan_barang.status', 29);
+    }
+
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('permintaan_barang.status', 29);
+      $this->db->where('permintaan_barang.idtoko', $this->session->userdata('x-idm-store'));
+    }
+    return $this->db->get();
+  }
+
+  public function GetDataPermintaanApproved($kodePermintaan = null, $filterDeleted = true)
+  {
+    $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc, supplier.supco, supplier.nama_supplier');
+    // $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc');
+    $this->db->join('barista', 'barista.id = permintaan_barang.idbarista');
+    $this->db->join('supplier', 'supplier.id = permintaan_barang.kodesupplier', 'left');
+    $this->db->join('toko', 'toko.id = permintaan_barang.idtoko');
+    $this->db->join('lookupvalue', 'permintaan_barang.status = lookupvalue.id');
+    $this->db->from('permintaan_barang');
+
+    if ($filterDeleted == true) {
+      $this->db->where('permintaan_barang.is_deleted', 0);
+    }
+
+    if ($kodePermintaan != null) {
+      $this->db->where('permintaan_barang.kodepermintaan', $kodePermintaan);
+    }
+
+    if ($this->session->userdata('x-idm-store') == 1) {
+      $this->db->where('permintaan_barang.status', 29);
+    }
+
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('permintaan_barang.status', 30);
+      $this->db->where('permintaan_barang.idtoko', $this->session->userdata('x-idm-store'));
+    }
+    return $this->db->get();
+  }
+
+  public function GetDataPermintaanRejected($kodePermintaan = null, $filterDeleted = true)
+  {
+    $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc, supplier.supco, supplier.nama_supplier');
+    // $this->db->select('permintaan_barang.*, barista.nama, toko.kodetoko, toko.nama_toko, lookupvalue.desc');
+    $this->db->join('barista', 'barista.id = permintaan_barang.idbarista');
+    $this->db->join('supplier', 'supplier.id = permintaan_barang.kodesupplier', 'left');
+    $this->db->join('toko', 'toko.id = permintaan_barang.idtoko');
+    $this->db->join('lookupvalue', 'permintaan_barang.status = lookupvalue.id');
+    $this->db->from('permintaan_barang');
+
+    if ($filterDeleted == true) {
+      $this->db->where('permintaan_barang.is_deleted', 0);
+    }
+
+    if ($kodePermintaan != null) {
+      $this->db->where('permintaan_barang.kodepermintaan', $kodePermintaan);
+    }
+
+    if ($this->session->userdata('x-idm-store') == 1) {
+      $this->db->where('permintaan_barang.status', 29);
+    }
+
+    if ($this->session->userdata('x-idm-store') != 1) {
+      $this->db->where('permintaan_barang.status', 31);
+      $this->db->where('permintaan_barang.idtoko', $this->session->userdata('x-idm-store'));
+    }
     return $this->db->get();
   }
 }

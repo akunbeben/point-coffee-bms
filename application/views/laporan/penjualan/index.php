@@ -4,14 +4,7 @@
       <h6 class="m-0 font-weight-bold text-primary">Data struk penjualan</h6>
     </div>
     <div class="float-right">
-      <div class="dropdown">
-        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-download"></i> Laporan
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Cetak PDF</a>
-        </div>
-      </div>
+
     </div>
   </div>
   <div class="card-body">
@@ -19,7 +12,7 @@
       <div class="col-md-12">
         <form action="" method="post">
           <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-5">
               <div class="form-group row">
                 <label for="dateFrom" class="col-md-4 col-form-label">From</label>
                 <div class="col-md-8">
@@ -27,7 +20,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-5">
               <div class="form-group row">
                 <label for="dateTo" class="col-md-4 col-form-label">To</label>
                 <div class="col-md-8">
@@ -35,14 +28,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-4">
-              <div class="form-group row">
-                <label for="cashier" class="col-md-4 col-form-label">Kasir</label>
-                <div class="col-md-8">
-                  <input type="text" class="form-control form-control-sm" id="cashier" name="cashier">
-                </div>
-              </div>
-            </div>
+            <!-- <div class="col-md-4"></div> -->
             <div class="col-md-2 text-center">
               <button type="button" id="btnFilter" class="btn btn-primary btn-sm">Filter</button>
             </div>

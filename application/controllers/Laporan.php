@@ -38,10 +38,15 @@ class Laporan extends CI_Controller
     $sortColumnName = $_POST['columns']['' . $_POST['order']['0']['column'] . '']['name'];
     $sortDir        = $_POST['order']['0']['dir'];
 
+    $filter = [
+      'dateFrom' => $_POST['dateMin'],
+      'dateTo' => $_POST['dateMax'],
+    ];
+
     $draw = $_POST['draw'];
     $recordsFiltered = $this->LaporanModel->getRecordsFiltered($search)->num_rows();
     $recordsTotal = $this->LaporanModel->getSales()->num_rows();
-    $data = $this->LaporanModel->getDatatables($search, $length, $start, $sortColumnName, $sortDir);
+    $data = $this->LaporanModel->getDatatables($search, $length, $start, $sortColumnName, $sortDir, $filter);
 
     $output = ['draw' => $draw, 'recordsFiltered' => $recordsFiltered, 'recordsTotal' => $recordsTotal, 'data' => $data];
 
@@ -269,6 +274,9 @@ class Laporan extends CI_Controller
       'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter, [35])->result()
     ];
 
+    // var_dump($data['barang']);
+    // die;
+
     $this->template->load('layout/template', 'laporan/proses_barang/index', $data);
   }
 
@@ -341,6 +349,11 @@ class Laporan extends CI_Controller
 
     if ($this->input->post('filter_day') != null) {
       $data['filter_day'] = $this->input->post('filter_day');
+    }
+
+    if ($data['current_period'] == NULL) {
+      $data['current_period'] = new stdClass;
+      $data['current_period']->bulan = date('F', time());
     }
 
     $this->template->load('layout/template', 'laporan/konversi/index', $data);
@@ -679,6 +692,16 @@ class Laporan extends CI_Controller
     $mpdf->Output();
   }
 
+  public function ajax_profit()
+  {
+    $data = $this->LaporanModel->groupedProfit()->result();
+
+    $output = ['data' => $data, 'status' => true];
+
+    header('Content-Type: application/json');
+    echo json_encode($output);
+  }
+
   public function get_all_customers()
   {
     $data = $this->TokoModel->getGroupedCustomer()->result();
@@ -690,5 +713,32 @@ class Laporan extends CI_Controller
 
     header('Content-Type: application/json');
     echo json_encode($output);
+  }
+
+  public function profit_perbulan()
+  {
+    $dataFilter = [
+      'tanggal_awal' => date('01-m-Y', time()),
+      'tanggal_akhir' => date('d-m-Y', time()),
+      'filter_toko' => null
+    ];
+
+    $data = $this->LaporanModel->profitPerbulan()->result();
+
+    // var_dump($data);
+    // die;
+
+    header('Content-Type: application/json');
+    echo json_encode(['status' => true, 'data' => $data]);
+  }
+
+  public function profit_overall()
+  {
+    $data = [
+      'title' => 'Profit : Overall',
+      'javascript' => 'profit.js'
+    ];
+
+    $this->template->load('layout/template', 'laporan/profit/overall', $data);
   }
 }

@@ -228,16 +228,29 @@
         </li>
 
         <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#reportProfit" aria-expanded="true" aria-controls="reportProfit">
+            <i class="fas fa-fw fa-money-bill-alt"></i>
+            <span>Profit</span>
+          </a>
+          <div id="reportProfit" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+              <a class="collapse-item" href="<?= base_url('reports/profit-overall'); ?>">Profit : Overall</a>
+              <a class="collapse-item" href="<?= base_url('reports/profit'); ?>">Profit : Pertoko</a>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
           <a class="nav-link" href="<?= base_url('reports/product-terlaris'); ?>">
             <i class="fas fa-fw fa-chart-bar"></i>
             <span>Product Terlaris</span></a>
         </li>
 
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a class="nav-link" href="<?= base_url('reports/profit'); ?>">
             <i class="fas fa-fw fa-money-bill-alt"></i>
             <span>Profit</span></a>
-        </li>
+        </li> -->
 
         <hr class="sidebar-divider">
 
@@ -378,12 +391,15 @@
   <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.min.js"></script>
   <script src="<?= base_url('asset/'); ?>vendor/jsPDF/jspdf.plugin.autotable.js"></script>
   <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew==" crossorigin=""></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js" integrity="sha512-rmZcZsyhe0/MAjquhTgiUcb4d9knaFc7b5xAfju483gbEXTkeJRUMIPk6s3ySZMYUHEcjKbjLjyddGWMrNEvZg==" crossorigin="anonymous"></script>
 
   <?php if ($javascript != null) : ?>
     <script src="<?= base_url('asset/'); ?>js/pages/<?= $javascript; ?>"></script>
   <?php endif; ?>
   <script>
-    var globalDatatable = $('table.dataitems').DataTable();
+    var globalDatatable = $('table.dataitems').DataTable({
+      "order": [],
+    });
 
     var globalBaseUrl = "<?= base_url(); ?>";
 
