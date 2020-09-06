@@ -74,6 +74,8 @@ class Stock extends CI_Controller
     ];
 
     $this->StockModel->save($stock);
+    $this->session->set_flashdata('pesanGlobal', 'Data stock bahan baku berhasil ditambah.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('stock');
   }
 
@@ -120,6 +122,8 @@ class Stock extends CI_Controller
     ];
 
     $this->StockModel->edit($stock);
+    $this->session->set_flashdata('pesanGlobal', 'Data stock bahan baku berhasil diupdate.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('stock/');
   }
 
@@ -145,9 +149,6 @@ class Stock extends CI_Controller
       'javascript'    => 'permintaan_barang.js',
       'permintaan'    => $this->StockModel->GetDataPermintaan()->result()
     ];
-
-    // var_dump($data);
-    // die;
 
     $this->template->load('layout/template', 'stock/permintaan_barang', $data);
   }
@@ -301,6 +302,8 @@ class Stock extends CI_Controller
   public function hapusItem($productCode, $requestNumber)
   {
     $this->StockModel->hapusItem($productCode);
+    $this->session->set_flashdata('pesanGlobal', 'Item dihapus.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('stock/form-permintaan-barang/' . $requestNumber);
   }
 
@@ -332,6 +335,8 @@ class Stock extends CI_Controller
     ];
 
     $this->StockModel->tambahItem($data);
+    $this->session->set_flashdata('pesanGlobal', 'Item ditambahkan.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('stock/form-permintaan-barang/' . $data['kodepermintaan']);
   }
 
@@ -345,6 +350,8 @@ class Stock extends CI_Controller
     ];
 
     $this->StockModel->updateItem($data);
+    $this->session->set_flashdata('pesanGlobal', 'Item diupdate.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('stock/form-permintaan-barang/' . $data['requestNumber']);
   }
 

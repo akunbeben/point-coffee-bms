@@ -13,9 +13,8 @@ $(document).ready(function () {
 	if (message.html() != "") {
 		Swal.fire({
 			title: message.html(),
-			toast: true,
-			position: "top-end",
-			showConfirmButton: false,
+			toast: false,
+			showConfirmButton: true,
 			timer: 3000,
 			type: type.html(),
 		});

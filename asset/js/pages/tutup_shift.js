@@ -1,3 +1,7 @@
+$(document).ready(function () {
+	$("#pendapatan").mask("000.000", { reverse: true });
+});
+
 function submitConfirmation() {
 	Swal.fire({
 		title: "Tutup Shift",

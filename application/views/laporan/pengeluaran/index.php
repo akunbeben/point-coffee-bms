@@ -62,7 +62,6 @@
           <table class="table table-bordered dataitems table-sm" id="Datatable" width="100%" cellspacing="0">
             <thead>
               <tr>
-                <th>No.</th>
                 <th>Supplier</th>
                 <th>Kode Permintaan</th>
                 <th>Tanggal</th>
@@ -72,10 +71,8 @@
               </tr>
             </thead>
             <tbody>
-              <?php $no = 1;
-              foreach ($data as $key) : ?>
+              <?php foreach ($data as $key) : ?>
                 <tr>
-                  <td class="text-center"><?= $no++; ?></td>
                   <td><?= $key->supplier; ?></td>
                   <td><?= $key->kodepermintaan; ?></td>
                   <td><?= date('d F Y H:i:s', strtotime($key->tanggal_terima)); ?></td>

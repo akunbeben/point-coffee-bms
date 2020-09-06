@@ -44,9 +44,6 @@ class Inventory extends CI_Controller
       'barang'  => $this->InventoryModel->getItems(null, null, $dataFilter, [32, 34])->result()
     ];
 
-    // var_dump($data);
-    // die;
-
     $this->template->load('layout/template', 'inventory/proses_barang', $data);
   }
 
@@ -76,6 +73,8 @@ class Inventory extends CI_Controller
     $this->InventoryModel->resetTempData();
     $this->InventoryModel->selesaiProses($suratJalan);
 
+    $this->session->set_flashdata('pesanGlobal', 'Stock telah berhasil diterima.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/proses-barang');
   }
 
@@ -93,6 +92,8 @@ class Inventory extends CI_Controller
     $suratJalan = $this->input->post('suratJalan');
     $this->InventoryModel->submitItem($id, $suratJalan);
 
+    $this->session->set_flashdata('pesanGlobal', 'Item ditambahkan dalam antrean untuk diproses.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/proses-barang-masuk/' . $requestNumber);
   }
 
@@ -197,9 +198,6 @@ class Inventory extends CI_Controller
       'items' => $this->StockModel->get(null, $this->InventoryModel->getLineRetur($kodeRetur)->result(), null, $this->session->userdata('x-idm-store'))->result()
     ];
 
-    // var_dump($data);
-    // die;
-
     $this->template->load('layout/template', 'inventory/form_retur_barang', $data);
   }
 
@@ -225,12 +223,16 @@ class Inventory extends CI_Controller
     ];
 
     $this->InventoryModel->createLine($data);
+    $this->session->set_flashdata('pesanGlobal', 'Item ditambah.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/form-retur/' . $kodeRetur);
   }
 
   public function hapus_item_retur($id = null, $kodeRetur = null)
   {
     $this->InventoryModel->deleteLine($id);
+    $this->session->set_flashdata('pesanGlobal', 'Item dihapus.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/form-retur/' . $kodeRetur);
   }
 
@@ -238,6 +240,8 @@ class Inventory extends CI_Controller
   {
     $idRetur = $this->InventoryModel->getData($kodeRetur)->row()->id;
     $this->InventoryModel->prosesRetur($idRetur);
+    $this->session->set_flashdata('pesanGlobal', 'Retur telah berhasil di proses.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/data-retur-barang');
   }
 
@@ -336,6 +340,8 @@ class Inventory extends CI_Controller
 
     $this->InventoryModel->createKonversi($data);
     $this->InventoryModel->minusKonversi($data);
+    $this->session->set_flashdata('pesanGlobal', 'Item berhasil dikonversi.');
+    $this->session->set_flashdata('typePesanGlobal', 'success');
     redirect('inventory/konversi');
   }
 }

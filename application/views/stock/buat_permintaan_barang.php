@@ -38,8 +38,7 @@
                   <td class="text-center">
                     <button type="button" class="btn btn-primary btn-sm" title="Koreksi item" data-toggle="modal" onclick="getItem('<?= base_url('stock/get-item/' . $req->id); ?>')" data-target="#updatePermintaanModal"><i class="fas fa-pencil-alt"></i>
                     </button>
-                    <a class="btn btn-danger btn-sm" title="Hapus item" href="<?= base_url('stock/hapusItem/' . $req->id . '/' . $header->kodepermintaan); ?>"><i class="fas fa-trash"></i>
-                    </a>
+                    <button class="btn btn-danger btn-sm" title="Hapus item" onclick="deleteConfirmation('<?= base_url('stock/hapusItem/' . $req->id . '/' . $header->kodepermintaan); ?>')"><i class="fas fa-trash"></i></button>
                   </td>
                 </tr>
               <?php endforeach; ?>

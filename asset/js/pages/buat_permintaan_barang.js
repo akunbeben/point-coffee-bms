@@ -67,3 +67,19 @@ function submitForm() {
 	formData.submit();
 	$("#btnSave").attr("disabled", true);
 }
+
+function deleteConfirmation() {
+	Swal.fire({
+		title: "Data Permintaan",
+		text: `Hapus item?`,
+		type: "question",
+		showCancelButton: true,
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		confirmButtonText: "Hapus",
+	}).then((result) => {
+		if (result.value) {
+			window.location.href = url;
+		}
+	});
+}

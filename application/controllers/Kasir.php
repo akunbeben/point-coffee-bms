@@ -133,6 +133,13 @@ class Kasir extends CI_Controller
 
         $this->KasirModel->sendDetail($salesId);
         $this->KasirModel->ResetKeranjang();
+
+        if ($data['kembalian'] > 0) {
+            $this->session->set_flashdata('pesan', 'Penjualan Selesai. Kembalian ' . rupiah($data['kembalian']));
+            $this->session->set_flashdata('typePesan', 'success');
+            redirect(base_url('kasir'));
+        }
+
         $this->session->set_flashdata('pesan', 'Penjualan Selesai.');
         $this->session->set_flashdata('typePesan', 'success');
         redirect(base_url('kasir'));
